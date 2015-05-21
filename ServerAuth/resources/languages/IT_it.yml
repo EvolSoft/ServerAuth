@@ -1,0 +1,44 @@
+#ServerAuth plugin Italian language file
+#Translation by Flavius12, EvolSoft
+---
+join-message: "&bSistema di autenticazione fornito da &aServerAuth"
+login:
+  message: "&cEsegui il login con /login <password>"
+  disabled: "&cIl login è disabilitato in questo server"
+  command: "&cUso: /login <password>"
+  ip-login: "&9Sei autenticato per IP"
+  login-success: "&aHai eseguito il login!"
+  login-timeout: "&cTempo di login scaduto"
+  already-login: "&aSei già autenticato"
+register: 
+  message: "&cRegistrati con /register <password>"
+  message-conf: "&cRegistrati con /register <password> <confermaPassword>"
+  disabled: "&cLa registrazione è disabilitata in questo server"
+  command: "&cUso: /register <password>"
+  command-conf: "&cUso: /register <password> <confermaPassword>"
+  register-success: "&aOra sei registrato!"
+  register-timeout: "&cTempo di registrazione scaduto"
+  already-registered: "&aSei già registrato"
+changepassword:
+  disabled: "&cIl cambio password è disabilitato in questo server"
+  login-required: "&cDevi essere autenticato per cambiare la password"
+  command: "&cUso: /changepassword <nuovaPassword>"
+  command-conf: "&cUso: /changepassword <nuovaPassword> <confermaPassword>"
+  changepassword-success: "&aPassword cambiata!"
+logout:
+  disabled: "&cIl logout è disabilitato in questo server"
+  logout-success: "&aHai eseguito il logout"
+unregister:
+  disabled: "&cLa cancellazione dell'account è disabilitata in questo server"
+  login-required: "&cDevi essere autenticato per cancellare l'account"
+  command: "&cUso: /unregister <password>"
+  unregister-success: "&aIl tuo account è stato cancellato!"
+errors:
+  generic: "&cSi è verificato un errore"
+  wrong-password: "&cPassword errata"
+  password-no-match: "&cLe password non corrispondono"
+  password-too-short: "&cLa password è troppo corta"
+  password-too-long: "&cLa password è troppo lunga"
+  user-not-registered: "&cNon sei registrato"
+  user-not-authenticated: "&cNon sei autenticato"
+...
