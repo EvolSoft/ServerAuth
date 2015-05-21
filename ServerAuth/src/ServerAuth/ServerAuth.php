@@ -233,6 +233,7 @@ class ServerAuth extends PluginBase {
         $this->cfg = $this->getConfig()->getAll();
         $this->saveResource("languages/EN_en.yml");
         $this->saveResource("languages/IT_it.yml");
+        $this->saveResource("languages/ES_es.yml");
         $this->getCommand("serverauth")->setExecutor(new Commands\Commands($this));
         $this->getCommand("register")->setExecutor(new Commands\Register($this));
         $this->getCommand("login")->setExecutor(new Commands\Login($this));
@@ -416,6 +417,10 @@ class ServerAuth extends PluginBase {
     		@mkdir($this->getDataFolder() . "languages/");
     		$this->saveResource("languages/EN_en.yml");
     		return new Config($this->getDataFolder() . "languages/EN_en.yml", Config::YAML);
+    	}else{
+    		@mkdir($this->getDataFolder() . "languages/");
+    		$this->saveResource("languages/ES_es.yml");
+    		return new Config($this->getDataFolder() . "languages/ES_es.yml", Config::YAML);
     	}
     }
     
