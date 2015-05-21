@@ -97,7 +97,7 @@ class ServerAuth extends PluginBase {
     }
     
     public function onLoad(){
-    	if(!self::$object instanceof ServerAuth){
+    	if(!(self::$object instanceof ServerAuth)){
     		self::$object = $this;
     	}
     }
