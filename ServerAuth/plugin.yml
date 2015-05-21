@@ -1,0 +1,58 @@
+name: ServerAuth
+main: ServerAuth\ServerAuth
+version: "1.00"
+api: [1.11.0]
+load: STARTUP
+author: EvolSoft
+description: The most advanced authentication plugin for PocketMine-MP
+website: http://www.evolsoft.tk
+
+commands:
+ serverauth:
+  aliases: [sa, sauth, auth]
+  description: ServerAuth Commands.
+  permission: serverauth
+ register:
+  aliases: [reg]
+  description: Allows registering an account
+  permission: serverauth.register
+ login:
+  description: Allows logging into an account
+  permission: serverauth.login
+ changepassword:
+  aliases: [ch, chp, chpass]
+  description: Allows changing account password
+  permission: serverauth.changepassword
+ unregister:
+  description: Allows unregistering an account
+  permission: serverauth.unregister
+ logout:
+  description: Allows to do the log out
+  permission: serverauth.logout
+
+permissions:
+ serverauth:
+  default: op
+  description: ServerAuth commands permissions.
+  children:
+   serverauth.info:
+    default: op
+    description: Allows player to read info about ServerAuth.
+   serverauth.reload:
+    default: op
+    description: Allows player to reload ServerAuth.
+   serverauth.register:
+    default: true
+    description: Allows registering an account.
+   serverauth.login:
+    default: true
+    description: Allows logging into an account.
+   serverauth.changepassword:
+    default: true
+    description: Allows changing account password.
+   serverauth.unregister:
+    default: true
+    description: Allows unregistering an account.
+   serverauth.logout:
+    default: true
+    description: Allows logging out an account.
