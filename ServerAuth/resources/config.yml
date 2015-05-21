@@ -1,0 +1,74 @@
+#ServerAuth plugin default configuration
+---
+#Keep logged in by IP
+IPLogin: false
+#Allow not authenticated users to move
+allow-move: false
+#Block chat for not authenticated users
+block-chat: true
+#Block commands for not authenticated users
+block-commands: true
+#Login/Register timeout
+timeout: 60
+#Minimum password length
+minPasswordLength: 6
+#Maximum password length
+maxPasswordLength: 16
+#Password hash algorithm
+passwordHash: "sha256"
+#ServerAuth language
+language: "EN_en"
+#ServerAuth message prefix
+prefix: "&1[ServerAuth] "
+#Show join message (defined on join-message in the current language file)
+show-join-message: true
+#Use MySQL (set this to false if you want to save data in local files)
+use-mysql: true
+#MySQL settings
+mysql:
+  #MySQL host
+  host: "host"
+  #MySQL port (default 3306)
+  port: 3306
+  #MySQL username
+  username: "username"
+  #MySQL password (you can leave it blank if your database doesn't need password)
+  password: ""
+  #MySQL ServerAuth database
+  database: "serverauth"
+  #ServerAuth table prefix
+  table_prefix: "srvauth_"
+#Login settings
+login:
+  #Enable login on your server
+  enabled: true
+  #Login message interval
+  message-interval: 2
+#Register settings
+register:
+  #Enable register on your server
+  enabled: true
+  #Require password confirmation
+  password-confirm-required: false
+  #To-Do
+  #Max registrations per IP
+  #max-ip: 3
+  #Register message interval
+  message-interval: 2
+#Change Password settings
+changepassword:
+  #Enable changepassword on your server
+  enabled: true
+  #Require password confirmation
+  password-confirm-required: true
+#Logout settings
+logout:
+  #Enable logout on your server
+  enabled: true
+#Unregister settings
+unregister:
+  #Enable unregister on your server
+  enabled: true
+  #Require password confirmation
+  require-password: true
+...
