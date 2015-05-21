@@ -23,7 +23,7 @@ prefix: "&1[ServerAuth] "
 #Show join message (defined on join-message in the current language file)
 show-join-message: true
 #Use MySQL (set this to false if you want to save data in local files)
-use-mysql: true
+use-mysql: false
 #MySQL settings
 mysql:
   #MySQL host
