@@ -4,7 +4,7 @@
  * ServerAuth (v1.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 22/05/2015 11:50 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -417,10 +417,6 @@ class ServerAuth extends PluginBase {
     		@mkdir($this->getDataFolder() . "languages/");
     		$this->saveResource("languages/EN_en.yml");
     		return new Config($this->getDataFolder() . "languages/EN_en.yml", Config::YAML);
-    	}else{
-    		@mkdir($this->getDataFolder() . "languages/");
-    		$this->saveResource("languages/ES_es.yml");
-    		return new Config($this->getDataFolder() . "languages/ES_es.yml", Config::YAML);
     	}
     }
     
