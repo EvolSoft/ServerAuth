@@ -1,44 +1,44 @@
-+#ServerAuth plugin Spanish language file
-+#Translation by TonyDroidd
-+---
-+join-message: "&bSistema de autenticación proporcionado por &aServerAuth &bplugin"
-+login:
-+  message: "&cPor favor, inicia sesion usando /login <contraseña>"
-+  disabled: "&cAutenticacion esta desactivada en este servidor"
-+  command: "&cIntenta usando: /login <contraseña>"
-+  ip-login: "&9Haz iniciado sesion con tu IP."
-+  login-success: "&aHaz iniciado sesion!"
-+  login-timeout: "&cEl tiempo de autenticacion ha expirado!"
-+  already-login: "&aYa haz iniciado sesión!"
-+register: 
-+  message: "&cPor favor, registrate usando /register <contraseña>"
-+  message-conf: "&cPor favor, registrate con /register <contraseña> <confirmarContraseña>"
-+  disabled: "&cLa registracion esta desactivada en este servidor!"
-+  command: "&cIntenta usandoe: /register <contraseña>"
-+  command-conf: "&cUsa: /register <contraseña> <confirmarContraseña>"
-+  register-success: "&aTe haz registrado correctamente!!"
-+  register-timeout: "&cHaz excedido el limite de tiempo!"
-+  already-registered: "&aYa estás registrado!"
-+changepassword:
-+  disabled: "&cCambio de contraseña está desactivado en este servidor"
-+  login-required: "&cNecesitas iniciar sesion para cambiar tu contraseña"
-+  command: "&cUsa el comando: /changepassword <nuevaContraseña>"
-+  command-conf: "&cUsa: /changepassword <nuevaContraseña> <confirmarContraseña>"
-+  changepassword-success: "&aContraseña cambiada correctamente!"
-+logout:
-+  disabled: "&cCerrar sesion esta desactivado en este servidor!"
-+  logout-success: "&aYa haz cerrado sesion"
-+unregister:
-+  disabled: "&cNo tienes permisos de desregistrarte"
-+  login-required: "&cNecesitas iniciar sesion para desregistrarte"
-+  command: "&cUsa: /unregister <contraseña>"
-+  unregister-success: "&aTe haz desregistrado!"
-+errors:
-+  generic: "&cHa ocurrido un error desconocido!"
-+  wrong-password: "&cLa contraseña incorrecta"
-+  password-no-match: "&cLas contraseñas no coinciden"
-+  password-too-short: "&cLa contraseña es muy corta"
-+  password-too-long: "&cLa contraseña es muy larga!"
-+  user-not-registered: "&cNo estas registrado en este servidor"
-+  user-not-authenticated: "&cNo haz iniciado sesion!"
-+...
+#ServerAuth plugin Spanish language file
+#Translation by TonyDroidd
+---
+join-message: "&bSistema de autenticación proporcionado por &aServerAuth &bplugin"
+login:
+  message: "&cPor favor, inicia sesion usando /login <contraseña>"
+  disabled: "&cAutenticacion esta desactivada en este servidor"
+  command: "&cIntenta usando: /login <contraseña>"
+  ip-login: "&9Haz iniciado sesion con tu IP."
+  login-success: "&aHaz iniciado sesion!"
+  login-timeout: "&cEl tiempo de autenticacion ha expirado!"
+  already-login: "&aYa haz iniciado sesión!"
+register: 
+  message: "&cPor favor, registrate usando /register <contraseña>"
+  message-conf: "&cPor favor, registrate con /register <contraseña> <confirmarContraseña>"
+  disabled: "&cLa registracion esta desactivada en este servidor!"
+  command: "&cIntenta usandoe: /register <contraseña>"
+  command-conf: "&cUsa: /register <contraseña> <confirmarContraseña>"
+  register-success: "&aTe haz registrado correctamente!!"
+  register-timeout: "&cHaz excedido el limite de tiempo!"
+  already-registered: "&aYa estás registrado!"
+changepassword:
+  disabled: "&cCambio de contraseña está desactivado en este servidor"
+  login-required: "&cNecesitas iniciar sesion para cambiar tu contraseña"
+  command: "&cUsa el comando: /changepassword <nuevaContraseña>"
+  command-conf: "&cUsa: /changepassword <nuevaContraseña> <confirmarContraseña>"
+  changepassword-success: "&aContraseña cambiada correctamente!"
+logout:
+  disabled: "&cCerrar sesion esta desactivado en este servidor!"
+  logout-success: "&aYa haz cerrado sesion"
+unregister:
+  disabled: "&cNo tienes permisos de desregistrarte"
+  login-required: "&cNecesitas iniciar sesion para desregistrarte"
+  command: "&cUsa: /unregister <contraseña>"
+  unregister-success: "&aTe haz desregistrado!"
+errors:
+  generic: "&cHa ocurrido un error desconocido!"
+  wrong-password: "&cLa contraseña incorrecta"
+  password-no-match: "&cLas contraseñas no coinciden"
+  password-too-short: "&cLa contraseña es muy corta"
+  password-too-long: "&cLa contraseña es muy larga!"
+  user-not-registered: "&cNo estas registrado en este servidor"
+  user-not-authenticated: "&cNo haz iniciado sesion!"
+...
