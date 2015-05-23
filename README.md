@@ -55,4 +55,4 @@ Documentation available at [ServerAuth Wiki](https://github.com/EvolSoft/ServerA
 
 ##Contributing
 
-If you want to contribute to this project please follow the [Contribution Guidelines](https://github.com/EvolSoft/xWeb/blob/master/CONTRIBUTING.md)
+If you want to contribute to this project please follow the [Contribution Guidelines](https://github.com/EvolSoft/ServerAuth/blob/master/CONTRIBUTING.md)
