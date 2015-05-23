@@ -23,5 +23,6 @@ If you want to contribute on code simply do a [Pull Request](https://github.com/
 
 ## Translation contributions
 
-If you want to contribute on translations make a [Pull Request](https://github.com/EvolSoft/ServerAuth/pull/new). 
+If you want to contribute on translations make a [Pull Request](https://github.com/EvolSoft/ServerAuth/pull/new).
+
 Remember that your translation file **must** follow the default ServerAuth language file structure
