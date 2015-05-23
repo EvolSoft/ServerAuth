@@ -37,11 +37,11 @@ In the ZIP file you will find:<br>
 
 **Commands:**
 
-***/serverauth*** *- ServerAuth commands (aliases: [sa, sauth, auth])*
-***/register*** *- Allows registering an account (aliases: [reg])*
-***/login*** *- Allows logging into an account*
-***/changepassword*** *- Allows changing account password (aliases: [ch, chp, chpass])*
-***/unregister*** *- Allows unregistering an account*
+***/serverauth*** *- ServerAuth commands (aliases: [sa, sauth, auth])*<br>
+***/register*** *- Allows registering an account (aliases: [reg])*<br>
+***/login*** *- Allows logging into an account*<br>
+***/changepassword*** *- Allows changing account password (aliases: [ch, chp, chpass])*<br>
+***/unregister*** *- Allows unregistering an account*<br>
 ***/logout*** *- Allows to do the log out*
 
 ***To-Do:***
