@@ -28,6 +28,13 @@ PHP >= 5.3.0 *(for ServerAuthAccountManager)*<br>
 
 And more...
 
+**What is included?**
+
+In the ZIP file you will find:<br>
+*- ServerAuth_v1.00.phar : ServerAuth Plugin + API*<br>
+*- ServerAuthAccountManager : An advanced online script to manage ServerAuth accounts*<br>
+*- ServerAuthWebAPI : ServerAuth Web API to use on your own web scripts*<br>
+
 **Commands:**
 
 ***/serverauth*** *- ServerAuth commands (aliases: [sa, sauth, auth])*
