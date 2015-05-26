@@ -4,7 +4,7 @@
  * ServerAuth (v1.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 22/05/2015 11:50 AM (UTC)
+ * Date: 26/05/2015 02:27 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -471,7 +471,7 @@ class ServerAuth extends PluginBase {
      * @param Player $player
      * @param string $password
      * 
-     * @return true on SUCCESS, otherwise the current error
+     * @return int|boolean true on SUCCESS, otherwise the current error
      */
     public function registerPlayer(Player $player, $password){
     	$cfg = $this->getConfig()->getAll();
@@ -549,12 +549,13 @@ class ServerAuth extends PluginBase {
     }
     
     /**
-     * 
+     * Authenticate a Player
      * 
      * @param Player $player
-     * @param unknown $password
-     * @param string $hash
-     * @return number|Ambigous <boolean, number>
+     * @param string $password
+     * @param boolean $hash
+     * 
+     * @return int|boolean true on SUCCESS, otherwise the current error
      */
     public function authenticatePlayer(Player $player, $password, $hash = true){
     	if($hash){
@@ -607,6 +608,13 @@ class ServerAuth extends PluginBase {
     	}
     }
     
+    /**
+     * Deauthenticate a player
+     * 
+     * @param Player $player
+     * 
+     * @return int|boolean true on SUCCESS, otherwise the current error
+     */
     public function deauthenticatePlayer(Player $player){
     	if($this->isPlayerRegistered($player->getName())){
     		if($this->isPlayerAuthenticated($player)){
