@@ -53,6 +53,10 @@ In the ZIP file you will find:<br>
 
 Documentation available at [ServerAuth Wiki](https://github.com/EvolSoft/ServerAuth/wiki)
 
+##Download
+
+You can download precompiled versions of ServerAuth on [ServerAuth Releases](https://github.com/EvolSoft/ServerAuth/releases) section
+
 ##Contributing
 
 If you want to contribute to this project please follow the [Contribution Guidelines](https://github.com/EvolSoft/ServerAuth/blob/master/CONTRIBUTING.md)
