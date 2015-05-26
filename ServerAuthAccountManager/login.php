@@ -26,7 +26,7 @@ if(isset($_SESSION["admin_login"])){
 	header("Location: admin.php");
 }
 if(isset($_SESSION["login"])){
-	header("Location: account.php");
+	header("Location: login.php");
 }
 $cfg_status = file_exists('config.php');
 include 'ServerAuthWebAPI.php';
@@ -40,69 +40,124 @@ if($cfg_status){
 		<nav class='navbar navbar-static <?php if($cfg_status && $config['dark-theme']) echo 'navbar-dark'; ?>'>
 	        <a class='navbar-title' href='index.php'>ServerAuth Account Manager</a>
 	        <button type='button' class='navbar-toggle'></button>
-	        <?php 
-	        if($cfg_status && $config["allow-register"] && !isset($_SESSION["login"])){
-				echo "<ul class='navbar-links navbar-links-right'><li><a href='register.php'><i class='fa fa-user'></i> Register</a></li></ul>";
-            }
-	        ?>
+			<ul class='navbar-links navbar-links-right'>
+				<li><a href='login.php'><i class='fa fa-sign-in'></i> Login</a></li>
+			</ul>
 		</nav>
-		<br>
 		<div class='content'>
-			<div class='col-3'></div>
-			<div class='col-6'>
+			<div class='col-2'></div>
+			<div class='col-8'>
+			<?php
+			if(!$cfg_status){
+			?>
 				<div class='panel'>
 					<div class='panel-header'>
-					    <?php
-	        	    	if(!$cfg_status){
-    						echo "<div class='panel-title'><i class='fa fa-warning'></i> Warning</div>";
-    					}else{
-							if($api_status == ServerAuthWebAPI::ERR_MYSQL){
-								echo "<div class='panel-title'><i class='fa fa-exclamation-circle'></i> MySQL Error</div>";
-							}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_PLUGIN){
-								echo "<div class='panel-title'><i class='fa fa-exclamation-circle'></i> Outdated Plugin Error</div>";
-							}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_WEBAPI){
-								echo "<div class='panel-title'><i class='fa fa-exclamation-circle'></i> Outdated WebAPI Error</div>";
-							}else{
-								echo "<div class='panel-title'><i class='fa fa-lock'></i> Login</div>";
-							}
-						}
-						?>
+						<div class='panel-title'><i class='fa fa-warning'></i> Warning</div></div>
 					</div>
 					<div class='panel-content'>
-					<?php
-	        	    if(!$cfg_status){
-    					echo "<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> ServerAuth Account Manager is not configured yet.<br><br>Please create a configuration file or rename the existing one.</div>";
-    				}else{
-						if($api_status == ServerAuthWebAPI::ERR_MYSQL){
-							echo "<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> <b>MySQL Error:</b> " . $api->getDatabase()->connect_error . "</div>";
-						}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_PLUGIN){
-							echo "<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> ServerAuth plugin is outdated. Please update it.</div>";
-						}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_WEBAPI){
-							echo "<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> ServerAuth Web API is outdated. Please update it.</div>";
-						}else{
-						?>
-						<form action='?action=login' method='POST'>
+					</div>
+				</div>
+				<?php 
+				}else{
+					if(!$config["allow-register"]){
+				?>
+				<div class='panel'>
+					<div class='panel-header'>
+						<div class='panel-title'><i class='fa fa-exclamation-circle'></i> Registration disabled</div>
+					</div>
+					<div class='panel-content'>
+						<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> Registration disabled</div>
+					</div>
+				</div>
+				<?php
+					}elseif($api_status == ServerAuthWebAPI::ERR_MYSQL){
+				?>
+				<div class='panel'>
+					<div class='panel-header'>
+						<div class='panel-title'><i class='fa fa-exclamation-circle'></i> MySQL Error</div>
+					</div>
+					<div class='panel-content'>
+					<?php 
+					echo "<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> <b>MySQL Error:</b> " . $api->getDatabase()->connect_error . "</div>";
+					?>
+					</div>
+				</div>
+				<?php
+					}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_PLUGIN){
+				?>
+				<div class='panel'>
+					<div class='panel-header'>
+						<div class='panel-title'><i class='fa fa-exclamation-circle'></i> Outdated Plugin Error</div>
+					</div>
+					<div class='panel-content'>
+						<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> ServerAuth plugin is outdated. Please update it.</div>
+					</div>
+				</div>
+				<?php
+					}elseif($api_status == ServerAuthWebAPI::ERR_OUTDATED_WEBAPI){
+				?>
+				<div class='panel'>
+					<div class='panel-header'>
+						<div class='panel-title'><i class='fa fa-exclamation-circle'></i> Outdated WebAPI Error</div>
+					</div>
+					<div class='panel-content'>
+						<div class='alert alert-error square' style='margin-bottom: 0'><i class='fa fa-exclamation-circle'></i> ServerAuth Web API is outdated. Please update it.</div>
+					</div>
+				</div>
+				<?php
+					}else{
+					?>
+					<div class='panel'>
+					<div class='panel-header'>
+					    <div class='panel-title'><i class='fa fa-lock'></i> Register</div>
+					</div>
+					<div class='panel-content'>
+						<form action='?action=register' method='POST'>
 							<div class='form'>
-								<div class='col-rs-2'>
+								<div class='col-rs-3'>
 									<label class='form-label' style='margin-left: -5px'>Username:</label>
 								</div>
-							    <div class='col-rs-10 ns'>
+							    <div class='col-rs-9 ns'>
 							    	<input type='text' class='input' name='username'>
 							    </div>
 							</div>
+							<br>
 							<div class='form'>
-								<div class='col-rs-2'>
+								<div class='col-rs-3'>
 									<label class='form-label' style='margin-left: -5px'>Password:</label>
 								</div>
-							    <div class='col-rs-10 ns'>
+							    <div class='col-rs-9 ns'>
 							    	<input type='password' class='input' name='password'>
+							    </div>
+							 </div>
+							<div class='form'>
+								<div class='col-rs-3'>
+									<label class='form-label' style='margin-left: -5px'>Confirm password:</label>
+								</div>
+							    <div class='col-rs-9 ns'>
+							    	<input type='password' class='input' name='cpassword'>
 							    	<?php
-									if(isset($_GET["action"]) && strtolower($_GET["action"]) == "login"){
-										if($api->isPlayerRegistered($_POST["username"]) && $api->getPlayerData($_POST["username"])["password"] == hash($api->getPasswordHash(), $_POST["password"])){
-											$_SESSION["login"] = $_POST["username"];
-											header("Location: account.php");
+									if(isset($_GET["action"]) && strtolower($_GET["action"]) == "register" && isset($_POST["username"]) && isset($_POST["password"])){
+										if(!$api->isPlayerRegistered($_POST["username"])){
+											if($_POST["password"] == $_POST["cpassword"]){
+												if(preg_match('/\s/', $_POST["password"]) == 0){
+													if(strlen($_POST["password"]) <= $config["min-password-length"]){
+														echo "<div class='hint out-error'>Password too short</div>";
+													}elseif(strlen($_POST["password"]) >= $config["max-password-length"]){
+														echo "<div class='hint out-error'>Password too long</div>";
+													}else{
+														$api->registerPlayer($_POST["username"], $_POST["password"], $_SERVER['REMOTE_ADDR'], time() * 1000, time() * 1000);
+														$_SESSION["login"] = $_POST["username"];
+														header("Location: account.php");
+													}
+												}else{
+													echo "<div class='hint out-error'>Password can't contain spaces</div>";
+												}
+											}else{
+												echo "<div class='hint out-error'>Password doesn't match confirmation</div>";
+											}
 										}else{
-											echo "<p class='hint out-error'>Wrong username or password</p>";
+											echo "<p class='hint out-error'>Username already registered</p>";
 										}
 									}
 									?>
@@ -110,19 +165,18 @@ if($cfg_status){
 							</div>
 							<br>
 							<div class='col-rs-12 ns alignment-right'>
-							    <input class='button button-primary' type='submit' value="Login">
+							    <input class='button button-success' type='submit' value="Register">
 							</div>
 						</form>
-				<?php 
+					</div>
+				</div>
+					<?php			
 					}
 				}
 				?>
-					</div>
-				</div>
 				<hr>
-				<p class='alignment-center'>ServerAuth Account Manager v1.0. <?php if($config["allow-register"] && !isset($_SESSION["login"])){ echo "<a href='register.php'>Register an account</a>"; } ?></p>
+				<p class='alignment-center'>ServerAuth Account Manager v1.0.</p>
 				<p class='alignment-center'>&copy; 2015 <a href='http://www.evolsoft.tk'>EvolSoft</a>. Licensed under MIT.</p>
-				<br>
 			</div>
 		</div>
 	</body>
