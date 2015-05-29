@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+session_start();
 /*
  * ServerAuth Account Manager (v1.0) by EvolSoft
  * Developer: EvolSoft (Flavius12)
@@ -20,7 +22,6 @@
 		<title>ServerAuth Account Manager</title>
 	</head>
 <?php
-session_start();
 if(isset($_SESSION["admin_login"])){
 	header("Location: admin.php");
 }
@@ -28,7 +29,6 @@ if(isset($_SESSION["login"])){
 	header("Location: login.php");
 }
 $cfg_status = file_exists('config.php');
-error_reporting(E_NOTICE);
 include 'ServerAuthWebAPI.php';
 if($cfg_status){
 	include 'config.php';
