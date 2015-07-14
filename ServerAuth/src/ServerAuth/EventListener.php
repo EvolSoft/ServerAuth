@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.00) by EvolSoft
+ * ServerAuth (v1.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 14/07/2015 01:10 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -21,10 +21,18 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\player\PlayerBedEnterEvent;
+use pocketmine\event\player\PlayerBedLeaveEvent;
+use pocketmine\event\player\PlayerBucketFillEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
+use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\event\player\PlayerItemConsumeEvent;
+use pocketmine\event\player\PlayerBucketEmptyEvent;
 use pocketmine\Player;
 use pocketmine\Server;
 
 use ServerAuth\ServerAuth;
+use pocketmine\event\player\PlayerAchievementAwardedEvent;
 
 class EventListener implements Listener {
 	
@@ -127,6 +135,68 @@ class EventListener implements Listener {
     public function onBlockPlace(BlockPlaceEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
+    	}
+    }
+    
+    public function onBucketFill(PlayerBucketFillEvent $event){
+    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
+    
+    public function onBucketEmpty(PlayerBucketEmptyEvent $event){
+    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
+    
+    //Other Events
+    
+    public function onBedEnter(PlayerBedEnterEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
+    public function onBedLeave(PlayerBedLeaveEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
+    public function onDropItem(PlayerDropItemEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
+    public function onItemHeld(PlayerItemHeldEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
+    public function onItemConsume(PlayerItemConsumeEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
+    public function onAwardAchievement(PlayerAchievementAwardedEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
     	}
     }
 }
