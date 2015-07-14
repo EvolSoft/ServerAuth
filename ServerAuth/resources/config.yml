@@ -8,6 +8,8 @@ allow-move: false
 block-chat: true
 #Block commands for not authenticated users
 block-commands: true
+#Block all events
+block-all-events: true
 #Login/Register timeout
 timeout: 60
 #Minimum password length
@@ -50,9 +52,8 @@ register:
   enabled: true
   #Require password confirmation
   password-confirm-required: false
-  #To-Do
   #Max registrations per IP
-  #max-ip: 3
+  max-ip: 3
   #Register message interval
   message-interval: 2
 #Change Password settings
