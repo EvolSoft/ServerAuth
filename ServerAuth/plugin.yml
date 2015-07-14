@@ -1,6 +1,6 @@
 name: ServerAuth
 main: ServerAuth\ServerAuth
-version: "1.00"
+version: "1.10"
 api: [1.11.0]
 load: STARTUP
 author: EvolSoft
