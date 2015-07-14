@@ -2,7 +2,7 @@
  * xWeb (v1.0) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 11/05/2015 06:15 PM (UTC)
+ * Date: 24/06/2015 12:36 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/xWeb/blob/master/LICENSE)
  */
@@ -90,19 +90,22 @@ $(document).ready(function(){
 });
 
 $(document).on("click", ".image-slider-control-left", function(){
-	slideLeft($(event.target).parent());
+	var target = event.target || event.srcElement;
+	slideLeft($(target).parent());
 });
 
 $(document).on("click", ".image-slider-control-right", function(){
-	slideRight($(event.target).parent());
+	var target = event.target || event.srcElement;
+	slideRight($(target).parent());
 });
 
 $(document).on("click", ".image-slider > .image-slider-navigation > li", function(){
-	if(!$(event.target).hasClass("active")){
+	var target = event.target || event.srcElement;
+	if(!$(target).hasClass("active")){
 		if($(event.target).nextAll().hasClass("active")){
-			slideRightPos($(event.target).parent().parent(), $(this).attr("img-id"));
+			slideRightPos($(target).parent().parent(), $(this).attr("img-id"));
 		}else{
-			slideLeftPos($(event.target).parent().parent(), $(this).attr("img-id"));
+			slideLeftPos($(target).parent().parent(), $(this).attr("img-id"));
 		}
 	}
 
@@ -115,8 +118,8 @@ $(document).on("click", ".image-slider > .image-slider-navigation > li", functio
  */
 function initializeImageSlider(image_slider){
 	if($(image_slider).hasClass("image-slider")){
-		ImageItem = $(image_slider).find(".image-slider-images").children(".image-slider-item");
-		activeImageItem = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
+		var ImageItem = $(image_slider).find(".image-slider-images").children(".image-slider-item");
+		var activeImageItem = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
 		$(image_slider).trigger("image-slider.initialize");
 		if(activeImageItem.length > 0){
 			activeImageItem.css("margin-left", "0%");
@@ -138,8 +141,8 @@ function initializeImageSlider(image_slider){
  */
 function slideLeft(image_slider){
 	if($(image_slider).hasClass("image-slider")){ //Check if the element is an image-slider
-		parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
-		activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
+		var parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
+		var activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
 		$(image_slider).trigger("image-slider.slide");
 		if(activeParent.prev().length > 0){ //Check if previous element exists
 			parent.removeClass("active");
@@ -171,11 +174,11 @@ function slideLeft(image_slider){
  */
 function slideLeftPos(image_slider, position){
 	if($(image_slider).hasClass("image-slider") && $(image_slider).find(".image-slider-images").children("[img-item='" + position + "']")){ //Check if the element is an image-slider
-		parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
+		var parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
 		parent.removeClass("active");
 		$(image_slider).find(".image-slider-images").children("[img-item='" + position + "']").addClass("active");
 		initializeImageSlider(image_slider);
-		activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
+		var activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
 		$(image_slider).trigger("image-slider.slide");
 		if(activeParent.prev().length > 0){ //Check if element exists
 			activeParent.prev().css("margin-left", "0%");
@@ -202,8 +205,8 @@ function slideLeftPos(image_slider, position){
  */
 function slideRight(image_slider){
 	if($(image_slider).hasClass("image-slider")){ //Check if the element is an image-slider
-		parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
-		activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
+		var parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
+		var activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
 		$(image_slider).trigger("image-slider.slide");
 		if(activeParent.next().length > 0){ //Check if next element exists
 			parent.removeClass("active");
@@ -235,11 +238,11 @@ function slideRight(image_slider){
  */
 function slideRightPos(image_slider, position){
 	if($(image_slider).hasClass("image-slider") && $(image_slider).find(".image-slider-images").children("[img-item='" + position + "']")){ //Check if the element is an image-slider
-		parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
+		var parent = $(image_slider).find(".image-slider-images").children(".image-slider-item");
 		parent.removeClass("active");
 		$(image_slider).find(".image-slider-images").children("[img-item='" + position + "']").addClass("active");
 		initializeImageSlider(image_slider);
-		activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
+		var activeParent = $(image_slider).find(".image-slider-images").children(".image-slider-item.active");
 		$(image_slider).trigger("image-slider.slide");
 		if(activeParent.next().length > 0){ //Check if element exists
 			activeParent.next().css("margin-left", "0%");
@@ -260,9 +263,11 @@ function slideRightPos(image_slider, position){
 }
 
 //**** Menus ****//
-
 $(document).on("click", function() {
-	var target = event.target;
+	var target = event.target || event.srcElement;
+	if(!$(target).is("[openmenu]")){
+		target = $(target).parent();
+	}
 	if($(target).parent().hasClass("open") && $(target).parent().hasClass("menu-group")){
 		$(".menu-group").removeClass("open"); //Closes all other menus
 	    $(target).parent().trigger("menu.close"); //Trigger menu.close events
@@ -275,10 +280,11 @@ $(document).on("click", function() {
 			if($(this).hasClass("open")){
 				$(this).trigger("menu.close");
 			}
-		})
+		});
 		$(".menu-group").removeClass("open"); //Closes all other menus
 	}
 });
+
 
 //**** Modals ****//
 
@@ -347,7 +353,7 @@ var pos = 0;
 
 $(document).on("mousedown", function() {
 	click = true;
-	current = event.target;
+	current = event.target || event.srcElement;
 });
 
 $(document).on("mouseup", function() {
@@ -395,13 +401,14 @@ function getRSliderVal(r_slider){
 //**** Tabs ****//
 
 $(document).on("click", "a", function(){
+	var target = event.target || event.srcElement;
 	if($(this).parent().parent().hasClass("tabs")){ //ul.tabs > li > a
 		$(this).parent().parent().find("li").removeClass("active"); //ul.tabs > li
 		$(this).parent().addClass("active"); //ul.tabs > li
 		$(this).parent().parent().parent().find(".tab-content").css("display", "none"); //Closes all tab-contents (div.tabs > ul.tabs > li > a)
-		if($(this).parent().parent().parent().find("[tab-id=" + $(event.target).attr("open-tab") + "]").hasClass("tab-content")){
-			$(this).parent().parent().parent().find("[tab-id=" + $(event.target).attr("open-tab") + "]").css("display", "block");
-			$(this).parent().parent().parent().find("[tab-id=" + $(event.target).attr("open-tab") + "]").trigger("tab.open");
+		if($(this).parent().parent().parent().find("[tab-id=" + $(target).attr("open-tab") + "]").hasClass("tab-content")){
+			$(this).parent().parent().parent().find("[tab-id=" + $(target).attr("open-tab") + "]").css("display", "block");
+			$(this).parent().parent().parent().find("[tab-id=" + $(target).attr("open-tab") + "]").trigger("tab.open");
 		}
 	}
 });
@@ -410,26 +417,28 @@ $(document).on("click", "a", function(){
 
 $(document).on("mouseover", function(){
 	$("[tooltip]").hover(function(){
-		tooltip = $("[tooltip-id='" + $(event.target).attr("tooltip") + "']");
-		$(event.target).trigger("tooltip.show", [tooltip]);
+		var target = event.target || event.srcElement;
+		tooltip = $("[tooltip-id='" + $(target).attr("tooltip") + "']");
+		$(target).trigger("tooltip.show", [tooltip]);
 		$(tooltip).css("visibility", "visible");
 		$(tooltip).css("opacity", "0.8");
 		if($(tooltip).hasClass("tooltip-top")){ //Top Tooltip
-		    $(tooltip).css("top", $(event.target).position().top - ($(tooltip).outerHeight(true) - pxtoint($(event.target).css("marginTop"))));
-			$(tooltip).css("left", $(event.target).position().left + (($(event.target).outerWidth(true) / 2) - ($(tooltip).outerWidth(true) / 2)));
+		    $(tooltip).css("top", $(target).position().top - ($(tooltip).outerHeight(true) - pxtoint($(target).css("marginTop"))));
+			$(tooltip).css("left", $(target).position().left + (($(target).outerWidth(true) / 2) - ($(tooltip).outerWidth(true) / 2)));
 		}else if($(tooltip).hasClass("tooltip-bottom")){ //Bottom Tooltip
-		    $(tooltip).css("top", $(event.target).position().top + ($(event.target).outerHeight(true) - pxtoint($(event.target).css("marginBottom"))));
-			$(tooltip).css("left", $(event.target).position().left + (($(event.target).outerWidth(true) / 2) - ($(tooltip).outerWidth(true) / 2)));
+		    $(tooltip).css("top", $(target).position().top + ($(target).outerHeight(true) - pxtoint($(target).css("marginBottom"))));
+			$(tooltip).css("left", $(target).position().left + (($(target).outerWidth(true) / 2) - ($(tooltip).outerWidth(true) / 2)));
 		}else if($(tooltip).hasClass("tooltip-left")){ //Left Tooltip
-			$(tooltip).css("top", $(event.target).position().top + (($(event.target).outerHeight(true) / 2) - ($(tooltip).outerHeight(true) / 2)));
-			$(tooltip).css("left", $(event.target).position().left + pxtoint($(event.target).css("marginLeft")) - ($(tooltip).outerWidth() + pxtoint($(tooltip).css("padding"))));
+			$(tooltip).css("top", $(target).position().top + (($(target).outerHeight(true) / 2) - ($(tooltip).outerHeight(true) / 2)));
+			$(tooltip).css("left", $(target).position().left + pxtoint($(target).css("marginLeft")) - ($(tooltip).outerWidth() + pxtoint($(tooltip).css("padding"))));
 		}else if($(tooltip).hasClass("tooltip-right")){ //Right Tooltip
-			$(tooltip).css("top", $(event.target).position().top + (($(event.target).outerHeight(true) / 2) - ($(tooltip).outerHeight(true) / 2)));
-			$(tooltip).css("left", $(event.target).position().left + $(event.target).outerWidth(true) - pxtoint($(event.target).css("marginRight")) + pxtoint($(tooltip).css("padding")));
+			$(tooltip).css("top", $(target).position().top + (($(target).outerHeight(true) / 2) - ($(tooltip).outerHeight(true) / 2)));
+			$(tooltip).css("left", $(target).position().left + $(target).outerWidth(true) - pxtoint($(target).css("marginRight")) + pxtoint($(tooltip).css("padding")));
 		}
 	}, function(){
-		tooltip = $("[tooltip-id='" + $(event.target).attr("tooltip") + "']");
-		$(event.target).trigger("tooltip.hide", [tooltip]);
+		var target = event.target || event.srcElement;
+		tooltip = $("[tooltip-id='" + $(target).attr("tooltip") + "']");
+		$(target).trigger("tooltip.hide", [tooltip]);
 		$(tooltip).css("visibility", "hidden");
 		$(tooltip).css("opacity", "0");
 	});
