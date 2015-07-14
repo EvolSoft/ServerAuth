@@ -4,7 +4,7 @@
  * ServerAuth (v1.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 14/07/2015 01:10 PM (UTC)
+ * Date: 14/07/2015 01:11 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -14,25 +14,25 @@ namespace ServerAuth;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerAchievementAwardedEvent;
+use pocketmine\event\player\PlayerBedEnterEvent;
+use pocketmine\event\player\PlayerBedLeaveEvent;
+use pocketmine\event\player\PlayerBucketEmptyEvent;
+use pocketmine\event\player\PlayerBucketFillEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\event\player\PlayerItemConsumeEvent;
+use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\event\player\PlayerBedEnterEvent;
-use pocketmine\event\player\PlayerBedLeaveEvent;
-use pocketmine\event\player\PlayerBucketFillEvent;
-use pocketmine\event\player\PlayerDropItemEvent;
-use pocketmine\event\player\PlayerItemHeldEvent;
-use pocketmine\event\player\PlayerItemConsumeEvent;
-use pocketmine\event\player\PlayerBucketEmptyEvent;
 use pocketmine\Player;
 use pocketmine\Server;
 
 use ServerAuth\ServerAuth;
-use pocketmine\event\player\PlayerAchievementAwardedEvent;
 
 class EventListener implements Listener {
 	
