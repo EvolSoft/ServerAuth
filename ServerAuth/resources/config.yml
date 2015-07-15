@@ -52,6 +52,8 @@ register:
   enabled: true
   #Require password confirmation
   password-confirm-required: false
+  #Enable max registrations per IP
+  enable-max-ip: false
   #Max registrations per IP
   max-ip: 3
   #Register message interval

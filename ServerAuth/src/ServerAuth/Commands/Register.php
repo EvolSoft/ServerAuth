@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.00) by EvolSoft
+ * ServerAuth (v1.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 15/07/2015 10:02 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -49,11 +49,13 @@ class Register implements CommandExecutor {
     										ServerAuth::getAPI()->authenticatePlayer($sender, $args[0]);
     										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["register-success"]));
     									}elseif($status == ServerAuth::ERR_USER_ALREADY_REGISTERED){
-    										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-already-registered"]));
+    										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["already-registered"]));
     									}elseif($status == ServerAuth::ERR_PASSWORD_TOO_SHORT){
     										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["password-too-short"]));
     									}elseif($status == ServerAuth::ERR_PASSWORD_TOO_LONG){
     										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["password-too-long"]));
+    									}elseif($status == ServerAuth::ERR_MAX_IP_REACHED){
+    										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["max-ip-reached"]));
     									}else{
     										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
     									}
@@ -76,6 +78,8 @@ class Register implements CommandExecutor {
     									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["password-too-short"]));
     								}elseif($status == ServerAuth::ERR_PASSWORD_TOO_LONG){
     									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["password-too-long"]));
+    								}elseif($status == ServerAuth::ERR_MAX_IP_REACHED){
+    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["max-ip-reached"]));
     								}else{
     									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
     								}

@@ -41,4 +41,5 @@ errors:
   password-too-long: "&cLa password è troppo lunga"
   user-not-registered: "&cNon sei registrato"
   user-not-authenticated: "&cNon sei autenticato"
+  max-ip-reached: "&cHai raggiunto il numero massimo di registrazioni per IP"
 ...

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.00) by EvolSoft
+ * ServerAuth (v1.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 26/05/2015 02:27 PM (UTC)
+ * Date: 14/07/2015 12:53 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -27,7 +27,7 @@ class ServerAuth extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.00";
+	const VERSION = "1.10";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -225,15 +225,42 @@ class ServerAuth extends PluginBase {
     	}
     }
     
+    /**
+     * Search string in yml files
+     * 
+     * @param string $path Search path
+     * @param string $str The string to search
+     * 
+     * @return int $count The number of occurrencies
+     */
+    private function grep($path, $str){
+    	$count = 0;
+    	foreach(glob($path . "*.yml") as $filename){
+    		foreach(file($filename) as $fli=>$fl){
+    			if(strpos($fl, $str) !== false){
+    				$count += 1;
+    			}
+    		}
+    	}
+    	return $count;
+    }
+    
     public function onEnable(){
 	    @mkdir($this->getDataFolder());
 	    @mkdir($this->getDataFolder() . "users/");
 	    @mkdir($this->getDataFolder() . "languages/");
         $this->saveDefaultConfig();
         $this->cfg = $this->getConfig()->getAll();
-        $this->saveResource("languages/EN_en.yml");
-        $this->saveResource("languages/IT_it.yml");
-        $this->saveResource("languages/ES_es.yml");
+        foreach($this->getResources() as $fullfilename){
+        	$root = substr($fullfilename, strrpos($fullfilename, '/') + 1);
+        	$dir = explode("\\", $root)[1];
+        	if($dir == "languages"){
+        		$filename = substr($root, strrpos($root, '\\') + 1);
+        		if(substr($filename, strrpos($filename, '.') + 1) == "yml"){
+        			$this->saveResource($dir . "/" . $filename);
+        		}
+        	}
+        }
         $this->getCommand("serverauth")->setExecutor(new Commands\Commands($this));
         $this->getCommand("register")->setExecutor(new Commands\Register($this));
         $this->getCommand("login")->setExecutor(new Commands\Login($this));
@@ -486,25 +513,54 @@ class ServerAuth extends PluginBase {
     			if($this->getDataProvider()){
     				//Check MySQL connection
     				if($this->getDatabase() && $this->getDatabase()->ping()){
-    					$query = "INSERT INTO " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata (user, password, ip, firstlogin, lastlogin) VALUES ('" . $player->getName() . "', '" . hash($this->getPasswordHash(), $password) . "', '" . $player->getAddress() . "', '" . $player->getFirstPlayed() . "', '" . $player->getLastPlayed() . "')";
-    					if($this->getDatabase()->query($query)){
-    						$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
-    						return ServerAuth::SUCCESS;
+    					if($cfg["register"]["enable-max-ip"]){
+    						if(\mysqli_num_rows($this->getDatabase()->query("SELECT user, password, ip, firstlogin, lastlogin FROM " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata WHERE ip='" . $player->getAddress() . "'")) + 1 <= $cfg["register"]["max-ip"]){
+    							$query = "INSERT INTO " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata (user, password, ip, firstlogin, lastlogin) VALUES ('" . $player->getName() . "', '" . hash($this->getPasswordHash(), $password) . "', '" . $player->getAddress() . "', '" . $player->getFirstPlayed() . "', '" . $player->getLastPlayed() . "')";
+    							if($this->getDatabase()->query($query)){
+    								$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
+    								return ServerAuth::SUCCESS;
+    							}else{
+    								return ServerAuth::ERR_GENERIC;
+    							}
+    						}else{
+    							return ServerAuth::ERR_MAX_IP_REACHED;
+    						}
     					}else{
-    						return ServerAuth::ERR_GENERIC;
+    						$query = "INSERT INTO " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata (user, password, ip, firstlogin, lastlogin) VALUES ('" . $player->getName() . "', '" . hash($this->getPasswordHash(), $password) . "', '" . $player->getAddress() . "', '" . $player->getFirstPlayed() . "', '" . $player->getLastPlayed() . "')";
+    						if($this->getDatabase()->query($query)){
+    							$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
+    							return ServerAuth::SUCCESS;
+    						}else{
+    							return ServerAuth::ERR_GENERIC;
+    						}
     					}
     				}else{
     					return ServerAuth::ERR_GENERIC;
     				}
     			}else{
-    				$data = new Config($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"), Config::YAML);
-    				$data->set("password", hash($this->getPasswordHash(), $password));
-    				$data->set("ip", $player->getAddress());
-    				$data->set("firstlogin", $player->getFirstPlayed());
-    				$data->set("lastlogin", $player->getLastPlayed());
-    				$data->save();
-    				$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
-    				return ServerAuth::SUCCESS;
+    				if($cfg["register"]["enable-max-ip"]){
+    					if($this->grep($this->getDataFolder() . "users/", $player->getAddress()) + 1 <= $cfg["register"]["max-ip"]){
+    						$data = new Config($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"), Config::YAML);
+    						$data->set("password", hash($this->getPasswordHash(), $password));
+    						$data->set("ip", $player->getAddress());
+    						$data->set("firstlogin", $player->getFirstPlayed());
+    						$data->set("lastlogin", $player->getLastPlayed());
+    						$data->save();
+    						$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
+    						return ServerAuth::SUCCESS;
+    					}else{
+    						return ServerAuth::ERR_MAX_IP_REACHED;
+    					}
+    				}else{
+    					$data = new Config($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"), Config::YAML);
+    					$data->set("password", hash($this->getPasswordHash(), $password));
+    					$data->set("ip", $player->getAddress());
+    					$data->set("firstlogin", $player->getFirstPlayed());
+    					$data->set("lastlogin", $player->getLastPlayed());
+    					$data->save();
+    					$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
+    					return ServerAuth::SUCCESS;
+    				}
     			}
     		}
     	}
