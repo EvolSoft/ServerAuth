@@ -17,6 +17,8 @@ PHP >= 5.4.0 *(for ServerAuthAccountManager)*<br>
 
 ***This Plugin uses the New API. You can't install it on old versions of PocketMine.***
 
+***To prevent bugs, delete all old plugin data if you are updating ServerAuth.***
+
 ***Features:***
 
 - MySQL support
