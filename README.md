@@ -31,7 +31,7 @@ And more...
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- ServerAuth_v1.00.phar : ServerAuth Plugin + API*<br>
+*- ServerAuth_v1.10.phar : ServerAuth Plugin + API*<br>
 *- ServerAuthAccountManager : An advanced online script to manage ServerAuth accounts*<br>
 *- ServerAuthWebAPI : ServerAuth Web API to use on your own web scripts*<br>
 
@@ -47,7 +47,6 @@ In the ZIP file you will find:<br>
 ***To-Do:***
 
 <dd><i>- Bug fix (if bugs will be found)</i></dd>
-<dd><i>- Limit number of registrations for IP</i></dd>
 
 ##Documentation
 
