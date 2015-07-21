@@ -1,10 +1,10 @@
-#ServerAuth plugin English language file
-#Translation by Flavius12, EvolSoft
++#ServerAuth plugin Russian language file
++#Translation by Pub4Game
 ---
 join-message: "&bНа этом сервере используется авторизация &7- &aServerAuth"
 login:
   message: "&cДля авторизации на сервере /login <пароль>"
-  disabled: "&cАвторизация отлючена на данном сервере"
+  disabled: "&cАвторизация отключена на данном сервере"
   command: "&cИспользуйте: /login <пароль>"
   ip-login: "&9Вы уже вошли на сервер с данного IP"
   login-success: "&aВы успешно вошли в свой аккаунт!"
@@ -13,7 +13,7 @@ login:
 register:
   message: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль>"
   message-conf: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль> <повтор пароля>"
-  disabled: "&cРегистрация отлючена на данном сервере"
+  disabled: "&cРегистрация отключена на данном сервере"
   command: "&cИспользуйте: /register <пароль>"
   command-conf: "&cИспользуйте: /register <пароль> <повтор пароля>"
   register-success: "&aВы успешно зарегистрировались!"
@@ -29,7 +29,7 @@ logout:
   disabled: "&cВыход из аккаунта отключен на данном сервере"
   logout-success: "&aВы успешно вышли из своего аккаунта"
 unregister:
-  disabled: "&cУдаление акканта отключено на сервере"
+  disabled: "&cУдаление аккаунта отключено на сервере"
   login-required: "&cПожалуйста, войдите в свой аккаунт, после чего повторите попытку!"
   command: "&cИспользуйте: /unregister <пароль>"
   unregister-success: "&aВы успешно удалили свой аккаунт!"
