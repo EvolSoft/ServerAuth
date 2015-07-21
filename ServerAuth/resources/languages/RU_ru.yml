@@ -1,0 +1,45 @@
++#ServerAuth plugin Russian language file
++#Translation by Pub4Game
+---
+join-message: "&bНа этом сервере используется авторизация &7- &aServerAuth"
+login:
+  message: "&cДля авторизации на сервере /login <пароль>"
+  disabled: "&cАвторизация отключена на данном сервере"
+  command: "&cИспользуйте: /login <пароль>"
+  ip-login: "&9Вы уже вошли на сервер с данного IP"
+  login-success: "&aВы успешно вошли в свой аккаунт!"
+  login-timeout: "&cВремя ожидания авторизации закончилось"
+  already-login: "&aВы уже вошли в свой аккаунт!"
+register:
+  message: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль>"
+  message-conf: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль> <повтор пароля>"
+  disabled: "&cРегистрация отключена на данном сервере"
+  command: "&cИспользуйте: /register <пароль>"
+  command-conf: "&cИспользуйте: /register <пароль> <повтор пароля>"
+  register-success: "&aВы успешно зарегистрировались!"
+  register-timeout: "&cВремя ожидания регистрации закончилось"
+  already-registered: "&aВы уже зарегистрировали свой аккаунт!"
+changepassword:
+  disabled: "&cИзменение пароля отключено на данном сервере"
+  login-required: "&cПожалуйста, войдите в свой аккаунт, после чего смените пароль!"
+  command: "&cИспользуйте: /changepassword <новый пароль>"
+  command-conf: "&cИспользуйте: /changepassword <новый пароль> <повтор пароля>"
+  changepassword-success: "&aПароль был успешно изменен!"
+logout:
+  disabled: "&cВыход из аккаунта отключен на данном сервере"
+  logout-success: "&aВы успешно вышли из своего аккаунта"
+unregister:
+  disabled: "&cУдаление аккаунта отключено на сервере"
+  login-required: "&cПожалуйста, войдите в свой аккаунт, после чего повторите попытку!"
+  command: "&cИспользуйте: /unregister <пароль>"
+  unregister-success: "&aВы успешно удалили свой аккаунт!"
+errors:
+  generic: "&cПроизошла ошибка"
+  wrong-password: "&cВы ввели неверный пароль!"
+  password-no-match: "&cПароли не совпадают"
+  password-too-short: "&cВаш пароль слишком короткий!"
+  password-too-long: "&cВаш пароль слишком длинный!"
+  user-not-registered: "&cВы не зарегистрированы!"
+  user-not-authenticated: "&cВы не авторизовались!"
+  max-ip-reached: "&cВы достигли максимальное число регистраций с одного IP"
+...
