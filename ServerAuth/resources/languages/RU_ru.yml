@@ -1,5 +1,5 @@
-+#ServerAuth plugin Russian language file
-+#Translation by Pub4Game
+#ServerAuth plugin Russian language file
+#Translation by Pub4Game
 ---
 join-message: "&bНа этом сервере используется авторизация &7- &aServerAuth"
 login:
