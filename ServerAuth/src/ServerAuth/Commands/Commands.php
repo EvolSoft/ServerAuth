@@ -39,7 +39,6 @@ class Commands extends PluginBase implements CommandExecutor {
     					    $sender->sendMessage($this->plugin->translateColors("&", "&a/login &b=>&a Do login"));
     					    $sender->sendMessage($this->plugin->translateColors("&", "&a/logout &b=>&a Do logout"));
     					    $sender->sendMessage($this->plugin->translateColors("&", "&a/register &b=>&a Register an account"));
-    						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth help &b=>&a Show help about this plugin"));
     						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth info &b=>&a Show info about this plugin"));
     						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth reload &b=>&a Reload the config"));
     						$sender->sendMessage($this->plugin->translateColors("&", "&a/unregister &b=>&a Unregister your account"));
@@ -77,15 +76,7 @@ class Commands extends PluginBase implements CommandExecutor {
     				}
     				}else{
     					if($sender->hasPermission("serverauth.help")){
-    						$sender->sendMessage($this->plugin->translateColors("&", "&b=> &aAvailable Commands &b<="));
-    					    $sender->sendMessage($this->plugin->translateColors("&", "&a/changepassword &b=>&a Change the account password"));
-    					    $sender->sendMessage($this->plugin->translateColors("&", "&a/login &b=>&a Do login"));
-    					    $sender->sendMessage($this->plugin->translateColors("&", "&a/logout &b=>&a Do logout"));
-    					    $sender->sendMessage($this->plugin->translateColors("&", "&a/register &b=>&a Register an account"));
-    						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth help &b=>&a Show help about this plugin"));
-    						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth info &b=>&a Show info about this plugin"));
-    						$sender->sendMessage($this->plugin->translateColors("&", "&a/serverauth reload &b=>&a Reload the config"));
-    						$sender->sendMessage($this->plugin->translateColors("&", "&a/unregister &b=>&a Unregister your account"));
+    						$sender->sendMessage($this->plugin->translateColors("&", "&cUse &a/serverauth help &cto show available commands"));
     						break;
     					}else{
     						$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
