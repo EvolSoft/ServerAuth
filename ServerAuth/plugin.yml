@@ -32,15 +32,15 @@ commands:
 
 permissions:
  serverauth:
-  default: op
+  default: true
   description: ServerAuth commands permissions.
   children:
    serverauth.info:
-    default: op
+    default: true
     description: Allows player to read info about ServerAuth.
-   serverauth.reload:
-    default: op
-    description: Allows player to reload ServerAuth.
+   serverauth.help:
+    default: true
+    description: Allows the player to view the help.
    serverauth.register:
     default: true
     description: Allows registering an account.
@@ -56,3 +56,6 @@ permissions:
    serverauth.logout:
     default: true
     description: Allows logging out an account.
+   serverauth.reload:
+    default: op
+    description: Allows player to reload ServerAuth.
