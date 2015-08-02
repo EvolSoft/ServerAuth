@@ -1,6 +1,6 @@
 name: ServerAuth
 main: ServerAuth\ServerAuth
-version: "1.10"
+version: "1.11"
 api: [1.11.0]
 load: STARTUP
 author: EvolSoft
@@ -35,6 +35,9 @@ permissions:
   default: op
   description: ServerAuth commands permissions.
   children:
+   serverauth.help:
+    default: true
+    description: Allows player to show ServerAuth help.
    serverauth.info:
     default: op
     description: Allows player to read info about ServerAuth.

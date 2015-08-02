@@ -1,11 +1,10 @@
 <?php
-error_reporting(0);
 session_start();
 /*
- * ServerAuth Account Manager (v1.0) by EvolSoft
+ * ServerAuth Account Manager (v1.1) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 12/05/2015 01:16 PM (UTC)
+ * Date: 02/08/2015 12:18 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -25,6 +24,9 @@ session_start();
 $cfg_status = file_exists('config.php');
 if($cfg_status){
 	include 'config.php';
+	if(!$config["debug"]){
+		error_reporting(0);
+	}
 }
 ?>
 	<body style='background: #fdfdfd'>

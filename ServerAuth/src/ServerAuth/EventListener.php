@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.10) by EvolSoft
+ * ServerAuth (v1.11) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 14/07/2015 01:11 PM (UTC)
+ * Date: 02/08/2015 11:53 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -57,7 +57,6 @@ class EventListener implements Listener {
     		//IP Authentication
     		if($cfg["IPLogin"]){
     			$playerdata = ServerAuth::getAPI()->getPlayerData($player->getName());
-    			print "IP " . $playerdata["ip"];
     			if($playerdata["ip"] == $player->getAddress()){
     				ServerAuth::getAPI()->authenticatePlayer($player, $playerdata["password"], false);
     				$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["ip-login"]));
@@ -69,7 +68,11 @@ class EventListener implements Listener {
     		}
     	}
     	if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) && ServerAuth::getAPI()->areRegisterMessagesEnabled()){
-    		$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message"]));
+    		if($cfg["register"]["password-confirm-required"]){
+    			$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message-conf"]));
+    		}else{
+    			$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message"]));
+    		}
     	}else{
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($player) && ServerAuth::getAPI()->areLoginMessagesEnabled()){
     			$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["message"]));

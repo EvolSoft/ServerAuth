@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ServerAuth (v1.10) by EvolSoft
+ * ServerAuth (v1.11) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 14/05/2015 04:45 AM (UTC)
@@ -38,7 +38,11 @@ class MessageTask extends PluginTask {
     			$this->players[strtolower($player->getName())]["kick"] += 1;
     			if($this->players[strtolower($player->getName())]["interval"] >= $cfg["register"]["message-interval"]){
     				if(ServerAuth::getAPI()->areRegisterMessagesEnabled()){
-    					$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message"]));
+    					if($cfg["register"]["password-confirm-required"]){
+    						$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message-conf"]));
+    					}else{
+    						$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["register"]["message"]));
+    					}
     				}
     				$this->players[strtolower($player->getName())]["interval"] = 0;
     			}

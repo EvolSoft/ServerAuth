@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.10) by EvolSoft
+ * ServerAuth (v1.11) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 14/07/2015 12:53 AM (UTC)
+ * Date: 02/08/2015 11:59 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -27,7 +27,7 @@ class ServerAuth extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.10";
+	const VERSION = "1.11";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -251,14 +251,11 @@ class ServerAuth extends PluginBase {
 	    @mkdir($this->getDataFolder() . "languages/");
         $this->saveDefaultConfig();
         $this->cfg = $this->getConfig()->getAll();
-        foreach($this->getResources() as $fullfilename){
-        	$root = substr($fullfilename, strrpos($fullfilename, '/') + 1);
-        	$dir = explode("\\", $root)[1];
-        	if($dir == "languages"){
-        		$filename = substr($root, strrpos($root, '\\') + 1);
-        		if(substr($filename, strrpos($filename, '.') + 1) == "yml"){
-        			$this->saveResource($dir . "/" . $filename);
-        		}
+        foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->getFile() . "resources/languages")) as $resource){
+        	$resource = str_replace("\\", "/", $resource);
+        	$resarr = explode("/", $resource);
+        	if(substr($resarr[count($resarr) - 1], strrpos($resarr[count($resarr) - 1], '.') + 1) == "yml"){
+        		$this->saveResource("languages/" . $resarr[count($resarr) - 1]);
         	}
         }
         $this->getCommand("serverauth")->setExecutor(new Commands\Commands($this));
@@ -721,9 +718,9 @@ class ServerAuth extends PluginBase {
     public function changePlayerPassword(Player $player, $new_password){
     	$cfg = $this->getConfig()->getAll();
     	if($this->isPlayerRegistered($player->getName())){
-    		if(strlen($new_password) <= $cfg["minPasswordLength"]){
+    		if(strlen($new_password) < $cfg["minPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_SHORT;
-    		}elseif(strlen($new_password) >= $cfg["maxPasswordLength"]){
+    		}elseif(strlen($new_password) > $cfg["maxPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_LONG;
     		}else{
     			if($this->getDataProvider()){

@@ -5,6 +5,8 @@ $config["dark-theme"] = true;
 $config["title"] = "ServerAuth Account Manager";
 //Set navbar link
 $config["title_link"] = "index.php";
+//Enable debug
+$config["debug"] = false;
 //Enable this function to allow people to register their accounts from here
 $config["allow-register"] = true;
 //Enable this function to allow people to show their account infos
