@@ -24,7 +24,6 @@ use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemConsumeEvent;
-use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
@@ -172,14 +171,6 @@ class EventListener implements Listener {
     }
     
     public function onDropItem(PlayerDropItemEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
-    
-    public function onItemHeld(PlayerItemHeldEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
     		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
