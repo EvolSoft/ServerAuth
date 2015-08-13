@@ -28,6 +28,7 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -119,6 +120,12 @@ class EventListener implements Listener {
     				}
     			}
     		}
+    	}
+    }
+    
+   public function onEntityDamage(EntityDamageEvent $event){
+	if(ServerAuth::getAPI()->isPlayerRegistered($event->getEntity()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getEntity())){
+		$event->setCancelled(true);
     	}
     }
     
