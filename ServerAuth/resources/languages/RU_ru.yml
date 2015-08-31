@@ -2,6 +2,12 @@
 #Translation by Pub4Game
 ---
 join-message: "&bНа этом сервере используется авторизация &7- &aServerAuth"
+single-auth: "&cИгрок с таким ником уже играет на сервере!"
+mysql-success: "&aServerAuth успешно подключен к базе данных MySQL!"
+mysql-restored: "&aMySQL соединение восстановлено!"
+mysql-fail: "&cServerAuth не может подключиться к базе данных MySQL. Все данные будут сохранены локально. Ошибка: {MYSQL_ERROR}" 
+config-reloaded: "&aКонфигурация плагина перезагружена!"
+operation-cancelled: "&cДействие отменено"
 login:
   message: "&cДля авторизации на сервере /login <пароль>"
   disabled: "&cАвторизация отключена на данном сервере"
@@ -10,6 +16,7 @@ login:
   login-success: "&aВы успешно вошли в свой аккаунт!"
   login-timeout: "&cВремя ожидания авторизации закончилось"
   already-login: "&aВы уже вошли в свой аккаунт!"
+  too-many-attempts: "&cВы делаете слишком много попыток входа!"
 register:
   message: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль>"
   message-conf: "&cПожалуйста, зарегистрируйтесь на сервере /register <пароль> <повтор пароля>"
@@ -32,7 +39,9 @@ unregister:
   disabled: "&cУдаление аккаунта отключено на сервере"
   login-required: "&cПожалуйста, войдите в свой аккаунт, после чего повторите попытку!"
   command: "&cИспользуйте: /unregister <пароль>"
+  command-cons: "&cИспользуйте: /unregister <ник>"
   unregister-success: "&aВы успешно удалили свой аккаунт!"
+  unregister-success-3rd: "&aВы успешно удалили аккаунт игрока!"
 errors:
   generic: "&cПроизошла ошибка"
   wrong-password: "&cВы ввели неверный пароль!"
@@ -40,6 +49,7 @@ errors:
   password-too-short: "&cВаш пароль слишком короткий!"
   password-too-long: "&cВаш пароль слишком длинный!"
   user-not-registered: "&cВы не зарегистрированы!"
+  user-not-registered-3rd: "&cИгрок с таким ником не зарегистрирован!"
   user-not-authenticated: "&cВы не авторизовались!"
   max-ip-reached: "&cВы достигли максимальное число регистраций с одного IP"
 ...
