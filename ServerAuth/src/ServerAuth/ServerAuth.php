@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v2.00) by EvolSoft
+ * ServerAuth (v2.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 31/08/2015 02:50 PM (UTC)
+ * Date: 31/08/2015 05:26 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -28,7 +28,7 @@ class ServerAuth extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "2.00";
+	const VERSION = "2.10";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";

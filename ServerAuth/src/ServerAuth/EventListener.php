@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v2.00) by EvolSoft
+ * ServerAuth (v2.10) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 31/08/2015 01:25 PM (UTC)
+ * Date: 31/08/2015 05:39 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -33,6 +33,7 @@ use pocketmine\Player;
 use pocketmine\Server;
 
 use ServerAuth\ServerAuth;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 
 class EventListener implements Listener {
 	
@@ -54,10 +55,8 @@ class EventListener implements Listener {
 				}
 			}
 			if($count > 1){
-				if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-					$player->close($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
-					$event->setCancelled(true);
-				}
+				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
+				$event->setCancelled(true);
 			}
 		}
 	}
@@ -169,8 +168,19 @@ class EventListener implements Listener {
     }
     
     public function onEntityDamage(EntityDamageEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
+    		$player = $event->getEntity();
+    		if($player instanceof Player){
+    			if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+    				$event->setCancelled(true);
+    			}
+    		}
+    	if($event instanceof EntityDamageByEntityEvent){
+    		$damager = $event->getDamager();
+    		if($damager instanceof Player){
+    			if(!ServerAuth::getAPI()->isPlayerRegistered($damager->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($damager)){
+    				$event->setCancelled(true);
+    			}
+    		}
     	}
     }
     
