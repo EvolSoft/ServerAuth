@@ -55,7 +55,7 @@ class EventListener implements Listener {
 			}
 			if($count > 1){
 				if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-					$player->close($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
+					$player->close("",$this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
 					$event->setCancelled(true);
 				}
 			}
