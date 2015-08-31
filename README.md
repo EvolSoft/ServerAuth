@@ -2,6 +2,7 @@
 # ServerAuth
 
 [![Join the chat at https://gitter.im/EvolSoft/ServerAuth](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/EvolSoft/ServerAuth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An advanced authentication plugin for PocketMine
 
 ## Category
