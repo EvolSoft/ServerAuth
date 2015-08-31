@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 31/08/2015 10:31 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -19,6 +19,7 @@ use pocketmine\Server;
 use pocketmine\plugin\PluginBase;
 
 use ServerAuth\ServerAuth;
+use ServerAuth\Tasks\MySQLTask;
 
 class Commands extends PluginBase implements CommandExecutor {
 
@@ -32,7 +33,7 @@ class Commands extends PluginBase implements CommandExecutor {
     		case "serverauth":
     			if(isset($args[0])){
     				$args[0] = strtolower($args[0]);
-    				if($args[0]=="help"){
+    				if($args[0] == "help"){
     					if($sender->hasPermission("serverauth.help")){
     					    $sender->sendMessage($this->plugin->translateColors("&", "&b=> &aAvailable Commands &b<="));
     					    $sender->sendMessage($this->plugin->translateColors("&", "&a/changepassword &b=>&a Change the account password"));
@@ -60,7 +61,24 @@ class Commands extends PluginBase implements CommandExecutor {
     				}elseif($args[0]=="reload"){
     					if($sender->hasPermission("serverauth.reload")){
     						$this->plugin->reloadConfig();
-    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . "&aConfiguration Reloaded."));
+    						$this->cfg = $this->plugin->getConfig()->getAll();
+    						//Restart MySQL
+    						ServerAuth::getAPI()->task->cancel();
+    						$this->plugin->task = $this->plugin->getServer()->getScheduler()->scheduleRepeatingTask(new MySQLTask($this->plugin), 20);
+    						$this->plugin->mysql = false;
+    						//Check MySQL
+    						if($this->cfg["use-mysql"] == true){
+    							$check = $this->plugin->checkDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"]);
+    							if($check[0]){
+    								$this->plugin->initializeDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"], $this->cfg["mysql"]["database"], $this->cfg["mysql"]["table_prefix"]);
+    								Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-success"]));
+    								$this->mysql = true;
+    							}else{
+    								Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->replaceArrays(ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-fail"], array("MYSQL_ERROR" => $check[1]))));
+    							}
+    						}
+    						//End MySQL Restart
+    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["config-reloaded"]));
     				        break;
     					}else{
     						$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));

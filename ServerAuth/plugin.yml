@@ -1,6 +1,6 @@
 name: ServerAuth
 main: ServerAuth\ServerAuth
-version: "1.11"
+version: "2.00"
 api: [1.11.0]
 load: STARTUP
 author: EvolSoft
@@ -11,7 +11,6 @@ commands:
  serverauth:
   aliases: [sa, sauth, auth]
   description: ServerAuth Commands.
-  permission: serverauth
  register:
   aliases: [reg]
   description: Allows registering an account

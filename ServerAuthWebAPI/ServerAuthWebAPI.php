@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft 
+ * ServerAuth (v2.00) by EvolSoft 
  * Developer: EvolSoft (Flavius12) 
  * Website: http://www.evolsoft.tk 
- * Date: 14/05/2015 01:37 PM (UTC) 
+ * Date: 31/08/2015 02:54 PM (UTC) 
  * Copyright & License: (C) 2015 EvolSoft 
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -12,10 +12,10 @@
 class ServerAuthWebAPI {
 	
 	/** @var string WEBAPI_VERSION Current ServerAuthWebAPI version */
-	const WEBAPI_VERSION = "1.0";
+	const WEBAPI_VERSION = "2.0";
 	
 	/** @var string CURRENT_API Current ServerAuth plugin API version */
-	const CURRENT_API = "1.0.0";
+	const CURRENT_API = "1.1.0";
 	
 	/** @var int SUCCESS Success */
 	const SUCCESS = 1;

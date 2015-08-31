@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 31/08/2015 10:27 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */

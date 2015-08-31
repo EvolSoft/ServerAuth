@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 14/05/2015 04:45 AM (UTC)
+ * Date: 30/08/2015 11:29 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -33,7 +33,7 @@ class MessageTask extends PluginTask {
     				$this->players[strtolower($player->getName())]["kick"] = 0;
     			}
     		}
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName())){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) && isset($this->players[strtolower($player->getName())])){
     			$this->players[strtolower($player->getName())]["interval"] += 1;
     			$this->players[strtolower($player->getName())]["kick"] += 1;
     			if($this->players[strtolower($player->getName())]["interval"] >= $cfg["register"]["message-interval"]){
@@ -51,7 +51,7 @@ class MessageTask extends PluginTask {
     				unset($this->players[strtolower($player->getName())]);
     			}
     		}else{
-    			if(!$this->plugin->isPlayerAuthenticated($player)){
+    			if(!ServerAuth::getAPI()->isPlayerAuthenticated($player) && isset($this->players[strtolower($player->getName())])){
     				$this->players[strtolower($player->getName())]["interval"] += 1;
     				$this->players[strtolower($player->getName())]["kick"] += 1;
     				if($this->players[strtolower($player->getName())]["interval"] >= $cfg["login"]["message-interval"]){
@@ -64,7 +64,7 @@ class MessageTask extends PluginTask {
     					$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["login-timeout"]));
     					unset($this->players[strtolower($player->getName())]);
     				}
-    			}else{
+    			}elseif(isset($this->players[strtolower($player->getName())])){
     				unset($this->players[strtolower($player->getName())]);
     			}
     		}

@@ -2,6 +2,12 @@
 #Translation by Flavius12, EvolSoft
 ---
 join-message: "&bSistema di autenticazione fornito da &aServerAuth"
+single-auth: "&cUn player con questo nickname è già autenticato!"
+mysql-success: "&aServerAuth connesso al database MySQL con successo!"
+mysql-restored: "&aConnessione MySQL ripristinata!"
+mysql-fail: "&cServerAuth non è riuscito a connettersi al database MySQL. I dati verranno salvati localmente. Errore: {MYSQL_ERROR}"
+config-reloaded: "&aConfigurazione ricaricata!"
+operation-cancelled: "&cOperazione cancellata"
 login:
   message: "&cEsegui il login con /login <password>"
   disabled: "&cIl login è disabilitato in questo server"
@@ -10,6 +16,7 @@ login:
   login-success: "&aHai eseguito il login!"
   login-timeout: "&cTempo di login scaduto"
   already-login: "&aSei già autenticato"
+  too-many-attempts: "&cTroppi tentativi di login!"
 register: 
   message: "&cRegistrati con /register <password>"
   message-conf: "&cRegistrati con /register <password> <confermaPassword>"
@@ -32,7 +39,9 @@ unregister:
   disabled: "&cLa cancellazione dell'account è disabilitata in questo server"
   login-required: "&cDevi essere autenticato per cancellare l'account"
   command: "&cUso: /unregister <password>"
+  command-cons: "&cUso: /unregister <player>"
   unregister-success: "&aIl tuo account è stato cancellato!"
+  unregister-success-3rd: "&aL'account del player è stato cancellato!"
 errors:
   generic: "&cSi è verificato un errore"
   wrong-password: "&cPassword errata"
@@ -40,6 +49,7 @@ errors:
   password-too-short: "&cLa password è troppo corta"
   password-too-long: "&cLa password è troppo lunga"
   user-not-registered: "&cNon sei registrato"
+  user-not-registered-3rd: "&cIl player non è registrato"
   user-not-authenticated: "&cNon sei autenticato"
   max-ip-reached: "&cHai raggiunto il numero massimo di registrazioni per IP"
 ...

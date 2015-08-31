@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 14/05/2015 05:19 PM (UTC)
@@ -31,14 +31,14 @@ class MySQLTask extends PluginTask {
     		if(ServerAuth::getAPI()->getDatabase() == false){
     			$check = ServerAuth::getAPI()->checkDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"]);
     			if($check[0]){
-    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . "&aMySQL connection restored!"));
+    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-restored"]));
     				ServerAuth::getAPI()->initializeDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"], $cfg["mysql"]["database"], $cfg["mysql"]["table_prefix"]);
     				ServerAuth::getAPI()->mysql = true;
     			}
     		}elseif(!ServerAuth::getAPI()->getDatabase()->ping()){
     			$check = ServerAuth::getAPI()->checkDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"]);
     			if($check[0]){
-    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . "&aMySQL connection restored!"));
+    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-restored"]));
     				ServerAuth::getAPI()->initializeDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"], $cfg["mysql"]["database"], $cfg["mysql"]["table_prefix"]);
     				ServerAuth::getAPI()->mysql = true;
     			}

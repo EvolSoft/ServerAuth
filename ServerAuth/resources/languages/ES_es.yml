@@ -2,6 +2,12 @@
 #Translation by TonyDroidd
 ---
 join-message: "&bSistema de autenticación proporcionado por &aServerAuth &bplugin"
+single-auth: "&cA player with this nickname is already authenticated!"
+mysql-success: "&aServerAuth successfully connected to the MySQL database!"
+mysql-restored: "&aMySQL connection restored!"
+mysql-fail: "&cServerAuth can't connect to the MySQL database. Data will be saved locally. Error: {MYSQL_ERROR}" 
+config-reloaded: "&aConfiguration reloaded!"
+operation-cancelled: "&cOperation cancelled"
 login:
   message: "&cPor favor, inicia sesion usando /login <contraseña>"
   disabled: "&cAutenticacion esta desactivada en este servidor"
@@ -10,6 +16,7 @@ login:
   login-success: "&aHaz iniciado sesion!"
   login-timeout: "&cEl tiempo de autenticacion ha expirado!"
   already-login: "&aYa haz iniciado sesión!"
+  too-many-attempts: "&cDemasiados intentos de acceso!"
 register: 
   message: "&cPor favor, registrate usando /register <contraseña>"
   message-conf: "&cPor favor, registrate con /register <contraseña> <confirmarContraseña>"
@@ -32,7 +39,9 @@ unregister:
   disabled: "&cNo tienes permisos de desregistrarte"
   login-required: "&cNecesitas iniciar sesion para desregistrarte"
   command: "&cUsa: /unregister <contraseña>"
+  command-cons: "&cUsage: /unregister <player>"
   unregister-success: "&aTe haz desregistrado!"
+  unregister-success-3rd: "&aThe player is now unregistered!"
 errors:
   generic: "&cHa ocurrido un error desconocido!"
   wrong-password: "&cLa contraseña incorrecta"
@@ -40,6 +49,7 @@ errors:
   password-too-short: "&cLa contraseña es muy corta"
   password-too-long: "&cLa contraseña es muy larga!"
   user-not-registered: "&cNo estas registrado en este servidor"
+  user-not-registered-3rd: "&cThe player isn't registered"
   user-not-authenticated: "&cNo haz iniciado sesion!"
   max-ip-reached: "&cHas alcanzado el número máximo de inscripciones para ip"
 ...

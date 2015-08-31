@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 02:20 PM (UTC)
+ * Date: 31/08/2015 12:49 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -13,25 +13,26 @@ namespace ServerAuth\Events;
 
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
+use pocketmine\event\Cancellable;
 
-class ServerAuthUnregisterEvent extends PluginEvent {
+class ServerAuthUnregisterEvent extends PluginEvent implements Cancellable {
 
 	public static $handlerList = null;
 
-	/** @var Player $player */
+	/** @var Player|OfflinePlayer $player */
 	private $player;
 
 	/**
 	 * @param Player $player
 	 */
-	public function __construct(Player $player){
+	public function __construct($player){
 		$this->player = $player;
 	}
 
 	/**
 	 * Get event player
 	 *
-	 * @return Player
+	 * @return Player|OfflinePlayer
 	 */
 	public function getPlayer(){
 		return $this->player;

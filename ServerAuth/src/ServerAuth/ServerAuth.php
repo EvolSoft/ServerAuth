@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 02/08/2015 11:59 AM (UTC)
+ * Date: 31/08/2015 02:50 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -18,6 +18,7 @@ use pocketmine\utils\TextFormat;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\Player;
+use pocketmine\OfflinePlayer;
 
 class ServerAuth extends PluginBase {
 	
@@ -27,7 +28,7 @@ class ServerAuth extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "1.11";
+	const VERSION = "2.00";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -69,8 +70,20 @@ class ServerAuth extends PluginBase {
 	/** @var int ERR_GENERIC A generic error */
 	const ERR_GENERIC = 9;
 	
+	/** @var int CANCELLED Operation cancelled */
+	const CANCELLED = 10;
+	
+	/** @var int TOO_MANY_ATTEMPTS Too many failed login attempts */
+	const TOO_MANY_ATTEMPTS = 11;
+	
 	/** @var array $auth_users Current authenticated users */
 	private $auth_users = array();
+	
+	/** @var array $auth_attempts Authentication attempts for each username */
+	private $auth_attempts = array();
+	
+	/** @var Task $task MySQL task*/
+	public $task;
 
     /** @var boolean $mysql Use mysql */
     public $mysql;
@@ -136,6 +149,21 @@ class ServerAuth extends PluginBase {
     	$message = str_replace($symbol."o", TextFormat::ITALIC, $message);
     	$message = str_replace($symbol."r", TextFormat::RESET, $message);
     
+    	return $message;
+    }
+    
+    /**
+     * Replace arrays in message
+     *
+     * @param string $message The message
+     * @param array $array The values to replace
+     *
+     * @return string the message
+     */
+    public function replaceArrays($message, $array){
+    	foreach($array as $key => $value){
+    		$message = str_replace("{" . strtoupper($key) . "}", $value, $message);
+    	}
     	return $message;
     }
     
@@ -249,15 +277,16 @@ class ServerAuth extends PluginBase {
 	    @mkdir($this->getDataFolder());
 	    @mkdir($this->getDataFolder() . "users/");
 	    @mkdir($this->getDataFolder() . "languages/");
+	    //Save Languages
+	    foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->getFile() . "resources/languages")) as $resource){
+	    	$resource = str_replace("\\", "/", $resource);
+	    	$resarr = explode("/", $resource);
+	    	if(substr($resarr[count($resarr) - 1], strrpos($resarr[count($resarr) - 1], '.') + 1) == "yml"){
+	    		$this->saveResource("languages/" . $resarr[count($resarr) - 1]);
+	    	}
+	    }
         $this->saveDefaultConfig();
         $this->cfg = $this->getConfig()->getAll();
-        foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->getFile() . "resources/languages")) as $resource){
-        	$resource = str_replace("\\", "/", $resource);
-        	$resarr = explode("/", $resource);
-        	if(substr($resarr[count($resarr) - 1], strrpos($resarr[count($resarr) - 1], '.') + 1) == "yml"){
-        		$this->saveResource("languages/" . $resarr[count($resarr) - 1]);
-        	}
-        }
         $this->getCommand("serverauth")->setExecutor(new Commands\Commands($this));
         $this->getCommand("register")->setExecutor(new Commands\Register($this));
         $this->getCommand("login")->setExecutor(new Commands\Login($this));
@@ -266,17 +295,17 @@ class ServerAuth extends PluginBase {
         $this->getCommand("unregister")->setExecutor(new Commands\Unregister($this));
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MessageTask($this), 20);
-        $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MySQLTask($this), 20);
+        $this->task = $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MySQLTask($this), 20);
         $this->mysql = false;
         //Check MySQL
         if($this->cfg["use-mysql"] == true){
         	$check = $this->checkDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"]);
         	if($check[0]){
         		$this->initializeDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"], $this->cfg["mysql"]["database"], $this->cfg["mysql"]["table_prefix"]);
-        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . "&aServerAuth successfully connected to the MySQL database!"));
+        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-success"]));
         		$this->mysql = true;
         	}else{
-        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . "&cServerAuth can't connect to the MySQL database. Data will be saved locally. Error: " . $check[1]));
+        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->replaceArrays(ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-fail"], array("MYSQL_ERROR" => $check[1]))));
         	}
         }
     }
@@ -284,7 +313,7 @@ class ServerAuth extends PluginBase {
     //API Functions
     
     /** @var string API_VERSION ServerAuth API version */
-    const API_VERSION = "1.0.0";
+    const API_VERSION = "1.1.0";
     
     /**
      * Get ServerAuth version
@@ -432,7 +461,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return \pocketmine\utils\Config
      */
-    private function getLanguage($language){
+    public function getLanguage($language){
     	if(file_exists($this->getDataFolder() . "languages/" . $language . ".yml")){
     		return new Config($this->getDataFolder() . "languages/" . $language . ".yml", Config::YAML);
     	}elseif(file_exists($this->getDataFolder() . "languages/EN_en.yml")){
@@ -486,7 +515,7 @@ class ServerAuth extends PluginBase {
      * @return boolean
      */
     public function isPlayerAuthenticated(Player $player){
-    	return isset($this->auth_users[array_search(strtolower($player->getName()), $this->auth_users)]);
+    	return isset($this->auth_users[strtolower($player->getName())]);
     }
     
     /**
@@ -507,6 +536,10 @@ class ServerAuth extends PluginBase {
     		}elseif(strlen($password) >= $cfg["maxPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_LONG;
     		}else{
+    			$this->getServer()->getPluginManager()->callEvent($event = new Events\ServerAuthRegisterEvent($player, $password));
+    			if($event->isCancelled()){
+    				return ServerAuth::CANCELLED;
+    			}
     			if($this->getDataProvider()){
     				//Check MySQL connection
     				if($this->getDatabase() && $this->getDatabase()->ping()){
@@ -514,7 +547,6 @@ class ServerAuth extends PluginBase {
     						if(\mysqli_num_rows($this->getDatabase()->query("SELECT user, password, ip, firstlogin, lastlogin FROM " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata WHERE ip='" . $player->getAddress() . "'")) + 1 <= $cfg["register"]["max-ip"]){
     							$query = "INSERT INTO " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata (user, password, ip, firstlogin, lastlogin) VALUES ('" . $player->getName() . "', '" . hash($this->getPasswordHash(), $password) . "', '" . $player->getAddress() . "', '" . $player->getFirstPlayed() . "', '" . $player->getLastPlayed() . "')";
     							if($this->getDatabase()->query($query)){
-    								$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
     								return ServerAuth::SUCCESS;
     							}else{
     								return ServerAuth::ERR_GENERIC;
@@ -525,7 +557,6 @@ class ServerAuth extends PluginBase {
     					}else{
     						$query = "INSERT INTO " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata (user, password, ip, firstlogin, lastlogin) VALUES ('" . $player->getName() . "', '" . hash($this->getPasswordHash(), $password) . "', '" . $player->getAddress() . "', '" . $player->getFirstPlayed() . "', '" . $player->getLastPlayed() . "')";
     						if($this->getDatabase()->query($query)){
-    							$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
     							return ServerAuth::SUCCESS;
     						}else{
     							return ServerAuth::ERR_GENERIC;
@@ -543,7 +574,6 @@ class ServerAuth extends PluginBase {
     						$data->set("firstlogin", $player->getFirstPlayed());
     						$data->set("lastlogin", $player->getLastPlayed());
     						$data->save();
-    						$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
     						return ServerAuth::SUCCESS;
     					}else{
     						return ServerAuth::ERR_MAX_IP_REACHED;
@@ -555,7 +585,6 @@ class ServerAuth extends PluginBase {
     					$data->set("firstlogin", $player->getFirstPlayed());
     					$data->set("lastlogin", $player->getLastPlayed());
     					$data->save();
-    					$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthRegisterEvent($player, $password));
     					return ServerAuth::SUCCESS;
     				}
     			}
@@ -566,38 +595,44 @@ class ServerAuth extends PluginBase {
 	/**
 	 * Unregister a player
 	 * 
-	 * @param Player $player
+	 * @param Player|OfflinePlayer $player
 	 * 
 	 * @return int|boolean true on SUCCESS or false if the player is not registered, otherwise the current error
 	 */
-    public function unregisterPlayer(Player $player){
-    	if($this->isPlayerRegistered($player->getName())){
-    		if($this->getDataProvider()){
-    			//Check MySQL connection
-    			if($this->getDatabase() && $this->getDatabase()->ping()){
-    				$query = "DELETE FROM " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata WHERE user='" . strtolower($player->getName()) . "'";
-    				if($this->getDatabase()->query($query)){
-    					//Restore default messages
-    					ServerAuth::getAPI()->enableLoginMessages(true);
-    					ServerAuth::getAPI()->enableRegisterMessages(true);
-    					$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthUnregisterEvent($player));
-    					return ServerAuth::SUCCESS;
+    public function unregisterPlayer($player){
+    	if($player instanceof Player || $player instanceof OfflinePlayer){
+    		if($this->isPlayerRegistered($player->getName())){
+    			$this->getServer()->getPluginManager()->callEvent($event = new Events\ServerAuthUnregisterEvent($player));
+    			if($event->isCancelled()){
+    				return ServerAuth::CANCELLED;
+    			}
+    			if($this->getDataProvider()){
+    				//Check MySQL connection
+    				if($this->getDatabase() && $this->getDatabase()->ping()){
+    					$query = "DELETE FROM " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata WHERE user='" . strtolower($player->getName()) . "'";
+    					if($this->getDatabase()->query($query)){
+    						//Restore default messages
+    						ServerAuth::getAPI()->enableLoginMessages(true);
+    						ServerAuth::getAPI()->enableRegisterMessages(true);
+    						return ServerAuth::SUCCESS;
+    					}else{
+    						return ServerAuth::ERR_GENERIC;
+    					}
     				}else{
     					return ServerAuth::ERR_GENERIC;
     				}
     			}else{
-    				return ServerAuth::ERR_GENERIC;
+    				@unlink($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"));
+    				//Restore default messages
+    				ServerAuth::getAPI()->enableLoginMessages(true);
+    				ServerAuth::getAPI()->enableRegisterMessages(true);
+    				return ServerAuth::SUCCESS;
     			}
     		}else{
-    			@unlink($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"));
-    			//Restore default messages
-    			ServerAuth::getAPI()->enableLoginMessages(true);
-    			ServerAuth::getAPI()->enableRegisterMessages(true);
-    			$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthUnregisterEvent($player));
-    			return ServerAuth::SUCCESS;
+    			return ServerAuth::ERR_USER_NOT_REGISTERED;
     		}
     	}else{
-    		return $this->isPlayerRegistered($player->getName());
+    		return -1;
     	}
     }
     
@@ -616,6 +651,11 @@ class ServerAuth extends PluginBase {
     	}
     	if($this->isPlayerRegistered($player->getName())){
     		if(!$this->isPlayerAuthenticated($player)){
+    			$this->getServer()->getPluginManager()->callEvent($event = new Events\ServerAuthAuthenticateEvent($player));
+    			if($event->isCancelled()){
+    				return ServerAuth::CANCELLED;
+    			}
+    			$cfg = $this->getConfig()->getAll();
     			if($this->getDataProvider()){
     				//Check MySQL connection
     				if($this->getDatabase() && $this->getDatabase()->ping()){
@@ -625,13 +665,27 @@ class ServerAuth extends PluginBase {
     						if($password == $db_password){
     							$query = "UPDATE " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata SET ip='" . $player->getAddress() . "', lastlogin='" . $player->getLastPlayed() . "' WHERE user='" . strtolower($player->getName()) . "'";
     							if($this->getDatabase()->query($query)){
-    								array_push($this->auth_users, strtolower($player->getName()));
-    								$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthAuthenticateEvent($player));
+    								$this->auth_users[strtolower($player->getName())] = "";
+    								if($cfg['login']['enable-failed-logins-kick'] && isset($this->auth_attempts[strtolower($player->getName())])){
+    									unset($this->auth_attempts[strtolower($player->getName())]);
+    								}
     								return ServerAuth::SUCCESS;
     							}else{
     								return ServerAuth::ERR_GENERIC;
     							}
     						}else{
+    							if($cfg['login']['enable-failed-logins-kick']){
+    								if(isset($this->auth_attempts[strtolower($player->getName())])){
+    									$this->auth_attempts[strtolower($player->getName())]++;
+    								}else{
+    									$this->auth_attempts[strtolower($player->getName())] = 1;
+    								}
+    								if($this->auth_attempts[strtolower($player->getName())] >= $cfg['login']['max-login-attempts']){
+    									$player->close("", $this->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["too-many-attempts"]));
+    									unset($this->auth_attempts[strtolower($player->getName())]);
+    									return ServerAuth::TOO_MANY_ATTEMPTS;
+    								}
+    							}
     							return ServerAuth::ERR_WRONG_PASSWORD;
     						}
     					}else{
@@ -646,8 +700,7 @@ class ServerAuth extends PluginBase {
     					$data->set("ip", $player->getAddress());
     					$data->set("lastlogin", $player->getLastPlayed());
     					$data->save();
-    					array_push($this->auth_users, strtolower($player->getName()));
-    					$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthAuthenticateEvent($player));
+    					$this->auth_users[strtolower($player->getName())] = "";
     					return ServerAuth::SUCCESS;
     				}else{
     					return ServerAuth::ERR_WRONG_PASSWORD;
@@ -671,6 +724,10 @@ class ServerAuth extends PluginBase {
     public function deauthenticatePlayer(Player $player){
     	if($this->isPlayerRegistered($player->getName())){
     		if($this->isPlayerAuthenticated($player)){
+    			$this->getServer()->getPluginManager()->callEvent($event = new Events\ServerAuthDeauthenticateEvent($player));
+    			if($event->isCancelled()){
+    				return ServerAuth::CANCELLED;
+    			}
     			if($this->getDataProvider()){
     				//Check MySQL connection
     				if($this->getDatabase() && $this->getDatabase()->ping()){
@@ -678,9 +735,8 @@ class ServerAuth extends PluginBase {
     					//Restore default messages
     					ServerAuth::getAPI()->enableLoginMessages(true);
     					ServerAuth::getAPI()->enableRegisterMessages(true);
-    					unset($this->auth_users[array_search(strtolower($player->getName()), $this->auth_users)]);
+    					unset($this->auth_users[strtolower($player->getName())]);
     					if($this->getDatabase()->query($query)){
-    						$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthDeauthenticateEvent($player));
     						return ServerAuth::SUCCESS;
     					}else{
     						return ServerAuth::ERR_GENERIC;
@@ -695,8 +751,7 @@ class ServerAuth extends PluginBase {
     				//Restore default messages
     				ServerAuth::getAPI()->enableLoginMessages(true);
     				ServerAuth::getAPI()->enableRegisterMessages(true);
-    				unset($this->auth_users[array_search(strtolower($player->getName()), $this->auth_users)]);
-    				$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthDeauthenticateEvent($player));
+    				unset($this->auth_users[strtolower($player->getName())]);
     				return ServerAuth::SUCCESS;
     			}
     		}else{
@@ -723,12 +778,15 @@ class ServerAuth extends PluginBase {
     		}elseif(strlen($new_password) > $cfg["maxPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_LONG;
     		}else{
+    			$this->getServer()->getPluginManager()->callEvent($event = new Events\ServerAuthPasswordChangeEvent($player, $new_password));
+    			if($event->isCancelled()){
+    				return ServerAuth::CANCELLED;
+    			}
     			if($this->getDataProvider()){
     				//Check MySQL connection
     				if($this->getDatabase() && $this->getDatabase()->ping()){
     					$query = "UPDATE " . $this->getDatabaseConfig()["table_prefix"] . "serverauthdata SET password='" . hash($this->getPasswordHash(), $new_password) . "' WHERE user='" . strtolower($player->getName()) . "'";
     					if($this->getDatabase()->query($query)){
-    						$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthPasswordChangeEvent($player, $new_password));
     						return ServerAuth::SUCCESS;
     					}else{
     						return ServerAuth::ERR_GENERIC;
@@ -740,7 +798,6 @@ class ServerAuth extends PluginBase {
     				$data = new Config($this->getDataFolder() . "users/" . strtolower($player->getName() . ".yml"), Config::YAML);
     				$data->set("password", hash($this->getPasswordHash(), $new_password));
     				$data->save();
-    				$this->getServer()->getPluginManager()->callEvent(new Events\ServerAuthPasswordChangeEvent($player, $new_password));
     				return ServerAuth::SUCCESS;
     			}	
     		}

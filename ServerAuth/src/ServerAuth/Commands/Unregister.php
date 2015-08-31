@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 10/05/2015 12:14 AM (UTC)
+ * Date: 31/08/2015 11:09 AM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -48,6 +48,10 @@ class Unregister implements CommandExecutor {
     										$status = ServerAuth::getAPI()->unregisterPlayer($sender);
     										if($status == ServerAuth::SUCCESS){
     											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["unregister"]["unregister-success"]));
+    										}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
+    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-not-registered"]));
+    										}elseif($status == ServerAuth::CANCELLED){
+    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["operation-cancelled"]));
     										}else{
     											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
     										}
@@ -60,7 +64,11 @@ class Unregister implements CommandExecutor {
     							}else{
     								$status = ServerAuth::getAPI()->unregisterPlayer($sender);
     								if($status == ServerAuth::SUCCESS){
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-not-authenticated"]));
+    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["unregister"]["unregister-success"]));
+    								}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
+    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-not-registered"]));
+    								}elseif($status == ServerAuth::CANCELLED){
+    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["operation-cancelled"]));
     								}else{
     									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
     								}
@@ -73,7 +81,20 @@ class Unregister implements CommandExecutor {
     					}
     					break;
     				}else{ //Console Sender
-    					$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . "&cYou can only perform this command as a player"));
+    					if(isset($args[0])){
+    						$status = ServerAuth::getAPI()->unregisterPlayer($this->plugin->getServer()->getOfflinePlayer($args[0]));
+    						if($status == ServerAuth::SUCCESS){
+    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["unregister"]["unregister-success-3rd"]));
+    						}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
+    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-not-registered-3rd"]));
+    						}elseif($status == ServerAuth::CANCELLED){
+    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["operation-cancelled"]));
+    						}else{
+    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
+    						}
+    					}else{
+    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["unregister"]["command-cons"]));
+    					}
     					break;
     				}
     			}else{

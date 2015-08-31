@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 10/05/2015 02:22 PM (UTC)
@@ -13,8 +13,9 @@ namespace ServerAuth\Events;
 
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
+use pocketmine\event\Cancellable;
 
-class ServerAuthPasswordChangeEvent extends PluginEvent {
+class ServerAuthPasswordChangeEvent extends PluginEvent implements Cancellable {
 
 	public static $handlerList = null;
 

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v1.11) by EvolSoft
+ * ServerAuth (v2.00) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 02/08/2015 11:53 PM (UTC)
+ * Date: 31/08/2015 01:25 PM (UTC)
  * Copyright & License: (C) 2015 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -14,6 +14,7 @@ namespace ServerAuth;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
 use pocketmine\event\player\PlayerBedEnterEvent;
 use pocketmine\event\player\PlayerBedLeaveEvent;
@@ -43,8 +44,23 @@ class EventListener implements Listener {
 		//Restore default messages
 		ServerAuth::getAPI()->enableLoginMessages(true);
 		ServerAuth::getAPI()->enableRegisterMessages(true);
+		$cfg = $this->plugin->getConfig()->getAll();
+		if($cfg['force-single-auth']){
+			$player = $event->getPlayer();
+			$count = 0;
+			foreach($this->plugin->getServer()->getOnlinePlayers() as $pl){
+				if(strtolower($pl->getName()) == strtolower($player->getName())){
+					$count++;
+				}
+			}
+			if($count > 1){
+				if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+					$player->close($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
+					$event->setCancelled(true);
+				}
+			}
+		}
 	}
-	
 	
     public function onJoin(PlayerJoinEvent $event){
     	$player = $event->getPlayer();
@@ -147,6 +163,12 @@ class EventListener implements Listener {
     }
     
     public function onBucketEmpty(PlayerBucketEmptyEvent $event){
+    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
+    
+    public function onEntityDamage(EntityDamageEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}

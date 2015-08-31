@@ -2,6 +2,8 @@
 ---
 #Keep logged in by IP
 IPLogin: false
+#Force single authentication
+force-single-auth: true
 #Allow not authenticated users to move
 allow-move: false
 #Block chat for not authenticated users
@@ -44,6 +46,10 @@ mysql:
 login:
   #Enable login on your server
   enabled: true
+  #Enable failed logins kick
+  enable-failed-logins-kick: true
+  #Max number of attempts
+  max-login-attempts: 5
   #Login message interval
   message-interval: 2
 #Register settings
