@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ServerAuth (v2.10) by EvolSoft
+ * ServerAuth (v2.11) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 31/08/2015 11:09 AM (UTC)

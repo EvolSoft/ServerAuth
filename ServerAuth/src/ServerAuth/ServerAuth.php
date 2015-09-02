@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ServerAuth (v2.10) by EvolSoft
+ * ServerAuth (v2.11) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 31/08/2015 05:26 PM (UTC)
@@ -28,7 +28,7 @@ class ServerAuth extends PluginBase {
 	const PRODUCER = "EvolSoft";
 	
 	/** @var string VERSION Plugin version */
-	const VERSION = "2.10";
+	const VERSION = "2.11";
 	
 	/** @var string MAIN_WEBSITE Plugin producer website */
 	const MAIN_WEBSITE = "http://www.evolsoft.tk";
@@ -701,8 +701,23 @@ class ServerAuth extends PluginBase {
     					$data->set("lastlogin", $player->getLastPlayed());
     					$data->save();
     					$this->auth_users[strtolower($player->getName())] = "";
+    					if($cfg['login']['enable-failed-logins-kick'] && isset($this->auth_attempts[strtolower($player->getName())])){
+    						unset($this->auth_attempts[strtolower($player->getName())]);
+    					}
     					return ServerAuth::SUCCESS;
     				}else{
+    					if($cfg['login']['enable-failed-logins-kick']){
+    						if(isset($this->auth_attempts[strtolower($player->getName())])){
+    							$this->auth_attempts[strtolower($player->getName())]++;
+    						}else{
+    							$this->auth_attempts[strtolower($player->getName())] = 1;
+    						}
+    						if($this->auth_attempts[strtolower($player->getName())] >= $cfg['login']['max-login-attempts']){
+    							$player->close("", $this->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["too-many-attempts"]));
+    							unset($this->auth_attempts[strtolower($player->getName())]);
+    							return ServerAuth::TOO_MANY_ATTEMPTS;
+    						}
+    					}    					
     					return ServerAuth::ERR_WRONG_PASSWORD;
     				}
     			}
