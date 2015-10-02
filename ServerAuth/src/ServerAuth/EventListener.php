@@ -14,6 +14,7 @@ namespace ServerAuth;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
 use pocketmine\event\player\PlayerBedEnterEvent;
@@ -145,6 +146,12 @@ class EventListener implements Listener {
     }
     
     public function onCraftItem(CraftItemEvent $event){
+    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
+    
+    public function onPickupItem(InventoryPickupItemEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
