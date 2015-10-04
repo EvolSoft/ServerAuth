@@ -81,7 +81,7 @@ class Commands extends PluginBase implements CommandExecutor {
     						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["config-reloaded"]));
     				        break;
     					}else{
-    						$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
+    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["no-permission"]));
     						break;
     					}
     				}else{
@@ -89,7 +89,7 @@ class Commands extends PluginBase implements CommandExecutor {
     						$sender->sendMessage($this->plugin->translateColors("&",  ServerAuth::PREFIX . "&cSubcommand &a" . $args[0] . " &cnot found. Use &a/serverauth help &cto show available commands"));
     						break;
     					}else{
-    						$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
+    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["no-permission"]));
     						break;
     					}
     				}
