@@ -54,7 +54,7 @@ class EventListener implements Listener {
 					$count++;
 				}
 			}
-			if($count > 1){
+			if($count > 0){
 				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
 				$event->setCancelled(true);
 			}
