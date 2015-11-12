@@ -14,20 +14,20 @@ login:
   command: "&cGebruik: /login <wachtwoord>"
   ip-login: "&9Je bent nu ingelogd door je IP”
   login-success: "&aJe bent nu ingelogd!”
-  login-timeout: "&cLogin Timeout"
-  already-login: "&aYou are already logged in"
-  too-many-attempts: "&cToo many login attempts!"
+  login-timeout: "&cDe tijd om in te loggen is verstreken“
+  already-login: "&aJe bent al ingelogd”
+  too-many-attempts: "&cTe veel wachtwoorden geprobeerd!”
 register: 
-  message: "&cPlease register with /register <password>"
-  message-conf: "&cPlease register with /register <password> <confirmPassword>"
-  disabled: "&cRegister disabled in this server"
-  command: "&cUsage: /register <password>"
-  command-conf: "&cUsage: /register <password> <confirmPassword>"
-  register-success: "&aYou are now registered!"
-  register-timeout: "&cRegister Timeout"
-  already-registered: "&aYou are already registered"
+  message: "&cregisteer je met /register <wachtwoord>"
+  message-conf: "&cregistreer je met /register <wachtwoord> <bevestigwachtwoord>"
+  disabled: "&cRegisteren op deze server is uitgeschakeld”
+  command: “&cGebruik: /register <wachtwoord>"
+  command-conf: "&cGebruik: /register <wachtwoord> <bevestigwachtwoord>"
+  register-success: "&aJe bent al geregistreerd!”
+  register-timeout: "&cDe tijd om te registreren is verstreken”
+  already-registered: "&aJe vent al geregistered“
 changepassword:
-  disabled: "&cChange password disabled in this server"
+  disabled: "&cWachtwoord veranderen is uitgeschakeld in deze server”
   login-required: "&cYou need to be logged in to change password"
   command: "&cUsage: /changepassword <newPassword>"
   command-conf: "&cUsage: /changepassword <newPassword> <confirmPassword>"
