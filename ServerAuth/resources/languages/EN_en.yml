@@ -1,19 +1,19 @@
-#ServerAuth plugin English language file
-#Translation by Flavius12, EvolSoft
+#ServerAuth plugin Dutch language file
+#Translation by Driesboy
 ---
 join-message: "&bAuthentication system provided by &aServerAuth &bplugin"
 single-auth: "&cA player with this nickname is already authenticated!"
-mysql-success: "&aServerAuth successfully connected to the MySQL database!"
-mysql-restored: "&aMySQL connection restored!"
-mysql-fail: "&cServerAuth can't connect to the MySQL database. Data will be saved locally. Error: {MYSQL_ERROR}" 
-config-reloaded: "&aConfiguration reloaded!"
-operation-cancelled: "&cOperation cancelled"
+mysql-success: "&aServerAuth is verbonden met MySQL!”
+mysql-restored: "&aMySQL verbinding vernieuwd”
+mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
+config-reloaded: "&aconfiguratie herladen!”
+operation-cancelled: "&cOperatie geannuleerd”
 login:
-  message: "&cPlease login with /login <password>"
-  disabled: "&cLogin disabled in this server"
-  command: "&cUsage: /login <password>"
-  ip-login: "&9You are logged in by IP"
-  login-success: "&aYou have been logged in!"
+  message: “&Log A.U.B. in met /login <wachtwoord>"
+  disabled: "&cInloggen op deze server is uitgeschakeld”
+  command: "&cGebruik: /login <wachtwoord>"
+  ip-login: "&9Je bent nu ingelogd door je IP”
+  login-success: "&aJe bent nu ingelogd!”
   login-timeout: "&cLogin Timeout"
   already-login: "&aYou are already logged in"
   too-many-attempts: "&cToo many login attempts!"
