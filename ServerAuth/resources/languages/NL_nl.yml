@@ -1,0 +1,55 @@
+#ServerAuth plugin English language file
+#Translation by Flavius12, EvolSoft
+---
+join-message: "&bAuthentication system provided by &aServerAuth &bplugin"
+single-auth: "&cA player with this nickname is already authenticated!"
+mysql-success: "&aServerAuth successfully connected to the MySQL database!"
+mysql-restored: "&aMySQL connection restored!"
+mysql-fail: "&cServerAuth can't connect to the MySQL database. Data will be saved locally. Error: {MYSQL_ERROR}" 
+config-reloaded: "&aConfiguration reloaded!"
+operation-cancelled: "&cOperation cancelled"
+login:
+  message: "&cPlease login with /login <password>"
+  disabled: "&cLogin disabled in this server"
+  command: "&cUsage: /login <password>"
+  ip-login: "&9You are logged in by IP"
+  login-success: "&aYou have been logged in!"
+  login-timeout: "&cLogin Timeout"
+  already-login: "&aYou are already logged in"
+  too-many-attempts: "&cToo many login attempts!"
+register: 
+  message: "&cPlease register with /register <password>"
+  message-conf: "&cPlease register with /register <password> <confirmPassword>"
+  disabled: "&cRegister disabled in this server"
+  command: "&cUsage: /register <password>"
+  command-conf: "&cUsage: /register <password> <confirmPassword>"
+  register-success: "&aYou are now registered!"
+  register-timeout: "&cRegister Timeout"
+  already-registered: "&aYou are already registered"
+changepassword:
+  disabled: "&cChange password disabled in this server"
+  login-required: "&cYou need to be logged in to change password"
+  command: "&cUsage: /changepassword <newPassword>"
+  command-conf: "&cUsage: /changepassword <newPassword> <confirmPassword>"
+  changepassword-success: "&aPassword changed!"
+logout:
+  disabled: "&cLogout disabled in this server"
+  logout-success: "&aYou have been logged out"
+unregister:
+  disabled: "&cUnregister disabled in this server"
+  login-required: "&cYou need to be logged in to unregister"
+  command: "&cUsage: /unregister <password>"
+  command-cons: "&cUsage: /unregister <player>"
+  unregister-success: "&aYou are now unregistered!"
+  unregister-success-3rd: "&aThe player is now unregistered!"
+errors:
+  generic: "&cAn error has occurred"
+  wrong-password: "&cWrong Password"
+  password-no-match: "&cPassword doesn't match confirmation"
+  password-too-short: "&cPassword too short"
+  password-too-long: "&cPassword too long"
+  user-not-registered: "&cYou are not registered"
+  user-not-registered-3rd: "&cThe player isn't registered"
+  user-not-authenticated: "&cYou are not logged in"
+  max-ip-reached: "&cYou reached the maximum number of registrations per IP"
+...
