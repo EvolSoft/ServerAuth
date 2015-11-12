@@ -2,11 +2,11 @@
 #Translation by Driesboy
 ---
 join-message: "&bAuthentication system provided by &aServerAuth &bplugin"
-single-auth: "&cA player with this nickname is already authenticated!"
+single-auth: "&cPlayer with this nickname is already authenticated!"
 mysql-success: "&aServerAuth is verbonden met MySQL!”
 mysql-restored: "&aMySQL verbinding vernieuwd”
 mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
-config-reloaded: "&aconfiguratie herladen!”
+config-reloaded: "&aConfiguratie herladen!”
 operation-cancelled: "&cOperatie geannuleerd”
 login:
   message: “&Log A.U.B. in met /login <wachtwoord>"
@@ -18,14 +18,14 @@ login:
   already-login: "&aJe bent al ingelogd”
   too-many-attempts: "&cTe veel wachtwoorden geprobeerd!”
 register: 
-  message: "&cregisteer je met /register <wachtwoord>"
+  message: "&cRegisteer je met /register <wachtwoord>"
   message-conf: "&cregistreer je met /register <wachtwoord> <bevestigwachtwoord>"
   disabled: "&cRegisteren op deze server is uitgeschakeld”
   command: “&cGebruik: /register <wachtwoord>"
   command-conf: "&cGebruik: /register <wachtwoord> <bevestigwachtwoord>"
   register-success: "&aJe bent al geregistreerd!”
   register-timeout: "&cDe tijd om te registreren is verstreken”
-  already-registered: "&aJe vent al geregistered“
+  already-registered: "&aJe bent al geregistered“
 changepassword:
   disabled: "&cWachtwoord veranderen is uitgeschakeld in deze server”
   login-required: "&cOm het wachtwoord te veranderen moet je ingelogd zijn"
