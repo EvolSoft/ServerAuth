@@ -1,8 +1,8 @@
 #ServerAuth plugin Dutch language file
 #Translation by Driesboy
 ---
-join-message: "&bAuthentication system provided by &aServerAuth &bplugin"
-single-auth: "&cPlayer with this nickname is already authenticated!"
+join-message: "&bLogin systeem door &aServerAuth &bplugin"
+single-auth: "&cEr is al een speler met dit account!”
 mysql-success: "&aServerAuth is verbonden met MySQL!”
 mysql-restored: "&aMySQL verbinding vernieuwd”
 mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
