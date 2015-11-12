@@ -1,33 +1,33 @@
-#ServerAuth plugin Dutch language file
-#Translation by Driesboy
+#ServerAuth plugin English language file
+#Translation by Flavius12, EvolSoft
 ---
 join-message: "&bAuthentication system provided by &aServerAuth &bplugin"
 single-auth: "&cA player with this nickname is already authenticated!"
-mysql-success: "&aServerAuth is verbonden met MySQL!”
-mysql-restored: "&aMySQL verbinding vernieuwd”
-mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
-config-reloaded: "&aconfiguratie herladen!”
-operation-cancelled: "&cOperatie geannuleerd”
+mysql-success: "&aServerAuth successfully connected to the MySQL database!"
+mysql-restored: "&aMySQL connection restored!"
+mysql-fail: "&cServerAuth can't connect to the MySQL database. Data will be saved locally. Error: {MYSQL_ERROR}" 
+config-reloaded: "&aConfiguration reloaded!"
+operation-cancelled: "&cOperation cancelled"
 login:
-  message: “&Log A.U.B. in met /login <wachtwoord>"
-  disabled: "&cInloggen op deze server is uitgeschakeld”
-  command: "&cGebruik: /login <wachtwoord>"
-  ip-login: "&9Je bent nu ingelogd door je IP”
-  login-success: "&aJe bent nu ingelogd!”
-  login-timeout: "&cDe tijd om in te loggen is verstreken“
-  already-login: "&aJe bent al ingelogd”
-  too-many-attempts: "&cTe veel wachtwoorden geprobeerd!”
+  message: "&cPlease login with /login <password>"
+  disabled: "&cLogin disabled in this server"
+  command: "&cUsage: /login <password>"
+  ip-login: "&9You are logged in by IP"
+  login-success: "&aYou have been logged in!"
+  login-timeout: "&cLogin Timeout"
+  already-login: "&aYou are already logged in"
+  too-many-attempts: "&cToo many login attempts!"
 register: 
-  message: "&cregisteer je met /register <wachtwoord>"
-  message-conf: "&cregistreer je met /register <wachtwoord> <bevestigwachtwoord>"
-  disabled: "&cRegisteren op deze server is uitgeschakeld”
-  command: “&cGebruik: /register <wachtwoord>"
-  command-conf: "&cGebruik: /register <wachtwoord> <bevestigwachtwoord>"
-  register-success: "&aJe bent al geregistreerd!”
-  register-timeout: "&cDe tijd om te registreren is verstreken”
-  already-registered: "&aJe vent al geregistered“
+  message: "&cPlease register with /register <password>"
+  message-conf: "&cPlease register with /register <password> <confirmPassword>"
+  disabled: "&cRegister disabled in this server"
+  command: "&cUsage: /register <password>"
+  command-conf: "&cUsage: /register <password> <confirmPassword>"
+  register-success: "&aYou are now registered!"
+  register-timeout: "&cRegister Timeout"
+  already-registered: "&aYou are already registered"
 changepassword:
-  disabled: "&cWachtwoord veranderen is uitgeschakeld in deze server”
+  disabled: "&cChange password disabled in this server"
   login-required: "&cYou need to be logged in to change password"
   command: "&cUsage: /changepassword <newPassword>"
   command-conf: "&cUsage: /changepassword <newPassword> <confirmPassword>"
