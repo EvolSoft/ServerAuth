@@ -1,0 +1,55 @@
+#ServerAuth plugin Dutch language file
+#Translation by Driesboy
+---
+join-message: "&bLogin systeem door &aServerAuth &bplugin"
+single-auth: "&cEr is al een speler met dit account!”
+mysql-success: "&aServerAuth is verbonden met MySQL!”
+mysql-restored: "&aMySQL verbinding vernieuwd”
+mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
+config-reloaded: "&aConfiguratie herladen!”
+operation-cancelled: "&cOperatie geannuleerd!”
+login:
+  message: “&Log A.U.B. in met /login <wachtwoord>"
+  disabled: "&cInloggen op deze server is uitgeschakeld”
+  command: "&cGebruik: /login <wachtwoord>"
+  ip-login: "&9Je bent nu ingelogd door je IP”
+  login-success: "&aJe bent nu ingelogd!”
+  login-timeout: "&cDe tijd om in te loggen is verstreken“
+  already-login: "&aJe bent al ingelogd”
+  too-many-attempts: "&cTe veel wachtwoorden geprobeerd!”
+register: 
+  message: "&cRegisteer je met /register <wachtwoord>"
+  message-conf: "&cregistreer je met /register <wachtwoord> <bevestigwachtwoord>"
+  disabled: "&cRegisteren op deze server is uitgeschakeld”
+  command: “&cGebruik: /register <wachtwoord>"
+  command-conf: "&cGebruik: /register <wachtwoord> <bevestigwachtwoord>"
+  register-success: "&aJe bent al geregistreerd!”
+  register-timeout: "&cDe tijd om te registreren is verstreken”
+  already-registered: "&aJe bent al geregistered“
+changepassword:
+  disabled: "&cWachtwoord veranderen is uitgeschakeld in deze server”
+  login-required: "&cOm het wachtwoord te veranderen moet je ingelogd zijn"
+  command: "&cGebruik: /changepassword <nieuwwachtwoord>"
+  command-conf: "&cGebruik: /changepassword <nieuwwachtwoord> <bevestigwachtwoord>"
+  changepassword-success: "&aWachtwoord veranderd!”
+logout:
+  disabled: "&cUitloggen is niet mogelijk op deze server”
+  logout-success: "&aJe bent al uitgelogd”
+unregister:
+  disabled: "&cRegistratie ongedaan maken is niet mogelijk op deze server”
+  login-required: "&cJe moet ingelogd zijn om je Registratie ongedaan te maken”
+  command: "&cGebruik: /unregister <wachtwoord>"
+  command-cons: "&cGebruik: /unregister <speler>"
+  unregister-success: "&aJe bent nu niet meer geregistreerde!"
+  unregister-success-3rd: "&aDe speler is nu niet meer geregistreerde!"
+errors:
+  generic: "&cEr is een fout opgetreden"
+  wrong-password: "&cVerkeerd wachtwoord”
+  password-no-match: "&cWachtwoord is niet bevestigd”
+  password-too-short: "&cWachtwoord is te kort”
+  password-too-long: "&cWachtwoord ist te lang“
+  user-not-registered: "&cJe bent niet geregistreerd”
+  user-not-registered-3rd: "&cDe speler is niet geregistreerd”
+  user-not-authenticated: "&cJe bent niet ingelogd”
+  max-ip-reached: "&cU bereikt het maximum aantal registraties per IP"
+...
