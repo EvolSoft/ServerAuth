@@ -242,7 +242,7 @@ class ServerAuth extends PluginBase {
     			}
     		    //Initialize Tables
     		    if(\mysqli_num_rows($db->query("SELECT version, api_version FROM " . $table_prefix . "serverauth")) == 0){
-                    $query = "INSERT INTO " . $table_prefix . "serverauth (version, api_version, password_hash) VALUES ('" . $this->getVersion() . "', '" . $this->getAPIVersion() . "', '" . $this->getPasswordHash() . "')";
+                    		$query = "INSERT INTO " . $table_prefix . "serverauth (version, api_version, password_hash) VALUES ('" . $this->getVersion() . "', '" . $this->getAPIVersion() . "', '" . $this->getPasswordHash() . "')";
     				$db->query($query);
     			}else{
     				$query = "UPDATE " . $table_prefix . "serverauth SET version='" . $this->getVersion() . "', api_version='" . $this->getAPIVersion() . "', password_hash='" . $this->getPasswordHash() . "' LIMIT 1";
@@ -426,7 +426,7 @@ class ServerAuth extends PluginBase {
     						"password" => $this->getDatabase()->query($query)->fetch_assoc()["password"],
     						"ip" => $this->getDatabase()->query($query)->fetch_assoc()["ip"],
     						"firstlogin" => $this->getDatabase()->query($query)->fetch_assoc()["firstlogin"],
-                            "lastlogin" => $this->getDatabase()->query($query)->fetch_assoc()["lastlogin"]
+    						"lastlogin" => $this->getDatabase()->query($query)->fetch_assoc()["lastlogin"]
     					);
     					return $data;
     				}else{
