@@ -28,9 +28,7 @@ use pocketmine\event\player\PlayerItemConsumeEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
-use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
-use pocketmine\Server;
 
 use ServerAuth\ServerAuth;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
