@@ -36,7 +36,7 @@ And more...
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- ServerAuth_v1.11.phar : ServerAuth Plugin + API*<br>
+*- ServerAuth_v2.11.phar : ServerAuth Plugin + API*<br>
 *- ServerAuthAccountManager : An advanced online script to manage ServerAuth accounts*<br>
 *- ServerAuthWebAPI : ServerAuth Web API to use on your own web scripts*<br>
 
@@ -60,6 +60,16 @@ Documentation available at [ServerAuth Wiki](https://github.com/EvolSoft/ServerA
 ##Download
 
 You can download precompiled versions of ServerAuth on [ServerAuth Releases](https://github.com/EvolSoft/ServerAuth/releases) section
+
+##Extensions
+
+[EvolSoft/ChatLogin](https://github.com/EvolSoft/ChatLogin): A ServerAuth extension to do login/register directly on chat
+
+[EvolSoft/InvisibleLogin](https://github.com/EvolSoft/InvisibleLogin):A ServerAuth extension to make players invisible when they are not authenticated
+
+[EvolSoft/EmailConfirm](https://github.com/EvolSoft/EmailConfirm): A ServerAuth extension which implements email confirmation when registering ServerAuth accounts
+
+<dd><i>If you want to submit your own ServerAuth Extension PM us on Twitter <b>([@Flavius12_](https://twitter.com/Flavius12_) or [@_EvolSoft](https://twitter.com/_EvolSoft))</b> or ask in <b>[ServerAuth Gitter Channel](https://gitter.im/EvolSoft/ServerAuth)</b></i></dd>
 
 ##Contributing
 
