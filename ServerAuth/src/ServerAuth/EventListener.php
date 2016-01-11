@@ -96,7 +96,7 @@ class EventListener implements Listener {
     
     public function onPlayerMove(PlayerMoveEvent $event){
     	if(!$this->plugin->getConfig()->getAll()["allow-move"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
@@ -104,7 +104,7 @@ class EventListener implements Listener {
 
     public function onPlayerChat(PlayerChatEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-chat"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true); //Cancel message
     		}
     		$recipients = $event->getRecipients();
@@ -125,7 +125,7 @@ class EventListener implements Listener {
     
     public function onPlayerCommand(PlayerCommandPreprocessEvent $event){
         if($this->plugin->getConfig()->getAll()["block-commands"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$command = strtolower($event->getMessage());
     			if($command{0} == "/"){
     				$command = explode(" ", $command);
@@ -138,31 +138,31 @@ class EventListener implements Listener {
     }
     
     public function onPlayerInteract(PlayerInteractEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
     }
     
     public function onBlockBreak(BlockBreakEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
     }
     
     public function onBlockPlace(BlockPlaceEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
     }
     
     public function onBucketFill(PlayerBucketFillEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
     }
     
     public function onBucketEmpty(PlayerBucketEmptyEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
     }
@@ -188,7 +188,7 @@ class EventListener implements Listener {
     
     public function onBedEnter(PlayerBedEnterEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
@@ -196,7 +196,7 @@ class EventListener implements Listener {
     
     public function onBedLeave(PlayerBedLeaveEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
@@ -204,7 +204,7 @@ class EventListener implements Listener {
     
     public function onDropItem(PlayerDropItemEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
@@ -212,7 +212,7 @@ class EventListener implements Listener {
     
     public function onItemConsume(PlayerItemConsumeEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
@@ -220,7 +220,7 @@ class EventListener implements Listener {
     
     public function onAwardAchievement(PlayerAchievementAwardedEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($event->getPlayer()->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
     		}
     	}
