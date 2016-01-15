@@ -15,6 +15,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
 use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\event\player\PlayerItemConsumeEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -94,7 +95,15 @@ class EventListener implements Listener {
     		}
     	}
     }
-
+    
+    public function onItemConsume(PlayerItemConsumeEvent $event){
+    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    			$event->setCancelled(true);
+    		}
+    	}
+    }
+    
     public function onPlayerChat(PlayerChatEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-chat"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
