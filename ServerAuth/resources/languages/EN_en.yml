@@ -52,4 +52,6 @@ errors:
   user-not-registered-3rd: "&cThe player isn't registered"
   user-not-authenticated: "&cYou are not logged in"
   max-ip-reached: "&cYou reached the maximum number of registrations per IP"
+  in-game: "&cYou can only perform this command as a player"
+  no-permission: "&cYou don't have permissions to use this command"
 ...

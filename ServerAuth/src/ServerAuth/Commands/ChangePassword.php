@@ -90,11 +90,11 @@ class ChangePassword implements CommandExecutor {
     					}
     					break;
     				}else{ //Console Sender
-    					$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . "&cYou can only perform this command as a player"));
+    					$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["in-game"]));
     					break;
     				}
     			}else{
-    				$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
+    				$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["no-permission"]));
     				break;
     			}
     			return true;

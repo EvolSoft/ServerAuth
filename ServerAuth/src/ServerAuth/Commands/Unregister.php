@@ -98,7 +98,7 @@ class Unregister implements CommandExecutor {
     					break;
     				}
     			}else{
-    				$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
+    				$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["no-permission"]));
     				break;
     			}
     			return true;
