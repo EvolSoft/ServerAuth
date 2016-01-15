@@ -11,20 +11,13 @@
 
 namespace ServerAuth;
 
-use pocketmine\event\block\BlockBreakEvent;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
-use pocketmine\event\player\PlayerBedEnterEvent;
-use pocketmine\event\player\PlayerBedLeaveEvent;
-use pocketmine\event\player\PlayerBucketEmptyEvent;
-use pocketmine\event\player\PlayerBucketFillEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\event\player\PlayerItemConsumeEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
@@ -56,7 +49,7 @@ class EventListener implements Listener {
 			}
 			if($count > 1){
 				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
-				$event->setCancelled(true);
+				$event->setCancelled();
 			}
 		}
 	}
@@ -97,7 +90,7 @@ class EventListener implements Listener {
     public function onPlayerMove(PlayerMoveEvent $event){
     	if(!$this->plugin->getConfig()->getAll()["allow-move"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
+    			$event->setCancelled();
     		}
     	}
     }
@@ -105,16 +98,15 @@ class EventListener implements Listener {
     public function onPlayerChat(PlayerChatEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-chat"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true); //Cancel message
+    			$event->setCancelled(); //Cancel message
     		}
     		$recipients = $event->getRecipients();
-    		for($i = 0; $i < count($recipients); $i++){
-    			$player = $recipients[$i];
+    		foreach($recipients as $key => $player){
     			if($player instanceof Player){
     				if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-    					$message[] = $i;
+    					$message[] = $key;
     					foreach($message as $messages){
-    						unset($recipients[$i]);
+    						unset($recipients[$key]);
     						$event->setRecipients(array_values($recipients));
     					}
     				}
@@ -130,7 +122,7 @@ class EventListener implements Listener {
     			if($command{0} == "/"){
     				$command = explode(" ", $command);
     				if($command[0] != "/login" && $command[0] != "/register" && $command[0] != "/reg"){
-    					$event->setCancelled(true);
+    					$event->setCancelled();
     				}
     			}
     		}
@@ -139,89 +131,39 @@ class EventListener implements Listener {
     
     public function onPlayerInteract(PlayerInteractEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
+    		$event->setCancelled();
     	}
     }
-    
-    public function onBlockBreak(BlockBreakEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBlockPlace(BlockPlaceEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBucketFill(PlayerBucketFillEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBucketEmpty(PlayerBucketEmptyEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
+
     public function onEntityDamage(EntityDamageEvent $event){
     		$player = $event->getEntity();
     		if($player instanceof Player){
-    			if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-    				$event->setCancelled(true);
+    			if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+    				$event->setCancelled();
     			}
     		}
     	if($event instanceof EntityDamageByEntityEvent){
     		$damager = $event->getDamager();
     		if($damager instanceof Player){
-    			if(!ServerAuth::getAPI()->isPlayerRegistered($damager->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($damager)){
-    				$event->setCancelled(true);
+    			if(!ServerAuth::getAPI()->isPlayerAuthenticated($damager)){
+    				$event->setCancelled();
     			}
     		}
     	}
     }
-    
-    //Other Events
-    
-    public function onBedEnter(PlayerBedEnterEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
-    
-    public function onBedLeave(PlayerBedLeaveEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
-    
+
     public function onDropItem(PlayerDropItemEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
+    			$event->setCancelled();
     		}
     	}
     }
-    
-    public function onItemConsume(PlayerItemConsumeEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
-    
+
     public function onAwardAchievement(PlayerAchievementAwardedEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
+    			$event->setCancelled();
     		}
     	}
     }
