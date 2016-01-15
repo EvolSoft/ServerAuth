@@ -30,6 +30,7 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -138,6 +139,15 @@ class EventListener implements Listener {
     public function onPlayerInteract(PlayerInteractEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
+    	}
+    }
+    
+    public function onPickupItem(InventoryPickupItemEvent $event){
+    	$player = $event->getInventory()->getHolder();
+    	if($player instanceof Player){
+    		if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+    			$event->setCancelled(true);
+    		}
     	}
     }
     
