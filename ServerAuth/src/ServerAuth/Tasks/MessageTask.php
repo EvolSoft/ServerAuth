@@ -27,7 +27,7 @@ class MessageTask extends PluginTask {
     public function onRun($tick){
     	$cfg = $this->plugin->getConfig()->getAll();
     	foreach($this->plugin->getServer()->getOnlinePlayers() as $player){
-    		if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){
     			if(!isset($this->players[strtolower($player->getName())])){
     				$this->players[strtolower($player->getName())]["interval"] = 0;
     				$this->players[strtolower($player->getName())]["kick"] = 0;
