@@ -35,7 +35,9 @@ use pocketmine\Server;
 
 class EventListener implements Listener {
 	
-	public function __construct(ServerAuth $plugin){
+        private $kick = array();
+    
+        public function __construct(ServerAuth $plugin){
 		$this->plugin = $plugin;
 	}
 	
@@ -44,18 +46,18 @@ class EventListener implements Listener {
 		ServerAuth::getAPI()->enableLoginMessages(true);
 		ServerAuth::getAPI()->enableRegisterMessages(true);
 		$cfg = $this->plugin->getConfig()->getAll();
-		if($cfg['force-single-auth']){
+		if($cfg["force-single-auth"]){
 			$player = $event->getPlayer();
-			$count = 0;
 			foreach($this->plugin->getServer()->getOnlinePlayers() as $pl){
-				if(strtolower($pl->getName()) == strtolower($player->getName())){
-					$count++;
+				if(strtolower($pl->getName()) == strtolower($player->getName()) and ServerAuth::getAPI()->isPlayerAuthenticated($pl)){
+                                    $this->kick[$player->getId()] = $player;
 				}
 			}
-			if($count > 1){
-				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
+                            if(isset($this->kick[$player->getId()])){
+				$this->kick[$player->getId()]->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
 				$event->setCancelled(true);
-			}
+                                unset($this->kick[$player->getId()]);
+                            }
 		}
 	}
 	
