@@ -14,7 +14,6 @@ namespace ServerAuth\Commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\plugin\PluginBase;
 

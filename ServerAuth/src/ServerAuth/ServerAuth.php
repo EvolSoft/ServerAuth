@@ -12,10 +12,8 @@
 namespace ServerAuth;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\command\CommandExecutor;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
-use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\Player;
 use pocketmine\OfflinePlayer;
