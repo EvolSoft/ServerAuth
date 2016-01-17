@@ -13,6 +13,7 @@ PocketMine-MP plugins, PHP Web scripts
 
 PocketMine-MP Alpha_1.4 API 1.11.0<br>
 PHP >= 5.4.0 *(for ServerAuthAccountManager)*<br>
+PHP MySQLi extension<br>
 
 ## Overview
 
@@ -36,7 +37,7 @@ And more...
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- ServerAuth_v2.11.phar : ServerAuth Plugin + API*<br>
+*- ServerAuth_v2.12.phar : ServerAuth Plugin + API*<br>
 *- ServerAuthAccountManager : An advanced online script to manage ServerAuth accounts*<br>
 *- ServerAuthWebAPI : ServerAuth Web API to use on your own web scripts*<br>
 
@@ -65,7 +66,7 @@ You can download precompiled versions of ServerAuth on [ServerAuth Releases](htt
 
 [EvolSoft/ChatLogin](https://github.com/EvolSoft/ChatLogin): A ServerAuth extension to do login/register directly on chat
 
-[EvolSoft/InvisibleLogin](https://github.com/EvolSoft/InvisibleLogin):A ServerAuth extension to make players invisible when they are not authenticated
+[EvolSoft/InvisibleLogin](https://github.com/EvolSoft/InvisibleLogin): A ServerAuth extension to make players invisible when they are not authenticated
 
 [EvolSoft/EmailConfirm](https://github.com/EvolSoft/EmailConfirm): A ServerAuth extension which implements email confirmation when registering ServerAuth accounts
 
