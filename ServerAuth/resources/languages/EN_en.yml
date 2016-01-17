@@ -31,7 +31,9 @@ changepassword:
   login-required: "&cYou need to be logged in to change password"
   command: "&cUsage: /changepassword <newPassword>"
   command-conf: "&cUsage: /changepassword <newPassword> <confirmPassword>"
+  command-cons: "&cUsage: /changepassword <player> <newPassword>"
   changepassword-success: "&aPassword changed!"
+  changepassword-cons-success: "&aPassword for user &b{PLAYER} &achanged to &b{PASSWORD}"
 logout:
   disabled: "&cLogout disabled in this server"
   logout-success: "&aYou have been logged out"
@@ -42,6 +44,17 @@ unregister:
   command-cons: "&cUsage: /unregister <player>"
   unregister-success: "&aYou are now unregistered!"
   unregister-success-3rd: "&aThe player is now unregistered!"
+help:
+   1: "&b=> &aAvailable Commands &b<="
+   2: "&a/changepassword &b=>&a Change the account password"
+   3: "&a/login &b=>&a Do login"
+   4: "&a/logout &b=>&a Do logout"
+   5: "&a/register &b=>&a Register an account"
+   6: "&a/serverauth help &b=>&a Show help about this plugin"
+   7: "&a/serverauth info &b=>&a Show info about this plugin"
+   8: "&a/serverauth reload &b=>&a Reload the config"
+   9: "&a/unregister &b=>&a Unregister your account"
+   error: "&cSubcommand &a{SUBCMD} &cnot found. Use &a/serverauth help &cto show available commands"
 errors:
   generic: "&cAn error has occurred"
   wrong-password: "&cWrong Password"
@@ -52,4 +65,6 @@ errors:
   user-not-registered-3rd: "&cThe player isn't registered"
   user-not-authenticated: "&cYou are not logged in"
   max-ip-reached: "&cYou reached the maximum number of registrations per IP"
+  no-permissions: "&cYou don't have permissions to use this command"
+  player-only: "&cYou can only perform this command as a player"
 ...

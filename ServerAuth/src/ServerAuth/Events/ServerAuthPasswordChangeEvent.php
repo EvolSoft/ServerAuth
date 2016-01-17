@@ -1,11 +1,11 @@
 <?php
 
 /*
- * ServerAuth (v2.11) by EvolSoft
+ * ServerAuth (v2.12) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 10/05/2015 02:22 PM (UTC)
- * Copyright & License: (C) 2015 EvolSoft
+ * Copyright & License: (C) 2016 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 
@@ -15,11 +15,13 @@ use pocketmine\event\plugin\PluginEvent;
 use pocketmine\Player;
 use pocketmine\event\Cancellable;
 
+use ServerAuth\ServerAuth;
+
 class ServerAuthPasswordChangeEvent extends PluginEvent implements Cancellable {
 
 	public static $handlerList = null;
 
-	/** @var Player $player */
+	/** @var Player|OfflinePlayer $player */
 	private $player;
 	
 	/** @var $password */
@@ -29,7 +31,7 @@ class ServerAuthPasswordChangeEvent extends PluginEvent implements Cancellable {
 	 * @param Player $player
 	 * @param $password
 	 */
-	public function __construct(Player $player, $password){
+	public function __construct($player, $password){
 		$this->player = $player;
 		$this->password = $password;
 	}
@@ -37,7 +39,7 @@ class ServerAuthPasswordChangeEvent extends PluginEvent implements Cancellable {
 	/**
 	 * Get event player
 	 *
-	 * @return Player
+	 * @return Player|OfflinePlayer
 	 */
 	public function getPlayer(){
 		return $this->player;
@@ -50,5 +52,14 @@ class ServerAuthPasswordChangeEvent extends PluginEvent implements Cancellable {
 	 */
 	public function getPassword(){
 		return $this->password;
+	}
+	
+	/**
+	 * Set cancelled message
+	 *
+	 * @param string $message
+	 */
+	public function setCancelledMessage($message){
+		ServerAuth::getAPI()->canc_message = $message;
 	}
 }

@@ -31,7 +31,9 @@ changepassword:
   login-required: "&cDevi essere autenticato per cambiare la password"
   command: "&cUso: /changepassword <nuovaPassword>"
   command-conf: "&cUso: /changepassword <nuovaPassword> <confermaPassword>"
+  command-cons: "&cUso: /changepassword <player> <nuovaPassword>"
   changepassword-success: "&aPassword cambiata!"
+  changepassword-console-success: "&aLa password per l'utente &b{PLAYER} &aé stata cambiata in &b{PASSWORD}"
 logout:
   disabled: "&cIl logout è disabilitato in questo server"
   logout-success: "&aHai eseguito il logout"
@@ -42,6 +44,17 @@ unregister:
   command-cons: "&cUso: /unregister <player>"
   unregister-success: "&aIl tuo account è stato cancellato!"
   unregister-success-3rd: "&aL'account del player è stato cancellato!"
+help:
+   1: "&b=> &aComandi disponibili &b<="
+   2: "&a/changepassword &b=>&a Cambia la password dell'account"
+   3: "&a/login &b=>&a Esegui il login"
+   4: "&a/logout &b=>&a Esegui il logout"
+   5: "&a/register &b=>&a Registra un account"
+   6: "&a/serverauth help &b=>&a Visualizza l'aiuto circa questo plugin"
+   7: "&a/serverauth info &b=>&a Visualizza le informazioni su questo plugin"
+   8: "&a/serverauth reload &b=>&a Ricarica la configurazione"
+   9: "&a/unregister &b=>&a Cancella il tuo account"
+   error: "&cSottocomando &a{SUBCMD} &cnon trovato. Usa &a/serverauth help &per visualizzare i comandi disponibili"
 errors:
   generic: "&cSi è verificato un errore"
   wrong-password: "&cPassword errata"
@@ -52,4 +65,6 @@ errors:
   user-not-registered-3rd: "&cIl player non è registrato"
   user-not-authenticated: "&cNon sei autenticato"
   max-ip-reached: "&cHai raggiunto il numero massimo di registrazioni per IP"
+  no-permissions: "&cNon hai i permessi per usare questo comando"
+  player-only: "&cPuoi eseguire questo comando solo come player"
 ...

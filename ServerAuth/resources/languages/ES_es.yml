@@ -31,7 +31,9 @@ changepassword:
   login-required: "&cNecesitas iniciar sesion para cambiar tu contraseña"
   command: "&cUsa el comando: /changepassword <nuevaContraseña>"
   command-conf: "&cUsa: /changepassword <nuevaContraseña> <confirmarContraseña>"
+  command-cons: "&cUsage: /changepassword <player> <newPassword>"
   changepassword-success: "&aContraseña cambiada correctamente!"
+  changepassword-cons-success: "&aPassword for user &b{PLAYER} &achanged to &b{PASSWORD}"
 logout:
   disabled: "&cCerrar sesion esta desactivado en este servidor!"
   logout-success: "&aYa haz cerrado sesion"
@@ -42,6 +44,17 @@ unregister:
   command-cons: "&cUsage: /unregister <player>"
   unregister-success: "&aTe haz desregistrado!"
   unregister-success-3rd: "&aThe player is now unregistered!"
+help:
+   1: "&b=> &aAvailable Commands &b<="
+   2: "&a/changepassword &b=>&a Change the account password"
+   3: "&a/login &b=>&a Do login"
+   4: "&a/logout &b=>&a Do logout"
+   5: "&a/register &b=>&a Register an account"
+   6: "&a/serverauth help &b=>&a Show help about this plugin"
+   7: "&a/serverauth info &b=>&a Show info about this plugin"
+   8: "&a/serverauth reload &b=>&a Reload the config"
+   9: "&a/unregister &b=>&a Unregister your account"
+   error: "&cSubcommand &a{SUBCMD} &cnot found. Use &a/serverauth help &cto show available commands"
 errors:
   generic: "&cHa ocurrido un error desconocido!"
   wrong-password: "&cLa contraseña incorrecta"
@@ -52,4 +65,6 @@ errors:
   user-not-registered-3rd: "&cThe player isn't registered"
   user-not-authenticated: "&cNo haz iniciado sesion!"
   max-ip-reached: "&cHas alcanzado el número máximo de inscripciones para ip"
+  no-permissions: "&cYou don't have permissions to use this command"
+  player-only: "&cYou can only perform this command as a player"
 ...

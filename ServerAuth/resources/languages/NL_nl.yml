@@ -2,54 +2,69 @@
 #Translation by Driesboy
 ---
 join-message: "&bLogin systeem door &aServerAuth &bplugin"
-single-auth: "&cEr is al een speler met dit account!‚Äù
-mysql-success: "&aServerAuth is verbonden met MySQL!‚Äù
-mysql-restored: "&aMySQL verbinding vernieuwd‚Äù
+single-auth: "&cEr is al een speler met dit account!î
+mysql-success: "&aServerAuth is verbonden met MySQL!î
+mysql-restored: "&aMySQL verbinding vernieuwdî
 mysql-fail: "&cServerAuth kan niet verbinden met de MySQL databank. data wordt lokaal opgeslagen. fout: {MYSQL_ERROR}" 
-config-reloaded: "&aConfiguratie herladen!‚Äù
-operation-cancelled: "&cOperatie geannuleerd!‚Äù
+config-reloaded: "&aConfiguratie herladen!î
+operation-cancelled: "&cOperatie geannuleerd!î
 login:
-  message: ‚Äú&Log A.U.B. in met /login <wachtwoord>"
-  disabled: "&cInloggen op deze server is uitgeschakeld‚Äù
+  message: ì&Log A.U.B. in met /login <wachtwoord>"
+  disabled: "&cInloggen op deze server is uitgeschakeldî
   command: "&cGebruik: /login <wachtwoord>"
-  ip-login: "&9Je bent nu ingelogd door je IP‚Äù
-  login-success: "&aJe bent nu ingelogd!‚Äù
-  login-timeout: "&cDe tijd om in te loggen is verstreken‚Äú
-  already-login: "&aJe bent al ingelogd‚Äù
-  too-many-attempts: "&cTe veel wachtwoorden geprobeerd!‚Äù
+  ip-login: "&9Je bent nu ingelogd door je IPî
+  login-success: "&aJe bent nu ingelogd!î
+  login-timeout: "&cDe tijd om in te loggen is verstrekenì
+  already-login: "&aJe bent al ingelogdî
+  too-many-attempts: "&cTe veel wachtwoorden geprobeerd!î
 register: 
   message: "&cRegisteer je met /register <wachtwoord>"
   message-conf: "&cregistreer je met /register <wachtwoord> <bevestigwachtwoord>"
-  disabled: "&cRegisteren op deze server is uitgeschakeld‚Äù
-  command: ‚Äú&cGebruik: /register <wachtwoord>"
+  disabled: "&cRegisteren op deze server is uitgeschakeldî
+  command: ì&cGebruik: /register <wachtwoord>"
   command-conf: "&cGebruik: /register <wachtwoord> <bevestigwachtwoord>"
-  register-success: "&aJe bent al geregistreerd!‚Äù
-  register-timeout: "&cDe tijd om te registreren is verstreken‚Äù
-  already-registered: "&aJe bent al geregistered‚Äú
+  register-success: "&aJe bent al geregistreerd!î
+  register-timeout: "&cDe tijd om te registreren is verstrekenî
+  already-registered: "&aJe bent al geregisteredì
 changepassword:
-  disabled: "&cWachtwoord veranderen is uitgeschakeld in deze server‚Äù
+  disabled: "&cWachtwoord veranderen is uitgeschakeld in deze serverî
   login-required: "&cOm het wachtwoord te veranderen moet je ingelogd zijn"
   command: "&cGebruik: /changepassword <nieuwwachtwoord>"
   command-conf: "&cGebruik: /changepassword <nieuwwachtwoord> <bevestigwachtwoord>"
-  changepassword-success: "&aWachtwoord veranderd!‚Äù
+  command-cons: "&cUsage: /changepassword <player> <newPassword>"
+  changepassword-success: "&aWachtwoord veranderd!î
+  changepassword-cons-success: "&aPassword for user &b{PLAYER} &achanged to &b{PASSWORD}"
 logout:
-  disabled: "&cUitloggen is niet mogelijk op deze server‚Äù
-  logout-success: "&aJe bent al uitgelogd‚Äù
+  disabled: "&cUitloggen is niet mogelijk op deze serverî
+  logout-success: "&aJe bent al uitgelogdî
 unregister:
-  disabled: "&cRegistratie ongedaan maken is niet mogelijk op deze server‚Äù
-  login-required: "&cJe moet ingelogd zijn om je Registratie ongedaan te maken‚Äù
+  disabled: "&cRegistratie ongedaan maken is niet mogelijk op deze serverî
+  login-required: "&cJe moet ingelogd zijn om je Registratie ongedaan te makenî
   command: "&cGebruik: /unregister <wachtwoord>"
   command-cons: "&cGebruik: /unregister <speler>"
   unregister-success: "&aJe bent nu niet meer geregistreerde!"
   unregister-success-3rd: "&aDe speler is nu niet meer geregistreerde!"
+help:
+   1: "&b=> &aAvailable Commands &b<="
+   2: "&a/changepassword &b=>&a Change the account password"
+   3: "&a/login &b=>&a Do login"
+   4: "&a/logout &b=>&a Do logout"
+   5: "&a/register &b=>&a Register an account"
+   6: "&a/serverauth help &b=>&a Show help about this plugin"
+   7: "&a/serverauth info &b=>&a Show info about this plugin"
+   8: "&a/serverauth reload &b=>&a Reload the config"
+   9: "&a/unregister &b=>&a Unregister your account"
+   error: "&cSubcommand &a{SUBCMD} &cnot found. Use &a/serverauth help &cto show available commands"
 errors:
   generic: "&cEr is een fout opgetreden"
-  wrong-password: "&cVerkeerd wachtwoord‚Äù
-  password-no-match: "&cWachtwoord is niet bevestigd‚Äù
-  password-too-short: "&cWachtwoord is te kort‚Äù
-  password-too-long: "&cWachtwoord ist te lang‚Äú
-  user-not-registered: "&cJe bent niet geregistreerd‚Äù
-  user-not-registered-3rd: "&cDe speler is niet geregistreerd‚Äù
-  user-not-authenticated: "&cJe bent niet ingelogd‚Äù
+  wrong-password: "&cVerkeerd wachtwoordî
+  password-no-match: "&cWachtwoord is niet bevestigdî
+  password-too-short: "&cWachtwoord is te kortî
+  password-too-long: "&cWachtwoord ist te langì
+  user-not-registered: "&cJe bent niet geregistreerdî
+  user-not-registered-3rd: "&cDe speler is niet geregistreerdî
+  user-not-authenticated: "&cJe bent niet ingelogdî
   max-ip-reached: "&cU bereikt het maximum aantal registraties per IP"
+  no-permissions: "&cYou don't have permissions to use this command"
+  player-only: "&cYou can only perform this command as a player"
 ...

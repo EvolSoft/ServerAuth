@@ -51,7 +51,7 @@ login:
   #Max number of attempts
   max-login-attempts: 5
   #Login message interval
-  message-interval: 2
+  message-interval: 4
 #Register settings
 register:
   #Enable register on your server
@@ -63,7 +63,7 @@ register:
   #Max registrations per IP
   max-ip: 3
   #Register message interval
-  message-interval: 2
+  message-interval: 4
 #Change Password settings
 changepassword:
   #Enable changepassword on your server

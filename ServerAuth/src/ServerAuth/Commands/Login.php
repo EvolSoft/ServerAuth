@@ -1,11 +1,11 @@
 <?php
 
 /*
- * ServerAuth (v2.11) by EvolSoft
+ * ServerAuth (v2.12) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 31/08/2015 10:48 AM (UTC)
- * Copyright & License: (C) 2015 EvolSoft
+ * Date: 15/01/2016 06:41 PM (UTC)
+ * Copyright & License: (C) 2015-2016 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 
@@ -43,31 +43,31 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
     						if(count($args) == 1){
     							$status = ServerAuth::getAPI()->authenticatePlayer($sender, $args[0]);
     							if($status == ServerAuth::SUCCESS){
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["login-success"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["login"]["login-success"]));
     							}elseif($status == ServerAuth::ERR_WRONG_PASSWORD){
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["wrong-password"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["wrong-password"]));
     							}elseif($status == ServerAuth::ERR_USER_ALREADY_AUTHENTICATED){
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["already-login"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["login"]["already-login"]));
     							}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["user-not-registered"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["user-not-registered"]));
     							}elseif($status == ServerAuth::CANCELLED){
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["operation-cancelled"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getCancelledMessage()));
     							}else{
-    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["errors"]["generic"]));
+    								$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["generic"]));
     							}
     						}else{
-    							$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["command"]));
+    							$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["login"]["command"]));
     						}
     					}else{
-    						$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["disabled"]));
+    						$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["login"]["disabled"]));
     					}
     					break;
     				}else{ //Console Sender
-    					$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . "&cYou can only perform this command as a player"));
+    					$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["errors"]["player-only"]));
     					break;
     				}
     			}else{
-    				$sender->sendMessage($this->plugin->translateColors("&", "&cYou don't have permissions to use this command"));
+    				$sender->sendMessage($this->plugin->translateColors("&", $this->plugin->chlang["errors"]["no-permissions"]));
     				break;
     			}
     			return true;

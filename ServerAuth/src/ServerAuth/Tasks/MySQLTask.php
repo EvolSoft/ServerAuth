@@ -1,11 +1,11 @@
 <?php
 
 /*
- * ServerAuth (v2.11) by EvolSoft
+ * ServerAuth (v2.12) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 14/05/2015 05:19 PM (UTC)
- * Copyright & License: (C) 2015 EvolSoft
+ * Copyright & License: (C) 2015-2016 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 
@@ -31,14 +31,14 @@ class MySQLTask extends PluginTask {
     		if(ServerAuth::getAPI()->getDatabase() == false){
     			$check = ServerAuth::getAPI()->checkDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"]);
     			if($check[0]){
-    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-restored"]));
+    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["mysql-restored"]));
     				ServerAuth::getAPI()->initializeDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"], $cfg["mysql"]["database"], $cfg["mysql"]["table_prefix"]);
     				ServerAuth::getAPI()->mysql = true;
     			}
     		}elseif(!ServerAuth::getAPI()->getDatabase()->ping()){
     			$check = ServerAuth::getAPI()->checkDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"]);
     			if($check[0]){
-    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->getConfigLanguage()->getAll()["mysql-restored"]));
+    				Server::getInstance()->getLogger()->info($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["mysql-restored"]));
     				ServerAuth::getAPI()->initializeDatabase($cfg["mysql"]["host"], $cfg["mysql"]["port"], $cfg["mysql"]["username"], $cfg["mysql"]["password"], $cfg["mysql"]["database"], $cfg["mysql"]["table_prefix"]);
     				ServerAuth::getAPI()->mysql = true;
     			}

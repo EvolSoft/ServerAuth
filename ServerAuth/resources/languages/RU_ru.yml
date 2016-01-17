@@ -31,7 +31,9 @@ changepassword:
   login-required: "&cПожалуйста, войдите в свой аккаунт, после чего смените пароль!"
   command: "&cИспользуйте: /changepassword <новый пароль>"
   command-conf: "&cИспользуйте: /changepassword <новый пароль> <повтор пароля>"
+  command-cons: "&cUsage: /changepassword <player> <newPassword>"
   changepassword-success: "&aПароль был успешно изменен!"
+  changepassword-cons-success: "&aPassword for user &b{PLAYER} &achanged to &b{PASSWORD}"
 logout:
   disabled: "&cВыход из аккаунта отключен на данном сервере"
   logout-success: "&aВы успешно вышли из своего аккаунта"
@@ -42,6 +44,17 @@ unregister:
   command-cons: "&cИспользуйте: /unregister <ник>"
   unregister-success: "&aВы успешно удалили свой аккаунт!"
   unregister-success-3rd: "&aВы успешно удалили аккаунт игрока!"
+help:
+   1: "&b=> &aAvailable Commands &b<="
+   2: "&a/changepassword &b=>&a Change the account password"
+   3: "&a/login &b=>&a Do login"
+   4: "&a/logout &b=>&a Do logout"
+   5: "&a/register &b=>&a Register an account"
+   6: "&a/serverauth help &b=>&a Show help about this plugin"
+   7: "&a/serverauth info &b=>&a Show info about this plugin"
+   8: "&a/serverauth reload &b=>&a Reload the config"
+   9: "&a/unregister &b=>&a Unregister your account"
+   error: "&cSubcommand &a{SUBCMD} &cnot found. Use &a/serverauth help &cto show available commands"
 errors:
   generic: "&cПроизошла ошибка"
   wrong-password: "&cВы ввели неверный пароль!"
@@ -52,4 +65,6 @@ errors:
   user-not-registered-3rd: "&cИгрок с таким ником не зарегистрирован!"
   user-not-authenticated: "&cВы не авторизовались!"
   max-ip-reached: "&cВы достигли максимальное число регистраций с одного IP"
+  no-permissions: "&cYou don't have permissions to use this command"
+  player-only: "&cYou can only perform this command as a player"
 ...

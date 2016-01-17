@@ -1,11 +1,11 @@
 <?php
 
 /*
- * ServerAuth (v2.11) by EvolSoft
+ * ServerAuth (v2.12) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 31/08/2015 05:39 PM (UTC)
- * Copyright & License: (C) 2015 EvolSoft
+ * Date: 16/01/2016 04:30 PM (UTC)
+ * Copyright & License: (C) 2015-2016 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 
@@ -16,11 +16,8 @@ use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\inventory\CraftItemEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
-use pocketmine\event\player\PlayerBedEnterEvent;
-use pocketmine\event\player\PlayerBedLeaveEvent;
-use pocketmine\event\player\PlayerBucketEmptyEvent;
-use pocketmine\event\player\PlayerBucketFillEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
@@ -52,9 +49,22 @@ class EventListener implements Listener {
 					$count++;
 				}
 			}
-			if($count > 1){
+			if($count > 0){
 				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
 				$event->setCancelled(true);
+			}
+			if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+				//IP Authentication
+				if($cfg["IPLogin"]){
+					$playerdata = ServerAuth::getAPI()->getPlayerData($player->getName());
+					if($playerdata["ip"] == $player->getAddress()){
+						ServerAuth::getAPI()->authenticatePlayer($player, $playerdata["password"], false);
+					}else{
+						ServerAuth::getAPI()->deauthenticatePlayer($event->getPlayer());
+					}
+				}else{
+					ServerAuth::getAPI()->deauthenticatePlayer($event->getPlayer());
+				}
 			}
 		}
 	}
@@ -65,19 +75,8 @@ class EventListener implements Listener {
     	if($cfg["show-join-message"]){
     		$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["join-message"]));
     	}
-    	if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-    		//IP Authentication
-    		if($cfg["IPLogin"]){
-    			$playerdata = ServerAuth::getAPI()->getPlayerData($player->getName());
-    			if($playerdata["ip"] == $player->getAddress()){
-    				ServerAuth::getAPI()->authenticatePlayer($player, $playerdata["password"], false);
-    				$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["ip-login"]));
-    			}else{
-    				ServerAuth::getAPI()->deauthenticatePlayer($event->getPlayer());
-    			}
-    		}else{
-    			ServerAuth::getAPI()->deauthenticatePlayer($event->getPlayer());
-    		}
+    	if(ServerAuth::getAPI()->isPlayerAuthenticated($player) && $cfg["IPLogin"]){
+    		$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["ip-login"]));
     	}
     	if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) && ServerAuth::getAPI()->areRegisterMessagesEnabled()){
     		if($cfg["register"]["password-confirm-required"]){
@@ -89,6 +88,13 @@ class EventListener implements Listener {
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($player) && ServerAuth::getAPI()->areLoginMessagesEnabled()){
     			$player->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getConfigLanguage()->getAll()["login"]["message"]));
     		}
+    	}
+    }
+    
+    public function onPlayerQuit(PlayerQuitEvent $event){
+    	//Free registered users cache
+    	if(isset($this->cached_registered_users[strtolower($event->getPlayer()->getName())])){
+    		unset($this->cached_registered_users[strtolower($event->getPlayer()->getName())]);
     	}
     }
     
@@ -106,18 +112,14 @@ class EventListener implements Listener {
     			$event->setCancelled(true); //Cancel message
     		}
     		$recipients = $event->getRecipients();
-    		for($i = 0; $i < count($recipients); $i++){
-    			$player = $recipients[$i];
-    			if($player instanceof Player){
-    				if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){
-    					$message[] = $i;
-    					foreach($message as $messages){
-    						unset($recipients[$i]);
-    						$event->setRecipients(array_values($recipients));
-    					}
+    		foreach($recipients as $key => $recipient){
+    			if($recipient instanceof Player){
+    				if(!ServerAuth::getAPI()->isPlayerAuthenticated($recipient)){
+    					unset($recipients[$key]);
     				}
     			}
     		}
+    		$event->setRecipients($recipients);
     	}
     }
     
@@ -141,41 +143,17 @@ class EventListener implements Listener {
     	}
     }
     
-    public function onBlockBreak(BlockBreakEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBlockPlace(BlockPlaceEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBucketFill(PlayerBucketFillEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBucketEmpty(PlayerBucketEmptyEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
     public function onEntityDamage(EntityDamageEvent $event){
     		$player = $event->getEntity();
     		if($player instanceof Player){
-    			if(!ServerAuth::getAPI()->isPlayerRegistered($player->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($player)){
+    			if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){
     				$event->setCancelled(true);
     			}
     		}
     	if($event instanceof EntityDamageByEntityEvent){
     		$damager = $event->getDamager();
     		if($damager instanceof Player){
-    			if(!ServerAuth::getAPI()->isPlayerRegistered($damager->getName()) || !ServerAuth::getAPI()->isPlayerAuthenticated($damager)){
+    			if(!ServerAuth::getAPI()->isPlayerAuthenticated($damager)){
     				$event->setCancelled(true);
     			}
     		}
@@ -184,15 +162,7 @@ class EventListener implements Listener {
     
     //Other Events
     
-    public function onBedEnter(PlayerBedEnterEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
-    
-    public function onBedLeave(PlayerBedLeaveEvent $event){
+    public function onCraftItem(CraftItemEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     			$event->setCancelled(true);
