@@ -1,10 +1,10 @@
 <?php
 
 /*
- * ServerAuth (v2.12) by EvolSoft
+ * ServerAuth (v2.13) by EvolSoft
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
- * Date: 16/01/2016 04:30 PM (UTC)
+ * Date: 27/01/2016 02:20 AM (UTC)
  * Copyright & License: (C) 2015-2016 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
@@ -16,7 +16,6 @@ use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\inventory\CraftItemEvent;
 use pocketmine\event\player\PlayerAchievementAwardedEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
@@ -161,14 +160,6 @@ class EventListener implements Listener {
     }
     
     //Other Events
-    
-    public function onCraftItem(CraftItemEvent $event){
-    	if($this->plugin->getConfig()->getAll()["block-all-events"]){
-    		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
-    		}
-    	}
-    }
     
     public function onDropItem(PlayerDropItemEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
