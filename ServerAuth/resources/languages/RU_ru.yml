@@ -31,7 +31,7 @@ changepassword:
   login-required: "&cПожалуйста, войдите в свой аккаунт, после чего смените пароль!"
   command: "&cИспользуйте: /changepassword <новый пароль>"
   command-conf: "&cИспользуйте: /changepassword <новый пароль> <повтор пароля>"
-  command-cons: "&cUsage: /changepassword <player> <newPassword>"
+  command-cons: "&cИспользуйте: /changepassword <player> <newPassword>"
   changepassword-success: "&aПароль был успешно изменен!"
   changepassword-cons-success: "&aПароль игрока &b{PLAYER} &aуспешно изменен на &b{PASSWORD}"
 logout:
