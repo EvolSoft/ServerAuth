@@ -39,7 +39,7 @@ And more...
 **What is included?**
 
 In the ZIP file you will find:<br>
-*- ServerAuth_v2.12.phar : ServerAuth Plugin + API*<br>
+*- ServerAuth_v2.13.phar : ServerAuth Plugin + API*<br>
 *- ServerAuthAccountManager : An advanced online script to manage ServerAuth accounts*<br>
 *- ServerAuthWebAPI : ServerAuth Web API to use on your own web scripts*<br>
 
