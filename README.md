@@ -23,7 +23,7 @@ PHP MySQLi extension<br>
 
 ***To prevent bugs, delete all old plugin data if you are updating ServerAuth.***
 
-***WARNING: If you're updating from old versions of ServerAuth to ServerAuth v2.12, you MAY NEED to delete the current language folder!!!***
+***WARNING: If you're updating from old versions of ServerAuth to ServerAuth v2.12 or newer, you MAY NEED to delete the current language folder!!!***
 
 ***Features:***
 
