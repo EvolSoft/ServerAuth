@@ -140,11 +140,11 @@ class EventListener implements Listener {
     	}
     }
 	
-	public function onBlockBreak(BlockBreakEvent $event){
-		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-			$event->setCancelled(true);
-		}
-	}
+    public function onBlockBreak(BlockBreakEvent $event){
+	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
     
     public function onEntityDamage(EntityDamageEvent $event){
     		$player = $event->getEntity();
