@@ -12,7 +12,6 @@
 namespace ServerAuth;
 
 use pocketmine\event\block\BlockBreakEvent;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
@@ -142,12 +141,6 @@ class EventListener implements Listener {
     }
     
     public function onPlayerInteract(PlayerInteractEvent $event){
-    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    		$event->setCancelled(true);
-    	}
-    }
-    
-    public function onBlockBreak(BlockBreakEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
