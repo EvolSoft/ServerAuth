@@ -146,7 +146,7 @@ class EventListener implements Listener {
     	}
     }
     
-    public function onBlockPlace(BlockPlaceEvent $event){
+    public function onBlockBreak(BlockBreakEvent $event){
     	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
     		$event->setCancelled(true);
     	}
@@ -195,4 +195,3 @@ class EventListener implements Listener {
     	}
     }
 }
-?>
