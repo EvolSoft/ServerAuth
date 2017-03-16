@@ -1,12 +1,11 @@
 name: ServerAuth
 main: ServerAuth\ServerAuth
 version: "2.13"
-api: [1.14.0]
+api: [2.0.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3, 3.0.0-ALPHA4]
 load: STARTUP
 author: EvolSoft
-description: The most advanced authentication plugin for PocketMine-MP
+description: The most advanced authentication plugin for PocketMine-MP.
 website: http://www.evolsoft.tk
-
 commands:
  serverauth:
   aliases: [sa, sauth, auth]
@@ -28,7 +27,6 @@ commands:
  logout:
   description: Allows to do the log out
   permission: serverauth.logout
-
 permissions:
  serverauth:
   default: op

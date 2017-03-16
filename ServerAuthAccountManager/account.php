@@ -5,7 +5,7 @@ session_start();
  * Developer: EvolSoft (Flavius12)
  * Website: http://www.evolsoft.tk
  * Date: 02/08/2015 12:17 AM (UTC)
- * Copyright & License: (C) 2015-2016 EvolSoft
+ * Copyright & License: (C) 2015-2017 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 ?>
