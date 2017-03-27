@@ -72,7 +72,7 @@ You can download precompiled versions of ServerAuth on [ServerAuth Releases](htt
 
 [EvolSoft/EmailConfirm](https://github.com/EvolSoft/EmailConfirm): A ServerAuth extension which implements email confirmation when registering ServerAuth accounts
 
-<dd><i>If you want to submit your own ServerAuth Extension PM us on Twitter <b><a href="https://twitter.com/Flavius12_">@Flavius12_</a><a href="https://twitter.com/_EvolSoft">@_EvolSoft</a></b> or ask in <b><a href="https://gitter.im/EvolSoft/ServerAuth">ServerAuth Gitter Channel</a></b></i></dd>
+<dd><i>If you want to submit your own ServerAuth Extension PM us on Twitter <b><a href="https://twitter.com/Flavius12_">@Flavius12_</a> or <a href="https://twitter.com/_EvolSoft">@_EvolSoft</a></b> or ask in <b><a href="https://gitter.im/EvolSoft/ServerAuth">ServerAuth Gitter Channel</a></b></i></dd>
 
 ## Contributing
 
