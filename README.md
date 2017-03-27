@@ -64,7 +64,7 @@ Documentation available at [ServerAuth Wiki](https://github.com/EvolSoft/ServerA
 
 You can download precompiled versions of ServerAuth on [ServerAuth Releases](https://github.com/EvolSoft/ServerAuth/releases) section
 
-##Extensions
+## Extensions
 
 [EvolSoft/ChatLogin](https://github.com/EvolSoft/ChatLogin): A ServerAuth extension to do login/register directly on chat
 
