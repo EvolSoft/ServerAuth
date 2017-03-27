@@ -56,11 +56,11 @@ In the ZIP file you will find:<br>
 
 <dd><i>- Bug fix (if bugs will be found)</i></dd>
 
-##Documentation
+## Documentation
 
 Documentation available at [ServerAuth Wiki](https://github.com/EvolSoft/ServerAuth/wiki)
 
-##Download
+## Download
 
 You can download precompiled versions of ServerAuth on [ServerAuth Releases](https://github.com/EvolSoft/ServerAuth/releases) section
 
@@ -72,8 +72,8 @@ You can download precompiled versions of ServerAuth on [ServerAuth Releases](htt
 
 [EvolSoft/EmailConfirm](https://github.com/EvolSoft/EmailConfirm): A ServerAuth extension which implements email confirmation when registering ServerAuth accounts
 
-<dd><i>If you want to submit your own ServerAuth Extension PM us on Twitter <b>([@Flavius12_](https://twitter.com/Flavius12_) or [@_EvolSoft](https://twitter.com/_EvolSoft))</b> or ask in <b>[ServerAuth Gitter Channel](https://gitter.im/EvolSoft/ServerAuth)</b></i></dd>
+<dd><i>If you want to submit your own ServerAuth Extension PM us on Twitter <b><a href="https://twitter.com/Flavius12_">@Flavius12_</a><a href="https://twitter.com/_EvolSoft">@_EvolSoft</a></b> or ask in <b><a href="https://gitter.im/EvolSoft/ServerAuth">ServerAuth Gitter Channel</a></b></i></dd>
 
-##Contributing
+## Contributing
 
 If you want to contribute to this project please follow the [Contribution Guidelines](https://github.com/EvolSoft/ServerAuth/blob/master/CONTRIBUTING.md)
