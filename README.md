@@ -11,7 +11,7 @@ PocketMine-MP plugins, PHP Web scripts
 
 ## Requirements
 
-[PocketMine-MP](https://github.com/pmmp/PocketMine-MP) API 2.0.0 - 3.0.0-ALPHA4<br>
+[PocketMine-MP](https://github.com/pmmp/PocketMine-MP) API 3.0.0-ALPHA1 - 3.0.0-ALPHA5<br>
 PHP >= 5.4.0 *(for ServerAuthAccountManager)*<br>
 PHP MySQLi extension<br>
 
