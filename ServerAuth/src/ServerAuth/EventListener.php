@@ -98,7 +98,12 @@ class EventListener implements Listener {
     public function onPlayerMove(PlayerMoveEvent $event){
     	if(!$this->plugin->getConfig()->getAll()["allow-move"]){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-    			$event->setCancelled(true);
+    			//$event->setCancelled(true); This is a test so...
+    			//Lock position but still allow to turn around
+			$to = clone $event->getFrom();
+        		$to->yaw = $event->getTo()->yaw;
+        		$to->pitch = $event->getTo()->pitch;
+            		$event->setTo($to);
     		}
     	}
     }
@@ -146,6 +151,12 @@ class EventListener implements Listener {
     	}
     }
     
+    public function onBlockBreak(BlockBreakEvent $event){
+    	if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+    		$event->setCancelled(true);
+    	}
+    }
+    
     public function onEntityDamage(EntityDamageEvent $event){
     		$player = $event->getEntity();
     		if($player instanceof Player){
@@ -189,4 +200,3 @@ class EventListener implements Listener {
     	}
     }
 }
-?>
