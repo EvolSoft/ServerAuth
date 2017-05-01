@@ -17,6 +17,7 @@ use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
+use pocketmine\IPlayer;
 use pocketmine\Player;
 use pocketmine\OfflinePlayer;
 
@@ -91,7 +92,7 @@ class ServerAuth extends PluginBase {
 	/** @var Task $task MySQL task */
 	public $task;
 
-    /** @var boolean $mysql Use mysql */
+    /** @var bool $mysql Use mysql */
     public $mysql;
     
     /** @var string $canc_message Message on cancelled event */
@@ -100,10 +101,10 @@ class ServerAuth extends PluginBase {
     /** @var \mysqli $datbase MySQLi instance */
     private $database;
     
-    /** @var boolean $register_message Register Message status */
+    /** @var bool $register_message Register Message status */
     private $register_message = true;
     
-    /** @var boolean $login_message Login Message status */
+    /** @var bool $login_message Login Message status */
     private $login_message = true;
     
     /** @var ServerAuth $object Plugin instance */
@@ -114,7 +115,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return ServerAuth ServerAuth API instance
      */
-    public static function getAPI(){
+    public static function getAPI() : ServerAuth{
     	return self::$object;
     }
     
@@ -132,7 +133,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return string The translated message
      */
-    public function translateColors($symbol, $message){
+    public function translateColors($symbol, $message) : string{
     	$message = str_replace($symbol."0", TextFormat::BLACK, $message);
     	$message = str_replace($symbol."1", TextFormat::DARK_BLUE, $message);
     	$message = str_replace($symbol."2", TextFormat::DARK_GREEN, $message);
@@ -168,7 +169,7 @@ class ServerAuth extends PluginBase {
      *
      * @return string the message
      */
-    public function replaceArrays($message, $array){
+    public function replaceArrays($message, $array) : string{
     	foreach($array as $key => $value){
     		$message = str_replace("{" . strtoupper($key) . "}", $value, $message);
     	}
@@ -210,9 +211,9 @@ class ServerAuth extends PluginBase {
      * @param string $database
      * @param string $table_prefix
      * 
-     * @return boolean true on SUCCESS, false on error
+     * @return bool true on SUCCESS, false on error
      */
-    public function initializeDatabase($host, $port, $username, $password, $database, $table_prefix){
+    public function initializeDatabase(string $host, int $port, string $username, string $password, string $database, string $table_prefix) : bool{
     	$db = @new \mysqli($host, $username, $password, null, $port);
     	if($db->connect_error){
     		return false;
@@ -269,7 +270,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return int $count The number of occurrencies
      */
-    private function grep($path, $str){
+    private function grep(string $path, string $str) : int{
     	$count = 0;
     	foreach(glob($path . "*.yml") as $filename){
     		foreach(file($filename) as $fli=>$fl){
@@ -305,21 +306,21 @@ class ServerAuth extends PluginBase {
         $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MessageTask($this), 20);
         $this->task = $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MySQLTask($this), 20);
         $this->mysql = false;
-        $this->chlang = ServerAuth::getAPI()->getConfigLanguage()->getAll();
+        $this->chlang = self::getAPI()->getConfigLanguage()->getAll();
         //Check MySQL
         if($this->cfg["use-mysql"] == true){
         	$check = $this->checkDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"]);
         	if($check[0]){
         		$this->initializeDatabase($this->cfg["mysql"]["host"], $this->cfg["mysql"]["port"], $this->cfg["mysql"]["username"], $this->cfg["mysql"]["password"], $this->cfg["mysql"]["database"], $this->cfg["mysql"]["table_prefix"]);
-        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . $this->chlang["mysql-success"]));
+        		$this->getServer()->getLogger()->info($this->translateColors("&", self::PREFIX . $this->chlang["mysql-success"]));
         		$this->mysql = true;
         	}else{
-        		Server::getInstance()->getLogger()->info($this->translateColors("&", ServerAuth::PREFIX . ServerAuth::getAPI()->replaceArrays($this->chlang["mysql-fail"], array("MYSQL_ERROR" => $check[1]))));
+        		$this->getServer()->getLogger()->info($this->translateColors("&", self::PREFIX . self::getAPI()->replaceArrays($this->chlang["mysql-fail"], array("MYSQL_ERROR" => $check[1]))));
         	}
         }
     }
     
-    //API Functions
+    /*** API Functions ***/
     
     /** @var string API_VERSION ServerAuth API version */
     const API_VERSION = "1.1.1";
@@ -329,8 +330,8 @@ class ServerAuth extends PluginBase {
      * 
      * @return string ServerAuth version
      */
-    public function getVersion(){
-    	return ServerAuth::VERSION;
+    public function getVersion() : string{
+    	return self::VERSION;
     }
     
     /**
@@ -338,14 +339,14 @@ class ServerAuth extends PluginBase {
      * 
      * @return string ServerAuth API version
      */
-    public function getAPIVersion(){
-    	return ServerAuth::API_VERSION;
+    public function getAPIVersion() : string{
+    	return self::API_VERSION;
     }
     
     /**
      * Get the current MySQL database instance
      * 
-     * @return mysqli|boolean
+     * @return mysqli|bool
      */
     public function getDatabase(){
     	if($this->database instanceof \mysqli){
@@ -360,61 +361,53 @@ class ServerAuth extends PluginBase {
      * 
      * @return array
      */
-    public function getDatabaseConfig(){
+    public function getDatabaseConfig() : array{
     	return $this->getConfig()->getAll()["mysql"];
     }
     
     /**
      * Get ServerAuth data provider
      *
-     * @return boolean true if ServerAuth is using MySQL, false if ServerAuth is using YAML config
+     * @return bool true if ServerAuth is using MySQL, false if ServerAuth is using YAML config
      */
-    public function getDataProvider(){
+    public function getDataProvider() : bool{
     	return $this->mysql;
     }
     
     /**
      * Check if register messages are enabled
      * 
-     * @return boolean
+     * @return bool
      */
-    public function areRegisterMessagesEnabled(){
+    public function areRegisterMessagesEnabled() : bool{
     	return $this->register_message;
     }
     
     /**
      * Enable\Disable register messages
      * 
-     * @param boolean $bool
+     * @param bool $bool
      */
-    public function enableRegisterMessages($bool = true){
-    	if(is_bool($bool)){
-    		$this->register_message = $bool;
-    	}else{
-    		$this->register_message = true;
-    	}
+    public function enableRegisterMessages(bool $bool = true){
+    	$this->register_message = $bool;
     }
     
     /**
      * Check if login messages are enabled
      *
-     * @return boolean
+     * @return bool
      */
-    public function areLoginMessagesEnabled(){
+    public function areLoginMessagesEnabled() : bool{
     	return $this->login_message;
     }
     
     /**
      * Enable\Disable login messages
      *
-     * @param boolean $bool
+     * @param bool $bool
      */
-    public function enableLoginMessages($bool = true){
-    	if(is_bool($bool)){
-    		$this->login_message = $bool;
-    	}else{
-    		$this->login_message = true;
-    	}
+    public function enableLoginMessages(bool $bool = true){
+    	$this->login_message = $bool;
     }
     
     /**
@@ -433,7 +426,7 @@ class ServerAuth extends PluginBase {
      *
      * @return array|int the array of player data on SUCCESS, otherwise the current error
      */
-    public function getPlayerData($player){
+    public function getPlayerData(string $player){
     	if($this->isPlayerRegistered($player)){
     		if($this->getDataProvider()){
     			//Check MySQL connection
@@ -473,9 +466,8 @@ class ServerAuth extends PluginBase {
      * 
      * @return string
      */
-    public function getPasswordHash(){
-    	$cfg = $this->getConfig()->getAll();
-    	return $cfg["passwordHash"];
+    public function getPasswordHash() : string{
+    	return $this->getConfig()->getAll()["passwordHash"];
     }
     
     /**
@@ -485,7 +477,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return \pocketmine\utils\Config
      */
-    public function getLanguage($language){
+    public function getLanguage(string $language) : Config{
     	if(file_exists($this->getDataFolder() . "languages/" . $language . ".yml")){
     		return new Config($this->getDataFolder() . "languages/" . $language . ".yml", Config::YAML);
     	}elseif(file_exists($this->getDataFolder() . "languages/EN_en.yml")){
@@ -502,7 +494,7 @@ class ServerAuth extends PluginBase {
      * 
      * @return \pocketmine\utils\Config
      */
-    public function getConfigLanguage(){
+    public function getConfigLanguage() : Config{
     	$cfg = $this->getConfig()->getAll();
     	return $this->getLanguage($cfg["language"]);
     }
@@ -512,9 +504,9 @@ class ServerAuth extends PluginBase {
      * 
      * @param string $player
      * 
-     * @return boolean|int true or false on SUCCESS, otherwise the current error
+     * @return bool|int true or false on SUCCESS, otherwise the current error
      */
-    public function isPlayerRegistered($player){
+    public function isPlayerRegistered(string $player){
     	if($this->getDataProvider()){
     		//Check MySQL connection
     		if($this->getDatabase() && $this->getDatabase()->ping()){
@@ -563,9 +555,9 @@ class ServerAuth extends PluginBase {
      * 
      * @param Player $player
      * 
-     * @return boolean
+     * @return bool
      */
-    public function isPlayerAuthenticated(Player $player){
+    public function isPlayerAuthenticated(Player $player) : bool{
     	return isset($this->auth_users[strtolower($player->getName())]);
     }
     
@@ -575,9 +567,9 @@ class ServerAuth extends PluginBase {
      * @param Player $player
      * @param string $password
      * 
-     * @return int|boolean true on SUCCESS, otherwise the current error
+     * @return int|bool true on SUCCESS, otherwise the current error
      */
-    public function registerPlayer(Player $player, $password){
+    public function registerPlayer(Player $player, string $password){
     	$cfg = $this->getConfig()->getAll();
     	if($this->isPlayerRegistered($player->getName())){
     		return ServerAuth::ERR_USER_ALREADY_REGISTERED;
@@ -687,9 +679,9 @@ class ServerAuth extends PluginBase {
 	 * 
 	 * @param Player|OfflinePlayer $player
 	 * 
-	 * @return int|boolean true on SUCCESS or false if the player is not registered, otherwise the current error
+	 * @return int|bool true on SUCCESS or false if the player is not registered, otherwise the current error
 	 */
-    public function unregisterPlayer($player){
+    public function unregisterPlayer(IPlayer $player){
     	$pname = $player;
     	if($player instanceof Player || $player instanceof OfflinePlayer){
     		$pname = $player->getName();
@@ -753,11 +745,11 @@ class ServerAuth extends PluginBase {
      * 
      * @param Player $player
      * @param string $password
-     * @param boolean $hash
+     * @param bool $hash
      * 
-     * @return int|boolean true on SUCCESS, otherwise the current error
+     * @return int|bool true on SUCCESS, otherwise the current error
      */
-    public function authenticatePlayer(Player $player, $password, $hash = true){
+    public function authenticatePlayer(Player $player, string $password, bool $hash = true){
     	if($hash){
     		$password = hash($this->getPasswordHash(), $password);
     	}
@@ -859,7 +851,7 @@ class ServerAuth extends PluginBase {
      * 
      * @param Player $player
      * 
-     * @return int|boolean true on SUCCESS, otherwise the current error
+     * @return int|bool true on SUCCESS, otherwise the current error
      */
     public function deauthenticatePlayer(Player $player){
     	if($this->isPlayerAuthenticated($player)){
@@ -885,9 +877,9 @@ class ServerAuth extends PluginBase {
 	 * @param Player|OfflinePlayer $player
 	 * @param string $new_password
 	 * 
-	 * @return int|boolean true on SUCCESS or false if the player is not registered, otherwise the current error
+	 * @return int|bool true on SUCCESS or false if the player is not registered, otherwise the current error
 	 */
-    public function changePlayerPassword($player, $new_password){
+    public function changePlayerPassword(IPlayer $player, string $new_password){
     	if($player instanceof Player || $player instanceof OfflinePlayer){
 	    	$cfg = $this->getConfig()->getAll();
 	    	if($this->isPlayerRegistered($player->getName())){
