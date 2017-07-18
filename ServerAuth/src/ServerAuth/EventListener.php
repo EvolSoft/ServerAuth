@@ -176,6 +176,14 @@ class EventListener implements Listener {
     		}
     	}
     }
+
+    public function onCraftItem(CraftItemEvent $event) {
+        if ($this->plugin->getConfig()->getAll()["block-all-events"]) {
+            if (!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())) {
+                $event->setCancelled(true);
+            }
+        }
+    }
     
     public function onAwardAchievement(PlayerAchievementAwardedEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
