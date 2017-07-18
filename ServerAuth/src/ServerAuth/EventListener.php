@@ -40,15 +40,11 @@ class EventListener implements Listener {
 		$cfg = $this->plugin->getConfig()->getAll();
 		if($cfg['force-single-auth']){
 			$player = $event->getPlayer();
-			$count = 0;
 			foreach($this->plugin->getServer()->getOnlinePlayers() as $pl){
 				if(strtolower($pl->getName()) == strtolower($player->getName())){
-					$count++;
+					$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
+					$event->setCancelled(true);
 				}
-			}
-			if($count > 0){
-				$player->close("", $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), $this->plugin->translateColors("&", ServerAuth::getAPI()->getConfigLanguage()->getAll()["single-auth"]), false);
-				$event->setCancelled(true);
 			}
 			if(ServerAuth::getAPI()->isPlayerAuthenticated($player)){
 				//IP Authentication
