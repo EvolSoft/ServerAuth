@@ -574,9 +574,9 @@ class ServerAuth extends PluginBase {
     	if($this->isPlayerRegistered($player->getName())){
     		return ServerAuth::ERR_USER_ALREADY_REGISTERED;
     	}else{
-    		if(strlen($password) <= $cfg["minPasswordLength"]){
+    		if(mb_strlen($password) <= $cfg["minPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_SHORT;
-    		}elseif(strlen($password) >= $cfg["maxPasswordLength"]){
+    		}elseif(mb_strlen($password) >= $cfg["maxPasswordLength"]){
     			return ServerAuth::ERR_PASSWORD_TOO_LONG;
     		}else{
     			//Reset cancelled message
@@ -883,9 +883,9 @@ class ServerAuth extends PluginBase {
     	if($player instanceof Player || $player instanceof OfflinePlayer){
 	    	$cfg = $this->getConfig()->getAll();
 	    	if($this->isPlayerRegistered($player->getName())){
-	    		if(strlen($new_password) < $cfg["minPasswordLength"]){
+	    		if(mb_strlen($new_password) < $cfg["minPasswordLength"]){
 	    			return ServerAuth::ERR_PASSWORD_TOO_SHORT;
-	    		}elseif(strlen($new_password) > $cfg["maxPasswordLength"]){
+	    		}elseif(mb_strlen($new_password) > $cfg["maxPasswordLength"]){
 	    			return ServerAuth::ERR_PASSWORD_TOO_LONG;
 	    		}else{
 	    			//Reset cancelled message
