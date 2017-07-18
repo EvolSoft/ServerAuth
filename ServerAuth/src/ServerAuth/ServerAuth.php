@@ -681,7 +681,7 @@ class ServerAuth extends PluginBase {
 	 * 
 	 * @return int|bool true on SUCCESS or false if the player is not registered, otherwise the current error
 	 */
-    public function unregisterPlayer(IPlayer $player){
+    public function unregisterPlayer($player){
     	$pname = $player;
     	if($player instanceof Player || $player instanceof OfflinePlayer){
     		$pname = $player->getName();
@@ -879,7 +879,7 @@ class ServerAuth extends PluginBase {
 	 * 
 	 * @return int|bool true on SUCCESS or false if the player is not registered, otherwise the current error
 	 */
-    public function changePlayerPassword(IPlayer $player, string $new_password){
+    public function changePlayerPassword($player, string $new_password){
     	if($player instanceof Player || $player instanceof OfflinePlayer){
 	    	$cfg = $this->getConfig()->getAll();
 	    	if($this->isPlayerRegistered($player->getName())){
