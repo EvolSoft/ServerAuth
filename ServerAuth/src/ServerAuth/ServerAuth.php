@@ -215,9 +215,7 @@ class ServerAuth extends PluginBase {
      */
     public function initializeDatabase(string $host, int $port, string $username, string $password, string $database, string $table_prefix) : bool{
     	$db = @new \mysqli($host, $username, $password, null, $port);
-    	if($db->connect_error){
-    		return false;
-    	}else{
+    	if(!$db->connect_error){
     		$query = "CREATE DATABASE " . $database;
     		if ($db->query($query) == true) {
     			$db->select_db($database);
@@ -259,7 +257,9 @@ class ServerAuth extends PluginBase {
     			}
     		}
     		$this->database = $db;
+		return true;
     	}
+	return false;
     }
     
     /**
