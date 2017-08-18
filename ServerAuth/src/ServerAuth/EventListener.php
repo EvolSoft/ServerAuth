@@ -11,6 +11,8 @@
 
 namespace ServerAuth;
 
+
+use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -185,6 +187,14 @@ class EventListener implements Listener {
             }
         }
     }
+       public function onTransaction(InventoryTransactionEvent $event){
+		$transactions = $event->getTransaction()->getTransactions();
+		$player = $transaction->getInventory()->getHolder();
+		foreach($transactions as $transaction){
+			if($player instanceof Player and !ServerAuth::getAPI()->isPlayerAuthenticated($transaction->getInventory()->getHolder())){
+						$event->setCancelled();
+					}
+				}
     
     public function onAwardAchievement(PlayerAchievementAwardedEvent $event){
     	if($this->plugin->getConfig()->getAll()["block-all-events"]){
