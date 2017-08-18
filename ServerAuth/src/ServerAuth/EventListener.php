@@ -193,8 +193,10 @@ class EventListener implements Listener {
 	 * @priority MONITOR
 	 */
 	public function onInventoryOpen(InventoryOpenEvent $event){
-		if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
-			$event->setCancelled(true);
+		if ($this->plugin->getConfig()->getAll()["block-all-events"]){
+			if(!ServerAuth::getAPI()->isPlayerAuthenticated($event->getPlayer())){
+				$event->setCancelled(true);
+			}
 		}
 	}
     
