@@ -11,6 +11,7 @@
 
 namespace ServerAuth;
 
+use pocketmine\inventory\PlayerInventory;
 use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
@@ -174,10 +175,14 @@ class EventListener implements Listener {
 		if ($this->plugin->getConfig()->getAll()["block-all-events"]) {
 			$transactions = $event->getTransaction()->getTransactions();
 			foreach($transactions as $transaction){
-				if($transaction->getInventory()->getHolder() instanceof Player and !ServerAuth::getAPI()->isPlayerAuthenticated($transaction->getInventory()->getHolder())){
-						$event->setCancelled();
+				if($transaction->getInventory() instanceof PlayerInventory){
+					if($transaction->getInventory()->getHolder() instanceof Player){
+						if(!ServerAuth::getAPI()->isPlayerAuthenticated($transaction->getInventory()->getHolder())){
+							$event->setCancelled();
+						}
 					}
 				}
+			}
 		}
 	}
     public function onItemConsume(PlayerItemConsumeEvent $event){
