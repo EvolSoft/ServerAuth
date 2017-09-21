@@ -24,7 +24,7 @@ class MySQLTask extends PluginTask {
         $this->plugin = $this->getOwner();
     }
     
-    public function onRun($tick){
+    public function onRun(int $tick){
     	$cfg = $this->plugin->getConfig()->getAll();
     	//Check MySQL
     	if($cfg["use-mysql"] == true){

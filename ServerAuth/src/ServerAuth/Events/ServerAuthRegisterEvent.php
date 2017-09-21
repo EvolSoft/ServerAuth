@@ -41,7 +41,7 @@ class ServerAuthRegisterEvent extends PluginEvent implements Cancellable {
 	 *
 	 * @return Player
 	 */
-	public function getPlayer(){
+	public function getPlayer(): Player {
 		return $this->player;
 	}
 	
@@ -59,7 +59,7 @@ class ServerAuthRegisterEvent extends PluginEvent implements Cancellable {
 	 *
 	 * @param string $message
 	 */
-	public function setCancelledMessage($message){
+	public function setCancelledMessage(string $message){
 		ServerAuth::getAPI()->canc_message = $message;
 	}
 }

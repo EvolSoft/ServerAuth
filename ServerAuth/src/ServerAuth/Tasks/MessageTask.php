@@ -24,7 +24,7 @@ class MessageTask extends PluginTask {
         $this->players = array();
     }
     
-    public function onRun($tick){
+    public function onRun(int $tick){
     	$cfg = $this->plugin->getConfig()->getAll();
     	foreach($this->plugin->getServer()->getOnlinePlayers() as $player){
     		if(!ServerAuth::getAPI()->isPlayerAuthenticated($player)){

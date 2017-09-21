@@ -29,7 +29,7 @@ class Logout implements CommandExecutor {
         $this->plugin = $plugin;
     }
     
-public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
+public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
     	$fcmd = strtolower($cmd->getName());
     	switch($fcmd){
     		case "logout":
@@ -64,7 +64,8 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
     				break;
     			}
     			return true;
-    			}
+    		}
+    		return true;
     	}
 }
 ?>
