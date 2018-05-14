@@ -10,19 +10,17 @@
 
 namespace ServerAuth\Events;
 
-use pocketmine\Player;
-
-class ServerAuthRegisterEvent extends ServerAuthEvent {
+class ServerAuthChangePasswordEvent extends ServerAuthEvent {
 
 	public static $handlerList = null;
 
-	/** @var Player */
+	/** @var string */
 	private $player;
 	
 	/** @var string */
 	private $password;
 
-	public function __construct(Player $player, $password){
+	public function __construct($player, $password){
 		$this->player = $player;
 		$this->password = $password;
 	}
@@ -30,16 +28,16 @@ class ServerAuthRegisterEvent extends ServerAuthEvent {
 	/**
 	 * Get player
 	 *
-	 * @return Player
+	 * @return string
 	 */
-	public function getPlayer() : Player {
+	public function getPlayer(){
 		return $this->player;
 	}
 	
 	/**
-	 * Get password (it can be hashed or not)
+	 * Get the new password
 	 * 
-	 * @return string
+	 * @return $password
 	 */
 	public function getPassword(){
 		return $this->password;

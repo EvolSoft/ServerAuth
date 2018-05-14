@@ -1,113 +1,106 @@
 <?php
 
 /*
- * ServerAuth (v2.13) by EvolSoft
- * Developer: EvolSoft (Flavius12)
- * Website: http://www.evolsoft.tk
- * Date: 16/01/2016 08:13 PM (UTC)
- * Copyright & License: (C) 2015-2016 EvolSoft
+ * ServerAuth v3.0 by EvolSoft
+ * Developer: Flavius12
+ * Website: https://www.evolsoft.tk
+ * Copyright (C) 2015-2018 EvolSoft
  * Licensed under MIT (https://github.com/EvolSoft/ServerAuth/blob/master/LICENSE)
  */
 
 namespace ServerAuth\Commands;
 
-use pocketmine\permission\Permission;
 use pocketmine\command\Command;
-use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\utils\Config;
-
-use pocketmine\utils\TextFormat;
 
 use ServerAuth\ServerAuth;
 
-class Unregister implements CommandExecutor {
+class Unregister extends ServerAuthCommand {
 
 	public function __construct(ServerAuth $plugin){
         $this->plugin = $plugin;
     }
     
-    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
-    	$fcmd = strtolower($cmd->getName());
-    	switch($fcmd){
-    		case "unregister":
-    			if($sender->hasPermission("serverauth.unregister")){
-    				//Player Sender
-    				if($sender instanceof Player){
-    					$cfg = $this->plugin->getConfig()->getAll();
-    					//Check if unregister is enabled
-    					if($cfg["unregister"]["enabled"]){
-    						if(ServerAuth::getAPI()->isPlayerAuthenticated($sender)){
-    							//Check if password is required
-    							if($cfg["unregister"]["require-password"]){
-    							    //Check args
-    								if(count($args) == 1){
-    									if(hash(ServerAuth::getAPI()->getPasswordHash(), $args[0]) == ServerAuth::getAPI()->getPlayerData($sender->getName())["password"]){
-    										$status = ServerAuth::getAPI()->unregisterPlayer($sender);
-    										if($status == ServerAuth::SUCCESS){
-    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["unregister-success"]));
-    										}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
-    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["user-not-registered"]));
-    										}elseif($status == ServerAuth::CANCELLED){
-    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getCancelledMessage()));
-    										}else{
-    											$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["generic"]));
-    										}
-    									}else{
-    										$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["wrong-password"]));
-    									}
-    								}else{
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["command"]));
-    								}
-    							}else{
-    								$status = ServerAuth::getAPI()->unregisterPlayer($sender);
-    								if($status == ServerAuth::SUCCESS){
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["unregister-success"]));
-    								}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["user-not-registered"]));
-    								}elseif($status == ServerAuth::CANCELLED){
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getCancelledMessage()));
-    								}else{
-    									$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["errors"]["generic"]));
-    								}
-    							}
-    						}else{
-    							$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["login-required"]));
-    						}
-    					}else{
-    						$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["disabled"]));
-    					}
-    					break;
-    				}else{ //Console Sender
-    					if(isset($args[0])){
-    						$player = $this->plugin->getServer()->getPlayer($args[0]);
-    						if(!$player instanceof Player){
-    							$player = $args[0];
-    						}
-    						$status = ServerAuth::getAPI()->unregisterPlayer($player);
-    						if($status == ServerAuth::SUCCESS){
-    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["unregister"]["unregister-success-3rd"]));
-    						}elseif($status == ServerAuth::ERR_USER_NOT_REGISTERED){
-    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["errors"]["user-not-registered-3rd"]));
-    						}elseif($status == ServerAuth::CANCELLED){
-    							$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . ServerAuth::getAPI()->getCancelledMessage()));
-    						}else{
-    							$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["errors"]["generic"]));
-    						}
-    					}else{
-    						$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["unregister"]["command-cons"]));
-    					}
-    					break;
-    				}
-    			}else{
-    				$sender->sendMessage($this->plugin->translateColors("&", $this->plugin->chlang["errors"]["no-permissions"]));
-    				break;
-    			}
-    			return true;
-    		}
-    		return true;
-    	}
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool {
+		if($sender->hasPermission("serverauth.unregister")){
+			if($sender instanceof Player){
+				if($this->plugin->isUnregisterEnabled()){
+					if($this->plugin->isPlayerAuthenticated($sender)){
+						if($this->plugin->cfg["unregister"]["require-password"]){
+							if(count($args) == 1){
+							    $pdata = $this->plugin->getPlayerData($sender->getName());
+							    $hashalg = isset($pdata["hashalg"]) ? $this->plugin->getHashAlgById($pdata["hashalg"]) : $this->plugin->getHashAlg();
+							    if(!$hashalg){
+							        $hashalg = $this->plugin->getHashAlg();
+							    }
+							    $params = isset($pdata["hashparams"]) ? $pdata["hashparams"] : $this->plugin->encodeParams($this->plugin->cfg["password-hash"]["parameters"]);
+						        if($this->plugin->hashPassword($args[0], $hashalg, $params . ",player:" . $sender->getName()) == $pdata["password"]){
+									goto unregister;
+								}else{
+									$sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $this->plugin->chlang["errors"]["wrong-password"]));
+								}
+							}else{
+							    $sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $this->plugin->chlang["unregister"]["command"]));
+							}
+						}else{
+							unregister:
+							$cmessage = null;
+							switch($this->plugin->unregisterAccount($sender->getName(), $cmessage)){
+							    case ServerAuth::SUCCESS:
+							        $sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $this->plugin->chlang["unregister"]["unregister-success"]));
+							        break;
+							    case ServerAuth::ERR_NOT_REG:
+							        $sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $this->plugin->chlang["errors"]["user-not-registered"]));
+							        break;
+							    case ServerAuth::CANCELLED:
+							        $sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $cmessage));
+							        break;
+							    case ServerAuth::ERR_IO:
+							        break;
+							    default:
+							        $sender->sendMessage($this->plugin->translateColors("&", $this->plugin->getPrefix() . $this->plugin->chlang["errors"]["generic"]));
+							        break;
+							}
+						}
+					}else{
+						$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["login-required"]));
+					}
+				}else{
+					$sender->sendMessage($this->plugin->translateColors("&", $cfg["prefix"] . $this->plugin->chlang["unregister"]["disabled"]));
+				}
+			}else if(isset($args[0])){
+					$cmessage = null;
+					switch($this->plugin->unregisterAccount($args[0], $cmessage)){
+					    case ServerAuth::SUCCESS:
+					        $sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["unregister"]["unregister-success-3rd"]));
+					        break;
+					    case ServerAuth::ERR_NOT_REG:
+					        $sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["errors"]["user-not-registered-3rd"]));
+					        break;
+					    case ServerAuth::CANCELLED:
+					        $sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $cmessage));
+					        break;
+					    case ServerAuth::ERR_IO:
+					        break;
+					    default:
+					        $sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["errors"]["generic"]));
+					        break;
+					}
+			}else{
+				$sender->sendMessage($this->plugin->translateColors("&", ServerAuth::PREFIX . $this->plugin->chlang["unregister"]["command-cons"]));
+			}
+		}else{
+			$sender->sendMessage($this->plugin->translateColors("&", $this->plugin->chlang["errors"]["no-permissions"]));
+		}
+		return true;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see \ServerAuth\Commands\ServerAuthCommand::getType()
+	 */
+	public function getType() : int {
+	    return ServerAuth::CMD_UNREGISTER;
+	}
 }
-?>

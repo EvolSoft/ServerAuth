@@ -1,47 +1,48 @@
-#ServerAuth plugin default configuration
 ---
-#Keep logged in by IP
-IPLogin: false
-#Force single authentication
+# Keep logged in by IP
+ip-login: false
+# Use UUID for authentication
+uuid-login: false
+# Force single authentication
 force-single-auth: true
-#Allow not authenticated users to move
+# Allow not authenticated users to move
 allow-move: false
-#Block chat for not authenticated users
+# Block chat for not authenticated users
 block-chat: true
-#Block commands for not authenticated users
+# Block commands for not authenticated users
 block-commands: true
-#Block all events
+# Block all events
 block-all-events: true
-#Login/Register timeout
+# Login/Register timeout
 timeout: 60
-#Minimum password length
-minPasswordLength: 6
-#Maximum password length
-maxPasswordLength: 16
-#Password hash algorithm
-passwordHash: "sha256"
-#ServerAuth language
+# Minimum password length
+min-password: 6
+# Maximum password length
+max-password: 16
+# Password hash algorithm
+password-hash:
+  # Password hash algorithm name
+  # serverauth: basic ServerAuth hash algorithm
+  # serverauth_salted: ServerAuth hash algorithm with salt
+  # simpleauth: SimpleAuth default hash algorithm
+  algorithm: "serverauth_salted"
+  # Optional parameters for hash algorithm (may change according to the selected algorithm)
+  # Default parameters are valid for both serverauth and serverauth_salted algorithms
+  parameters:
+    hash: "sha256"
+    multi-hash: "md5"
+# ServerAuth language
 language: "EN_en"
-#ServerAuth message prefix
+# ServerAuth message prefix
 prefix: "&1[ServerAuth] "
-#Show join message (defined on join-message in the current language file)
+# Show join message (defined on join-message in the current language file)
 show-join-message: true
-#Use MySQL (set this to false if you want to save data in local files)
-use-mysql: false
-#MySQL settings
-mysql:
-  #MySQL host
-  host: "host"
-  #MySQL port (default 3306)
-  port: 3306
-  #MySQL username
-  username: "username"
-  #MySQL password (you can leave it blank if your database doesn't need password)
-  password: ""
-  #MySQL ServerAuth database
-  database: "serverauth"
-  #ServerAuth table prefix
-  table_prefix: "srvauth_"
+# Data provider
+data-provider: yaml
+# Data cache timeout (0 disables this feature)
+data-cache-timeout: 60
+# Max cached players (0 for unlimited)
+max-cached-players: 100
 #Login settings
 login:
   #Enable login on your server
@@ -49,7 +50,7 @@ login:
   #Enable failed logins kick
   enable-failed-logins-kick: true
   #Max number of attempts
-  max-login-attempts: 5
+  max-attempts: 5
   #Login message interval
   message-interval: 4
 #Register settings
@@ -57,11 +58,13 @@ register:
   #Enable register on your server
   enabled: true
   #Require password confirmation
-  password-confirm-required: false
+  confirm-required: false
   #Enable max registrations per IP
   enable-max-ip: false
-  #Max registrations per IP
+  #Max registrations per IP (0 to disable this feature)
   max-ip: 3
+  # Log multiple accounts to OPs
+  log-multiple-accounts: true
   #Register message interval
   message-interval: 4
 #Change Password settings
@@ -69,7 +72,7 @@ changepassword:
   #Enable changepassword on your server
   enabled: true
   #Require password confirmation
-  password-confirm-required: true
+  confirm-required: true
 #Logout settings
 logout:
   #Enable logout on your server
