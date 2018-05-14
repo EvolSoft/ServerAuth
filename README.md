@@ -1,4 +1,7 @@
 ![start2](https://cloud.githubusercontent.com/assets/10303538/6315586/9463fa5c-ba06-11e4-8f30-ce7d8219c27d.png)
+
+**THE PLUGIN IS NOT READY TO BE USED YET. IT HAS NOT BEEN TESTED CAREFULLY AND IT STILL CONTAINS LOTS OF BUGS! PLEASE WAIT THE OFFICIAL RELEASE ON POGGIT!**
+
 # ServerAuth
 
 [![Join the chat at https://gitter.im/EvolSoft/ServerAuth](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/EvolSoft/ServerAuth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
