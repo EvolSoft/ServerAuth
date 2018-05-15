@@ -75,7 +75,7 @@ errors:
   mysql-query-error: "&cMySQL query failed."
   mysql-tables-error: "&cFailed to create ServerAuth tables into MySQL database!"
   sqlite-open-error: "&cFailed to open SQLite3 database: {ERROR}"
-  mysql-query-error: "&SQLite3 query failed."
+  sqlite-query-error: "&SQLite3 query failed."
   sqlite-tables-error: "&cFailed to create ServerAuth tables into SQLite3 database!"
   invalid-hash-algorithm: "&eInvalid hash algorithm specified! ServerAuth salted algorithm set."
   invalid-provider: "&eInvalid data provider specified! YAML default data provider set."
