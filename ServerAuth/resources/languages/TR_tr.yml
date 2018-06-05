@@ -18,7 +18,7 @@ login:
   already-login: "&aZaten giriş yapıldı."
   too-many-attempts: "&cÇok fazla giriş yapmayı denedin!"
 register: 
-  message: "&cKayıt olmak için lütfen /register <şifre> komutunu kullanınız".
+  message: "&cKayıt olmak için lütfen /register <şifre> komutunu kullanınız."
   message-conf: "&cKayıt olmak için lütfen /register <şifre> <şifreDoğrula>"
   disabled: "&cKayıt olma komutu bu sunucuda devre dışı bırakılmış."
   command: "&cKullanımı: /register <şifre>"
