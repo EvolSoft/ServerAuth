@@ -17,7 +17,7 @@ use pocketmine\plugin\PluginBase;
 
 use ServerAuth\ServerAuth;
 
-class Commands extends PluginBase implements CommandExecutor {
+class Commands implements CommandExecutor {
 
 	public function __construct(ServerAuth $plugin){
         $this->plugin = $plugin;
