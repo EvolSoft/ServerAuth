@@ -13,7 +13,7 @@ namespace ServerAuth\Commands;
 use pocketmine\command\CommandExecutor;
 use pocketmine\plugin\PluginBase;
 
-abstract class ServerAuthCommand extends PluginBase implements CommandExecutor {
+abstract class ServerAuthCommand implements CommandExecutor {
     
     /**
      * Get auth command type

@@ -10,13 +10,13 @@
 
 namespace ServerAuth\Tasks;
 
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 use pocketmine\Server;
 
 use ServerAuth\ServerAuth;
 use ServerAuth\Providers\MySQLProvider;
 
-class MySQLTask extends PluginTask {
+class MySQLTask extends Task {
     
     private $mysqlp;
     

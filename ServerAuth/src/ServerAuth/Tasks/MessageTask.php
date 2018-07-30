@@ -10,21 +10,22 @@
 
 namespace ServerAuth\Tasks;
 
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
 use ServerAuth\ServerAuth;
 
-class MessageTask extends PluginTask {
+class MessageTask extends Task {
     
     /** @var array */
     private $players = array();
+	private $plugins;
 	
-    public function __construct(ServerAuth $plugin){
-    	parent::__construct($plugin);
+    public function __construct(ServerAuth $plugins){
+    	$this->plugins = $plugins;
     }
     
     public function onRun(int $tick){
-        $plugin = $this->getOwner();
+        $plugin = $this->plugins;
     	foreach($plugin->getServer()->getOnlinePlayers() as $player){
     	    if(!$plugin->isPlayerAuthenticated($player)){
     	        if(!isset($this->players[strtolower($player->getName())])){

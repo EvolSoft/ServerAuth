@@ -277,7 +277,7 @@ class ServerAuth extends PluginBase {
 	    };
 	    $this->logmsghndl = $loghndl;
 	    $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-	    $this->getServer()->getScheduler()->scheduleRepeatingTask(new Tasks\MessageTask($this), 20);
+	    $this->getScheduler()->scheduleRepeatingTask(new Tasks\MessageTask($this), 20);
 	}
 	
 	/*** API Functions ***/
