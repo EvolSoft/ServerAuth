@@ -1,5 +1,6 @@
 #ServerAuth plugin Turkish language file
 #Translation by NightRichTR (Old Nick: Gecekatili)
+#Bugs fixed by theilqer 31.12.2021
 ---
 join-message: "&aServerAuth §atarafından sağlanan kimlik doğrulama eklentisi."
 single-auth: "&cBu isimle sunucuya zaten kayıt olunmuş!"
