@@ -75,7 +75,7 @@ errors:
   mysql-query-error: "&cMySQL sorgusu başarısız oldu."
   mysql-tables-error: "&cServerAuth tabloları MySQL veritabanında oluşturulamadı!"
   sqlite-open-error: "&cSQLite3 veritabanını açamadı. Hata: {ERROR}"
-  sqlite-query-error: "&SQLite3 sorgusu başarısız oldu.."
+  sqlite-query-error: "&cSQLite3 sorgusu başarısız oldu.."
   sqlite-tables-error: "&cServerAuth tabloları SQLite3 veritabanında oluşturulamadı!"
   invalid-hash-algorithm: "&eGeçersiz karma şifreleme algoritması. ServerAuth stabil algoritmasına geçildi."
   invalid-provider: "&eGeçersiz veri sağlayıcısı belirlendi! YAML varsayılan veri sağlayıcısı ayarlandı."
